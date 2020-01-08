@@ -15,9 +15,12 @@ const useStyles = makeStyles(theme => ({
     color: '#E9E9E9',
     display: 'flex',
     height: '100%',
+    alignItems: 'stretch',
   },
   content: {
-    flex: '1 0 auto',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   avatar: {
     backgroundColor: 'transparent',
@@ -29,32 +32,40 @@ const useStyles = makeStyles(theme => ({
     color: '#E9E9E9',
     height: 40,
     width: 40
-  }
+  },
+  iconContainer: {
+    background: 'rgba(0, 0, 64, 1.0)',
+    borderTopLeftRadius: 4,
+    borderBottomLeftRadius: 4,
+  },
 }));
 
-const renderIcon = (icon, classes) => {
+const renderIcon = ({ icon, background }, classes) => {
   if (icon === null) {
     return null;
   }
 
+  background = background || classes.iconContainer.background;
+
   return (
-    <Grid item>
+    <CardContent className={[classes.content, classes.iconContainer]} style={{ background }}>
       <Avatar variant="rounded" className={classes.avatar}>
         {icon}
       </Avatar>
-    </Grid>
+    </CardContent>
   );
 };
 
-const StatsCard = ({ label, value, icon, ...props }) => {
+const StatsCard = ({ label, value, ...props }) => {
 
   const classes = useStyles();
 
   return (
     <Card className={classes.card}>
+      {renderIcon(props, classes)}
+
       <CardContent className={classes.content}>
         <Grid container spacing={2} justify="flex-start" alignItems="center">
-          {renderIcon(icon, classes)}
           <Grid item>
             <Typography variant="subtitle1" color="#E9E9E9" align="left">
               {label}
