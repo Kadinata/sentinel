@@ -1,9 +1,0 @@
-.card {
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  justify-content: center;
-  font-family: sans-serif;
-  padding: 1rem;
-  margin: 1rem;
-}
