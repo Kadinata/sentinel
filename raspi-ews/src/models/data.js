@@ -45,20 +45,24 @@ const Data = {
     "free_mem": 210440192,
     "percent": 0.4658101835062015
   },
-  "netstats": {
-    "rx": {
-      "packets": "309",
-      "bytes": "254611",
-      "error": "0",
-      "dropped": "0"
-    },
-    "tx": {
-      "packets": "267",
-      "bytes": "31781",
-      "error": "0",
-      "dropped": "0"
+  "netstats": [
+    {
+      "interface": "wlan0",
+      "ipaddr": "192.168.1.4",
+      "rx": {
+        "packets": "309",
+        "bytes": "254611",
+        "error": "0",
+        "dropped": "0"
+      },
+      "tx": {
+        "packets": "267",
+        "bytes": "31781",
+        "error": "0",
+        "dropped": "0"
+      }
     }
-  }
+  ]
 };
 
 export default Data;
