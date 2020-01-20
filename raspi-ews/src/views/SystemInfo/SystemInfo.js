@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faQuestionCircle } from '@fortawesome/free-regular-svg-icons';
 
 import StatsCard from '../../components/common/Card/StatsCard';
-import { CpuTemp, Uptime, Storage, DeviceInfo, Memory, NetworkUsage, MqttStatus } from './components';
+import { CpuTemp, Uptime, Storage, DeviceInfo, Memory, NetworkUsage, MqttStatus, CpuStatus } from './components';
 
 const useStyles = (theme) => ({
   root: {
@@ -46,7 +46,8 @@ class SystemInfo extends React.Component {
             </Grid>
             <Grid item lg={3} md={6} sm={6} xs={12} className={classes.gridItem}>
               <StatsCard
-                background={"#225bc3"}
+                // background={"#225bc3"}
+                background={"#e67e22"}
                 icon={
                   <FontAwesomeIcon
                     className="fa-2x"
@@ -56,21 +57,30 @@ class SystemInfo extends React.Component {
               />
             </Grid>
           </Grid>
+
           <Grid container item spacing={0} alignItems="stretch" justify="space-between">
-            <Grid item md sm={12} xs={12} className={classes.gridItem}>
-              <DeviceInfo />
+            <Grid container item spacing={0} alignItems="stretch" justify="space-between" lg={4} sm={12} xs={12}>
+              <Grid item lg={12} md={6} xs={12} className={classes.gridItem}>
+                <DeviceInfo />
+              </Grid>
+              <Grid item lg={12} md={6} xs={12} className={classes.gridItem}>
+                <CpuStatus />
+              </Grid>
             </Grid>
+
             <Grid item md sm={12} xs={12} className={classes.gridItem}>
               <Storage />
             </Grid>
-            <Grid container item spacing={0} alignItems="stretch" justify="space-between" md={4} sm={12} xs={12}>
-              <Grid item xs={12} className={classes.gridItem}>
+
+            <Grid container item spacing={0} alignItems="stretch" justify="space-between" lg={4} sm={12} xs={12}>
+              <Grid item lg={12} md={6} xs={12} className={classes.gridItem}>
                 <Memory />
               </Grid>
-              <Grid item xs={12} className={classes.gridItem}>
+              <Grid item lg={12} md={6} xs={12} className={classes.gridItem}>
                 <NetworkUsage />
               </Grid>
             </Grid>
+
           </Grid>
         </Grid>
       </div>

@@ -8,6 +8,8 @@ import {
 } from '@material-ui/core';
 
 import { DisplayCard } from '../../../components/common/Card';
+import { Table, TableBody, TableRow, TableCell } from '../../../components/common/Table';
+import Data from '../../../models/data';
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -21,34 +23,23 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const data = {
-  Hostname: 'raspberrypi (192.168.1.4)',
-  Kernel: 'Linux 4.19.58-v7+',
-  Processor: 'ARMv7 Processor rev 4 (v7l)',
-  Distribution: 'Raspbian GNU/Linux 10 (buster)',
-};
-
-const renderLine = (label, value, id, classes) => {
+const RowItem = ({ label, value, classes }) => {
   return (
-    <Grid container item id={id}>
-      <Grid item xs={4}>
-        <Typography align='left'>
-          {label}
-        </Typography>
-      </Grid>
-      <Grid item xs={8}>
-        <Typography align='left'>
-          {value}
-        </Typography>
-      </Grid>
-    </Grid>
+    <TableRow>
+      <TableCell>
+        <Typography align="left">{label}</Typography>
+      </TableCell>
+      <TableCell>
+        <Typography align="left">{value}</Typography>
+      </TableCell>
+    </TableRow>
   );
-};
+}
 
 const DeviceInfo = (props) => {
   const classes = useStyles();
 
-  const entries = Object.keys(data).map((key, index) => (renderLine(key, data[key], index, classes)));
+  const { cpu_info, os_info } = Data;
 
   return (
     <DisplayCard
@@ -59,7 +50,14 @@ const DeviceInfo = (props) => {
       }
     >
       <Grid container>
-        {entries}
+        <Table>
+          <TableBody>
+            <RowItem label="Hostname" value={`${os_info.hostname} (${os_info.host_ip})`} />
+            <RowItem label="Kernel" value={`${os_info.type} ${os_info.release}`} />
+            <RowItem label="Processor" value={cpu_info.processor} />
+            <RowItem label="Distribution" value={os_info.distribution} />
+          </TableBody>
+        </Table>
       </Grid>
     </DisplayCard>
   );
