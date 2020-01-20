@@ -21,6 +21,10 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+    padding: theme.spacing(2),
+    '&:last-child': {
+      paddingBottom: theme.spacing(2),
+    },
   },
   avatar: {
     backgroundColor: 'transparent',
@@ -34,7 +38,7 @@ const useStyles = makeStyles(theme => ({
     width: 40
   },
   iconContainer: {
-    background: 'rgba(0, 0, 64, 1.0)',
+    background: 'rgba(33, 33, 64, 0.7)',
     borderTopLeftRadius: 4,
     borderBottomLeftRadius: 4,
   },
@@ -76,7 +80,6 @@ const StatsCard = ({ label, value, ...props }) => {
           </Grid>
         </Grid>
       </CardContent>
-      <div />
     </Card>
   );
 };
