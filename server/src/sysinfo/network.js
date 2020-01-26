@@ -2,7 +2,16 @@
 //  
 //===========================================================================
 'use-strict';
+const os = require('os');
 const promise_exec = require('./promise_exec');
+
+const get_network_interfaces = () => {
+  const { lo, ...interfaces } = os.networkInterfaces();
+  return Object.keys(interfaces).map(interface => {
+    const [ipaddr] = interfaces[interface].map(item => item.address);
+    return { interface, ipaddr };
+  });
+}
 
 const get_rx_stats = (response) => {
   const packets = response.match(/RX\s+packets\s(?<packets>\d+)/i).groups;
@@ -20,13 +29,18 @@ const get_tx_stats = (response) => {
   return { ...packets, ...bytes, ...error, ...dropped };
 };
 
+const get_interface_stats = async ({ interface, ipaddr }) => {
+  const command = `ifconfig ${interface}`;
+  const response = await promise_exec(command);
+  const rx = get_rx_stats(response);
+  const tx = get_tx_stats(response);
+  return { interface, ipaddr, rx, tx };
+};
+
 module.exports = async () => {
-  const command = 'ifconfig wlan0';
+  const interfaces = get_network_interfaces();
   try {
-    const response = await promise_exec(command);
-    const rx = get_rx_stats(response);
-    const tx = get_tx_stats(response);
-    return { rx, tx };
+    return Promise.all(interfaces.map(get_interface_stats));
   } catch (err) {
     return Promise.reject(err);
   }
