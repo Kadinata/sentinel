@@ -8,6 +8,8 @@ import { faQuestionCircle } from '@fortawesome/free-regular-svg-icons';
 import StatsCard from '../../components/common/Card/StatsCard';
 import { CpuTemp, Uptime, Storage, DeviceInfo, Memory, NetworkUsage, MqttStatus, CpuStatus } from './components';
 
+import Data from '../../models/data';
+
 const useStyles = (theme) => ({
   root: {
     padding: theme.spacing(3),
@@ -22,6 +24,7 @@ class SystemInfo extends React.Component {
   render() {
 
     const { classes } = this.props;
+    const { os_info, cpu_info, hdd_info, mem_info, netstats } = Data;
 
     return (
       <div className={classes.root}>
@@ -36,10 +39,10 @@ class SystemInfo extends React.Component {
 
           <Grid container item spacing={0} alignItems="stretch" justify="space-between">
             <Grid item lg={3} md={6} sm={6} xs={12} className={classes.gridItem}>
-              <CpuTemp temperature={39.2} />
+              <CpuTemp temperature={cpu_info.cpu_temp} />
             </Grid>
             <Grid item lg={3} md={6} sm={6} xs={12} className={classes.gridItem}>
-              <Uptime uptime={180122 - (2 * 86400) - 7200} />
+              <Uptime uptime={os_info.uptime} />
             </Grid>
             <Grid item lg={3} md={6} sm={6} xs={12} className={classes.gridItem}>
               <MqttStatus />
@@ -61,23 +64,23 @@ class SystemInfo extends React.Component {
           <Grid container item spacing={0} alignItems="stretch" justify="space-between">
             <Grid container item spacing={0} alignItems="stretch" justify="space-between" lg={4} sm={12} xs={12}>
               <Grid item lg={12} md={6} xs={12} className={classes.gridItem}>
-                <DeviceInfo />
+                <DeviceInfo data={{ ...cpu_info, ...os_info }} />
               </Grid>
               <Grid item lg={12} md={6} xs={12} className={classes.gridItem}>
-                <CpuStatus />
+                <CpuStatus data={cpu_info} />
               </Grid>
             </Grid>
 
-            <Grid item md sm={12} xs={12} className={classes.gridItem}>
-              <Storage />
+            <Grid item lg md={6} sm={12} xs={12} className={classes.gridItem}>
+              <Storage data={hdd_info} />
             </Grid>
 
-            <Grid container item spacing={0} alignItems="stretch" justify="space-between" lg={4} sm={12} xs={12}>
-              <Grid item lg={12} md={6} xs={12} className={classes.gridItem}>
-                <Memory />
+            <Grid container item spacing={0} alignItems="stretch" justify="space-between" lg md={6} sm={12} xs={12}>
+              <Grid item lg={12} md={12} xs={12} className={classes.gridItem}>
+                <Memory data={mem_info} />
               </Grid>
-              <Grid item lg={12} md={6} xs={12} className={classes.gridItem}>
-                <NetworkUsage />
+              <Grid item lg={12} md={12} xs={12} className={classes.gridItem}>
+                <NetworkUsage data={netstats} />
               </Grid>
             </Grid>
 

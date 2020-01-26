@@ -9,7 +9,6 @@ import {
 
 import { DisplayCard } from '../../../components/common/Card';
 import { Table, TableBody, TableRow, TableCell } from '../../../components/common/Table';
-import Data from '../../../models/data';
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -36,10 +35,9 @@ const RowItem = ({ label, value, classes }) => {
   );
 }
 
-const DeviceInfo = (props) => {
+const DeviceInfo = ({ data, ...props }) => {
   const classes = useStyles();
-
-  const { cpu_info, os_info } = Data;
+  const { hostname, host_ip, type, release, processor, distribution } = data;
 
   return (
     <DisplayCard
@@ -52,10 +50,10 @@ const DeviceInfo = (props) => {
       <Grid container>
         <Table>
           <TableBody>
-            <RowItem label="Hostname" value={`${os_info.hostname} (${os_info.host_ip})`} />
-            <RowItem label="Kernel" value={`${os_info.type} ${os_info.release}`} />
-            <RowItem label="Processor" value={cpu_info.processor} />
-            <RowItem label="Distribution" value={os_info.distribution} />
+            <RowItem label="Hostname" value={`${hostname} (${host_ip})`} />
+            <RowItem label="Kernel" value={`${type} ${release}`} />
+            <RowItem label="Processor" value={processor} />
+            <RowItem label="Distribution" value={distribution} />
           </TableBody>
         </Table>
       </Grid>

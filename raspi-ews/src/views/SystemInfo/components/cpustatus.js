@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { makeStyles } from '@material-ui/core';
+
 import {
   Grid,
   Typography,
@@ -9,20 +11,36 @@ import { DisplayCard } from '../../../components/common/Card';
 import { PercentCircle } from '../../../components/common/ProgressCircle';
 import { TableCell, Table, TableBody, TableRow } from '../../../components/common/Table';
 
+const useStyles = makeStyles((theme) => ({
+  infoBox: {
+    paddingLeft: theme.spacing(2),
+  },
+  percentCircle: {
+    display: 'flex',
+    paddingRight: theme.spacing(2),
+    paddingLeft: theme.spacing(2),
+    minWidth: '56px',
+  },
+}));
+
 const RowItem = ({ label, value, classes }) => {
   return (
     <TableRow>
       <TableCell>
         <Typography align='left'>{label}</Typography>
       </TableCell>
-      <TableCell>
-        <Typography align='left'>{value}</Typography>
+      <TableCell align="right">
+        <Typography>{value}</Typography>
       </TableCell>
     </TableRow>
   );
 };
 
-const CpuStatus = (props) => {
+const CpuStatus = ({ data, ...props }) => {
+
+  const classes = useStyles();
+  const { load_1, load_5, load_15 } = data;
+
   return (
     <DisplayCard
       title={
@@ -32,15 +50,18 @@ const CpuStatus = (props) => {
       }
     >
       <Grid container alignItems="center">
-        <Grid container item xs={3} alignItems="center">
+        <Grid container item xs={3}
+          alignItems="center"
+          className={[classes.percentCircle]}>
           <PercentCircle value={16.7} />
         </Grid>
-        <Grid container item xs={9}>
+        <Grid container item xs={9}
+          className={[classes.infoBox]}>
           <Table size="small">
             <TableBody>
-              <RowItem label={"Load 1m"} value={0.20} />
-              <RowItem label={"Load 5m"} value={0.14} />
-              <RowItem label={"Load 15m"} value={0.06} />
+              <RowItem label={"Load 1m"} value={(load_1).toFixed(2)} />
+              <RowItem label={"Load 5m"} value={(load_5).toFixed(2)} />
+              <RowItem label={"Load 15m"} value={(load_15).toFixed(2)} />
             </TableBody>
           </Table>
         </Grid>

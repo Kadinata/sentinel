@@ -10,8 +10,6 @@ import { DisplayCard } from '../../../components/common/Card';
 import { Table, TableRow, TableBody, TableCell } from '../../../components/common/Table';
 import { formatBytes } from '../../../utils';
 
-import Data from '../../../models/data';
-
 const useStyles = makeStyles((theme) => ({
 
 }));
@@ -26,15 +24,14 @@ const RowItem = ({ label, netstats }) => {
       <TableCell>
         <Typography>{label}</Typography>
       </TableCell>
-      <TableCell>
-        <Typography>
-          {`${volume.value.toFixed(2)} ${volume.unit}`}
-        </Typography>
+      <TableCell align="right">
+        <Typography display="inline">{volume.value.toFixed(2)}</Typography>
+        <Typography display="inline">{` ${volume.unit}`}</Typography>
       </TableCell>
       <TableCell>
-        <Typography>{"Err/Drop"}</Typography>
+        <Typography display="inline">{"Err/Drop"}</Typography>
       </TableCell>
-      <TableCell>
+      <TableCell align="right">
         <Typography>
           {`${error}/${dropped}`}
         </Typography>
@@ -60,11 +57,10 @@ const NetworkDisplay = ({ net_if, classes }) => {
   );
 };
 
-const NetworkUsage = (props) => {
+const NetworkUsage = ({ data, ...props }) => {
   const classes = useStyles();
 
-  const { netstats } = Data;
-  const network_interfaces = netstats.map((net_if, key) => (<NetworkDisplay net_if={net_if} key={key} />));
+  const network_interfaces = data.map((net_if, key) => (<NetworkDisplay net_if={net_if} key={key} />));
 
   return (
     <DisplayCard

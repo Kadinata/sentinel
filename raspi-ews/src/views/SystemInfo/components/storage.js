@@ -2,7 +2,6 @@ import React from 'react';
 
 import {
   Grid,
-  Divider,
   Typography,
 } from '@material-ui/core';
 
@@ -12,7 +11,6 @@ import { DisplayCard } from '../../../components/common/Card';
 import { PercentCircle } from '../../../components/common/ProgressCircle';
 import { Table, TableBody, TableCell, TableRow } from '../../../components/common/Table';
 import { formatBytes } from '../../../utils';
-import Data from '../../../models/data';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -36,11 +34,9 @@ const RowItem = ({ label, value, unit }) => {
       <TableCell>
         <Typography>{label}</Typography>
       </TableCell>
-      <TableCell>
-        <Typography>{value}</Typography>
-      </TableCell>
-      <TableCell>
-        <Typography>{unit}</Typography>
+      <TableCell align="right">
+        <Typography display="inline">{value}</Typography>
+        <Typography display="inline">{`  ${unit}`}</Typography>
       </TableCell>
     </TableRow>
   );
@@ -72,9 +68,9 @@ const StorageDisplay = ({ partition, classes, key }) => {
                 </Typography>
               </TableCell>
             </TableRow>
-            <RowItem label={"Available"} value={free.value} unit={free.unit} />
-            <RowItem label={"Used"} value={used.value} unit={used.unit} />
-            <RowItem label={"Total"} value={total.value} unit={total.unit} />
+            <RowItem label={"Available"} value={free.value.toFixed(2)} unit={free.unit} />
+            <RowItem label={"Used"} value={used.value.toFixed(2)} unit={used.unit} />
+            <RowItem label={"Total"} value={total.value.toFixed(2)} unit={total.unit} />
           </TableBody>
         </Table>
       </Grid>
@@ -83,11 +79,10 @@ const StorageDisplay = ({ partition, classes, key }) => {
 
 }
 
-const Storage = (props) => {
+const Storage = ({ data, ...props }) => {
 
   const classes = useStyles();
-  const { hdd_info } = Data;
-  const storages = hdd_info.map((partition, key) => StorageDisplay({ partition, classes, key }))
+  const storages = data.map((partition, key) => StorageDisplay({ partition, classes, key }))
 
   return (
     <DisplayCard
@@ -102,6 +97,10 @@ const Storage = (props) => {
       </Grid>
     </DisplayCard>
   );
+};
+
+Storage.defaultProps = {
+  data: [],
 };
 
 export default Storage;

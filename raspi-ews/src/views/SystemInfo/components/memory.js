@@ -10,7 +10,6 @@ import { DisplayCard } from '../../../components/common/Card';
 import { PercentCircle } from '../../../components/common/ProgressCircle';
 import { Table, TableBody, TableRow, TableCell } from '../../../components/common/Table';
 import { formatBytes } from '../../../utils';
-import Data from '../../../models/data';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -34,22 +33,21 @@ const RowItem = ({ label, value, unit }) => {
       <TableCell>
         <Typography>{label}</Typography>
       </TableCell>
-      <TableCell>
-        <Typography>{value}</Typography>
-      </TableCell>
-      <TableCell>
-        <Typography>{unit}</Typography>
+      <TableCell align="right">
+        <Typography display="inline">{value}</Typography>
+        <Typography display="inline">{`  ${unit}`}</Typography>
       </TableCell>
     </TableRow>
   );
 };
 
-const Memory = (props) => {
+const Memory = ({ data, ...props }) => {
   const classes = useStyles();
-  const { mem_info } = Data;
-  const total_mem = formatBytes(mem_info.total_mem);
-  const free_mem = formatBytes(mem_info.free_mem);
-  const used_mem = formatBytes(mem_info.total_mem - mem_info.free_mem);
+  const { total_mem, free_mem, percent } = data;
+
+  const total = formatBytes(total_mem);
+  const free = formatBytes(free_mem);
+  const used = formatBytes(total_mem - free_mem);
 
   return (
     <DisplayCard
@@ -63,22 +61,26 @@ const Memory = (props) => {
         <Grid container item xs={3}
           alignItems="center"
           className={[classes.progressBar]}>
-          <PercentCircle value={mem_info.percent * 100} />
+          <PercentCircle value={percent * 100} />
         </Grid>
         <Grid container item xs={9}
           direction="column"
           className={[classes.container, classes.infoBox]}>
           <Table size="small">
             <TableBody>
-              <RowItem label={"Available"} value={free_mem.value} unit={free_mem.unit} />
-              <RowItem label={"In Use"} value={used_mem.value} unit={used_mem.unit} />
-              <RowItem label={"Total"} value={total_mem.value} unit={total_mem.unit} />
+              <RowItem label={"Available"} value={free.value.toFixed(2)} unit={free.unit} />
+              <RowItem label={"In Use"} value={used.value.toFixed(2)} unit={used.unit} />
+              <RowItem label={"Total"} value={total.value.toFixed(2)} unit={total.unit} />
             </TableBody>
           </Table>
         </Grid>
       </Grid>
     </DisplayCard>
   );
+};
+
+Memory.defaultProps = {
+  data: {},
 };
 
 export default Memory;
