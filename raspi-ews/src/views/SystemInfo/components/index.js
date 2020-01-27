@@ -6,6 +6,7 @@ import DeviceInfo from './deviceinfo';
 import Memory from './memory';
 import NetworkUsage from './networkusage';
 import MqttStatus from './mqttstatus';
+import SystemTime from './systemtime';
 
 export {
   CpuTemp,
@@ -16,4 +17,5 @@ export {
   DeviceInfo,
   NetworkUsage,
   MqttStatus,
+  SystemTime,
 };
