@@ -6,7 +6,7 @@ const service = require('./service');
 const baseHandler = (datasource) => async (req, res, next) => {
   try {
     const data = await datasource();
-    res.json(data);
+    res.status(200).json(data);
   } catch (err) {
     console.log(err);
     res.send('Server Error!');

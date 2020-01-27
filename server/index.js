@@ -1,5 +1,5 @@
 const express = require('express');
-const sysinfoRoutes = require('./src/sysinfo');
+const apiRoutes = require('./src/api');
 const mqttHandler = require('./src/mqtt_handler');
 const path = require('path');
 
@@ -13,7 +13,7 @@ app.set('json spaces', 2);
 
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/api/v1/sysinfo', sysinfoRoutes);
+app.use('/api/v1/', apiRoutes);
 
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'public/index.html'));

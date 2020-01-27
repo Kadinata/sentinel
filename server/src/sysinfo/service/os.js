@@ -37,12 +37,11 @@ module.exports = async () => {
     const host_ip = await get_host_ip();
     const distribution = await get_distro();
     const hostname = os.hostname();
-    const uptime = os.uptime();
     const type = os.type();
     const platform = os.platform();
     const arch = os.arch();
     const release = os.release();
-    return { hostname, host_ip, uptime, type, platform, arch, release, distribution };
+    return { hostname, host_ip, type, platform, arch, release, distribution };
   } catch (err) {
     return Promise.reject(err);
   }
