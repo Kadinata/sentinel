@@ -5,5 +5,6 @@ export default withStyles((theme) => ({
   root: {
     color: 'inherit',
     border: 'none',
+    padding: theme.spacing(2) / theme.spacing(1),
   },
 }))(TableCell);
