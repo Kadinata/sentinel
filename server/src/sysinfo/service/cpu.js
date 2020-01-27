@@ -3,7 +3,7 @@
 //===========================================================================
 'use-strict';
 const os = require('os');
-const promise_exec = require('./promise_exec');
+const promise_exec = require('../../utils/promise_exec');
 
 // Caches
 let cached_processor = null;

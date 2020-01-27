@@ -2,7 +2,7 @@
 //  
 //===========================================================================
 'use-strict';
-const promise_exec = require('./promise_exec');
+const promise_exec = require('../../utils/promise_exec');
 
 const process_drive_info = (drv_info) => {
   let [fs, type, total, used, avail, percent, mount] = drv_info.split(/\s+/g);
