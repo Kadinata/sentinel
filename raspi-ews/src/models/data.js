@@ -1,23 +1,22 @@
 const Data = {
-  "message": "Hello from Pi 3A! 😃",
   "os_info": {
     "hostname": "raspberrypi",
-    "host_ip": "192.168.1.4",
-    "uptime": 209,
+    "host_ip": "192.168.1.8",
     "type": "Linux",
     "platform": "linux",
+    "uptime": 15094,
     "arch": "arm",
     "release": "4.19.58-v7+",
     "distribution": "Raspbian GNU/Linux 10 (buster)"
   },
   "cpu_info": {
-    "cpu_temp": 39.2,
-    "cpu_freq": 1400,
-    "core_voltage": 1.35,
+    "cpu_temp": 44.5,
+    "cpu_freq": 600,
+    "core_voltage": 1.2,
     "core_num": 4,
-    "load_1": 0.201171875,
-    "load_5": 0.142578125,
-    "load_15": 0.0576171875,
+    "load_1": 0,
+    "load_5": 0,
+    "load_15": 0,
     "processor": "ARMv7 Processor rev 4 (v7l)"
   },
   "hdd_info": [
@@ -25,8 +24,8 @@ const Data = {
       "fs": "/dev/root",
       "type": "ext4",
       "total": 14674,
-      "used": 1374,
-      "avail": 12672,
+      "used": 1382,
+      "avail": 12664,
       "percent": 10,
       "mount": "/"
     },
@@ -42,27 +41,29 @@ const Data = {
   ],
   "mem_info": {
     "total_mem": 451772416,
-    "free_mem": 210440192,
-    "percent": 0.4658101835062015
+    "free_mem": 155406336,
+    "percent": 0.3439925291941684
   },
   "netstats": [
     {
       "interface": "wlan0",
-      "ipaddr": "192.168.1.4",
+      "ipaddr": "192.168.1.8",
       "rx": {
-        "packets": "309",
-        "bytes": "254611",
+        "packets": "5127",
+        "bytes": "866973",
         "error": "0",
         "dropped": "0"
       },
       "tx": {
-        "packets": "267",
-        "bytes": "31781",
+        "packets": "3939",
+        "bytes": "1007704",
         "error": "0",
         "dropped": "0"
       }
     }
-  ]
+  ],
+  "uptime": 15094,
+  "localtime": "2020-01-27T12:34:56.680"
 };
 
 export default Data;

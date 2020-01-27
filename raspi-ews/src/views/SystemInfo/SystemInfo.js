@@ -2,13 +2,17 @@ import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { Typography, Grid } from '@material-ui/core';
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faQuestionCircle } from '@fortawesome/free-regular-svg-icons';
-
-import StatsCard from '../../components/common/Card/StatsCard';
-import { CpuTemp, Uptime, Storage, DeviceInfo, Memory, NetworkUsage, MqttStatus, CpuStatus } from './components';
-
-import Data from '../../models/data';
+import {
+  CpuTemp,
+  Uptime,
+  Storage,
+  DeviceInfo,
+  Memory,
+  NetworkUsage,
+  MqttStatus,
+  CpuStatus,
+  SystemTime
+} from './components';
 
 const useStyles = (theme) => ({
   root: {
@@ -23,8 +27,13 @@ class SystemInfo extends React.Component {
 
   render() {
 
-    const { classes } = this.props;
-    const { os_info, cpu_info, hdd_info, mem_info, netstats } = Data;
+    const { data, classes } = this.props;
+
+    if (!data) {
+      return (<div />);
+    }
+
+    const { os_info, cpu_info, hdd_info, mem_info, netstats, uptime, localtime } = data;
 
     return (
       <div className={classes.root}>
@@ -42,22 +51,13 @@ class SystemInfo extends React.Component {
               <CpuTemp temperature={cpu_info.cpu_temp} />
             </Grid>
             <Grid item lg={3} md={6} sm={6} xs={12} className={classes.gridItem}>
-              <Uptime uptime={os_info.uptime} />
+              <Uptime uptime={uptime} />
             </Grid>
             <Grid item lg={3} md={6} sm={6} xs={12} className={classes.gridItem}>
               <MqttStatus />
             </Grid>
             <Grid item lg={3} md={6} sm={6} xs={12} className={classes.gridItem}>
-              <StatsCard
-                // background={"#225bc3"}
-                background={"#e67e22"}
-                icon={
-                  <FontAwesomeIcon
-                    className="fa-2x"
-                    icon={faQuestionCircle}
-                  />
-                }
-              />
+              <SystemTime time={localtime} />
             </Grid>
           </Grid>
 
