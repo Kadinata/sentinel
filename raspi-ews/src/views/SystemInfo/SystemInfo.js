@@ -17,6 +17,7 @@ import {
 const useStyles = (theme) => ({
   root: {
     padding: theme.spacing(3),
+    paddingTop: theme.spacing(2),
   },
   gridItem: {
     padding: theme.spacing(2),
