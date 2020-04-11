@@ -11,8 +11,6 @@ import {
 
 const useStyles = makeStyles(theme => ({
   card: {
-    background: 'rgba(0,0,26, 0.35)',
-    color: '#E9E9E9',
     display: 'flex',
     height: '100%',
     alignItems: 'stretch',
@@ -28,17 +26,16 @@ const useStyles = makeStyles(theme => ({
   },
   avatar: {
     backgroundColor: 'transparent',
-    color: '#E9E9E9',
+    color: theme.palette.text.primary,
     height: 56,
     width: 56
   },
   icon: {
-    color: '#E9E9E9',
     height: 40,
     width: 40
   },
   iconContainer: {
-    background: 'rgba(33, 33, 64, 0.7)',
+    background: theme.palette.primary.main,
     borderTopLeftRadius: 4,
     borderBottomLeftRadius: 4,
   },
@@ -71,7 +68,7 @@ const StatsCard = ({ label, value, ...props }) => {
       <CardContent className={classes.content}>
         <Grid container spacing={2} justify="flex-start" alignItems="center">
           <Grid item>
-            <Typography variant="subtitle1" color="#E9E9E9" align="left">
+            <Typography variant="subtitle1" align="left">
               {label}
             </Typography>
             <Typography component="h5" variant="h5" align="left">

@@ -8,10 +8,9 @@ import {
 
 const useStyles = makeStyles(theme => ({
   itemIcon: {
-    color: '#E9E9E9',
+    color: theme.palette.text.primary,
   },
   itemText: {
-    color: '#E9E9E9',
   },
 }));
 

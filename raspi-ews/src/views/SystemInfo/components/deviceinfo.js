@@ -15,8 +15,6 @@ const useStyles = makeStyles((theme) => ({
     height: '100%',
   },
   avatar: {
-    backgroundColor: 'transparent',
-    color: 'black',
     height: 40,
     width: 40
   },

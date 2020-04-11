@@ -6,8 +6,8 @@ import { AppBar, Toolbar } from '@material-ui/core';
 const useStyles = makeStyles((theme) => ({
   spacer: theme.mixins.spacer,
   appBar: {
-    color: '#E9E9E9',
-    backgroundColor: 'rgba(33, 33, 64, 0.7)',
+    color: theme.palette.text.primary,
+    backgroundColor: theme.palette.primary.main,
   },
 }));
 

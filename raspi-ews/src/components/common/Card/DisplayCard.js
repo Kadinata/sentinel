@@ -10,14 +10,12 @@ import {
 
 const useStyles = makeStyles(theme => ({
   card: {
-    background: 'rgba(0,0,26, 0.35)',
-    color: '#E9E9E9',
     height: '100%',
     display: 'flex',
     flexDirection: 'column',
   },
   header: {
-    background: 'rgba(33, 33, 64, 0.7)',
+    background: theme.palette.primary.main,
     borderTopLeftRadius: 4,
     borderTopRightRadius: 4,
   },

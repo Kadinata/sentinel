@@ -1,1 +1,2 @@
-export * from './Themes';
+import Theme from './Theme';
+export { Theme };
