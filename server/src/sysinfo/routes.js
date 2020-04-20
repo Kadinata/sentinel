@@ -14,5 +14,6 @@ router.route('/storage').get(handler.storage);
 router.route('/time').get(handler.systime);
 router.route('/uptime').get(handler.uptime);
 router.route('/localtime').get(handler.localtime);
+router.route('/mqtt-broker').get(handler.mqttBroker);
 
 module.exports = router;

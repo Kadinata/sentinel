@@ -21,6 +21,7 @@ const storage = baseHandler(service.hdd);
 const systime = baseHandler(service.systime.getAll);
 const uptime = baseHandler(service.systime.getUptime);
 const localtime = baseHandler(service.systime.getLocaltime);
+const mqttBroker = baseHandler(service.mqttBroker);
 const fetchAll = baseHandler(service.fetchAll);
 
 module.exports = {
@@ -32,6 +33,7 @@ module.exports = {
   systime,
   uptime,
   localtime,
+  mqttBroker,
   fetchAll
 };
 
