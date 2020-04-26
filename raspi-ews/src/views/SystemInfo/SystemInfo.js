@@ -34,7 +34,7 @@ class SystemInfo extends React.Component {
       return (<div />);
     }
 
-    const { os_info, cpu_info, hdd_info, mem_info, netstats, uptime, localtime } = data;
+    const { os_info, cpu_info, hdd_info, mem_info, netstats, uptime, localtime, mqtt_broker } = data;
 
     return (
       <div className={classes.root}>
@@ -55,7 +55,7 @@ class SystemInfo extends React.Component {
               <Uptime uptime={uptime} />
             </Grid>
             <Grid item lg={3} md={6} sm={6} xs={12} className={classes.gridItem}>
-              <MqttStatus />
+              <MqttStatus brokerStatus={mqtt_broker.online}/>
             </Grid>
             <Grid item lg={3} md={6} sm={6} xs={12} className={classes.gridItem}>
               <SystemTime time={localtime} />

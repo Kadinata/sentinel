@@ -62,6 +62,9 @@ const Data = {
       }
     }
   ],
+  "mqtt_broker": {
+    "online": true
+  },
   "uptime": 15094,
   "localtime": "2020-01-27T12:34:56.680"
 };
