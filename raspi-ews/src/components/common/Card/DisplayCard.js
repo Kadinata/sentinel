@@ -28,19 +28,23 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const DisplayCard = ({ title, children, ...props }) => {
+const DisplayCard = ({ title, children, noHeader, ...props }) => {
 
   const classes = useStyles();
 
   return (
     <Card className={classes.card}>
-      <CardHeader title={title} className={classes.header} />
-      <Divider />
+      {!noHeader && <CardHeader title={title} className={classes.header} />}
+      {!noHeader && <Divider />}
       <CardContent className={classes.content}>
         {children}
       </CardContent>
     </Card>
   );
+};
+
+DisplayCard.defaultProps = {
+  noHeader: false,
 };
 
 export default DisplayCard;
