@@ -7,14 +7,14 @@ import ResponsiveDrawer from './ResponsiveDrawer';
 
 const useStyles = makeStyles((theme) => ({
   drawer: {
-    width: 240,
+    ...theme.mixins.sidebar,
     flexShrink: 0,
   },
   drawerPaper: {
     [theme.breakpoints.down('sm')]: {
       background: theme.palette.background.default,
     },
-    width: 240,
+    width: theme.mixins.sidebar.width,
   },
   toolbar: theme.mixins.toolbar,
 }));

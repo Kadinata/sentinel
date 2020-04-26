@@ -15,6 +15,11 @@ const Theme = createMuiTheme({
       primary: '#E9E9E9',
     },
   },
+  mixins: {
+    sidebar: {
+      width: 240,
+    },
+  },
 });
 
 export default responsiveFontSizes(Theme);
