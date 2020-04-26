@@ -3,30 +3,37 @@ import { Drawer, List } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core';
 
 import SidebarLink from './sidebarlink';
+import ResponsiveDrawer from './ResponsiveDrawer';
 
 const useStyles = makeStyles((theme) => ({
   drawer: {
     width: 240,
+    flexShrink: 0,
   },
   drawerPaper: {
+    [theme.breakpoints.down('sm')]: {
+      background: theme.palette.background.default,
+    },
     width: 240,
   },
   toolbar: theme.mixins.toolbar,
 }));
 
-const Sidebar = ({ routes, ...props }) => {
+const Sidebar = ({ routes, open, onClose, ...props }) => {
 
   const classes = useStyles();
 
   return (
-    <Drawer
+    <ResponsiveDrawer
       className={[classes.drawer]}
       classes={{
         paper: classes.drawerPaper,
       }}
+      anchor="left"
+      open={!!open}
+      onClose={onClose}
       variant="permanent"
     >
-      <div className={classes.toolbar} />
       <List component="nav">
         {routes.map(({ title, path, icon }, key) => {
           return (
@@ -35,11 +42,12 @@ const Sidebar = ({ routes, ...props }) => {
               icon={icon}
               to={path}
               key={key}
+              onClick={onClose}
             />
           );
         })}
       </List>
-    </Drawer>
+    </ResponsiveDrawer>
   );
 };
 

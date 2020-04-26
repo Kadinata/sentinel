@@ -14,12 +14,12 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const SidebarLink = ({ icon, title, to, ...props }) => {
+const SidebarLink = ({ icon, title, to, onClick, ...props }) => {
 
   const classes = useStyles();
 
   return (
-    <ListItem button component="a" href={to}>
+    <ListItem button component="a" href={to} onClick={onClick}>
       <ListItemIcon className={classes.itemIcon}>
         {icon}
       </ListItemIcon>
