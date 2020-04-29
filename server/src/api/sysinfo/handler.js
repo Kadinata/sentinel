@@ -1,7 +1,7 @@
 //===========================================================================
 //  
 //===========================================================================
-const service = require('./service');
+const service = require('../../services/sysinfo');
 
 const baseHandler = (datasource) => async (req, res, next) => {
   try {
