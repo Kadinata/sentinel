@@ -2,6 +2,7 @@
 //  
 //===========================================================================
 const mqtt = require('mqtt');
+const { once } = require('../../utils/event_utils');
 
 const LOOPBACK_TOPIC = "test/loopback";
 const LOOPBACK_MESSAGE = "loopback status";
@@ -22,18 +23,12 @@ const init_client = async (host = MQTT_HOST) => {
   });
 };
 
-const once = async (emitter, name) => {
-  return new Promise((resolve, reject) => {
-    emitter.on(name, (...value) => resolve({ name, value }));
-  });
-};
-
 const brokerOnline = async () => {
   try {
     await init_client();
     if (!mqtt_client.connected) return false;
     mqtt_client.publish(LOOPBACK_TOPIC, LOOPBACK_MESSAGE);
-    const {value: [topic, message]} = await once(mqtt_client, 'message');
+    const { value: [topic, message] } = await once(mqtt_client, 'message');
     return (topic == LOOPBACK_TOPIC) && (message.toString() == LOOPBACK_MESSAGE);
   } catch (err) {
     return Promise.reject(err);
