@@ -1,2 +1,3 @@
 import formatBytes from './formatBytes';
-export { formatBytes };
+import fetchData from './fetchData';
+export { formatBytes, fetchData };
