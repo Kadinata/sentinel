@@ -39,6 +39,9 @@ const useStyles = makeStyles(theme => ({
     borderTopLeftRadius: 4,
     borderBottomLeftRadius: 4,
   },
+  w100: {
+    flex: 1,
+  },
 }));
 
 const renderIcon = ({ icon, background }, classes) => {
@@ -65,13 +68,13 @@ const StatsCard = ({ label, value, ...props }) => {
     <Card className={classes.card}>
       {renderIcon(props, classes)}
 
-      <CardContent className={classes.content}>
+      <CardContent className={[classes.content, classes.w100]}>
         <Grid container spacing={2} justify="flex-start" alignItems="center">
-          <Grid item>
-            <Typography variant="subtitle1" align="left">
+          <Grid item className={classes.w100}>
+            <Typography variant="subtitle1" align="left" noWrap>
               {label}
             </Typography>
-            <Typography component="h5" variant="h5" align="left">
+            <Typography component="h5" variant="h5" align="left" noWrap>
               {value}
             </Typography>
           </Grid>
