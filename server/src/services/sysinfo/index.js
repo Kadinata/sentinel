@@ -18,7 +18,7 @@ const fetchAll = async () => {
     const mem_info = memory();
     const localtime = systime.getLocaltime();
     const uptime = systime.getUptime();
-    const mqtt_broker = await mqttBroker();
+    const mqtt_broker = await mqttBroker.brokerStatus();
     return { os_info, cpu_info, hdd_info, mem_info, netstats, uptime, localtime, mqtt_broker };
   } catch (err) {
     return Promise.reject(err);
