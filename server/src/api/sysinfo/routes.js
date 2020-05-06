@@ -3,17 +3,25 @@
 //===========================================================================
 const express = require('express');
 const handler = require('./handler');
+const streamHandler = require('./stream');
 const router = express.Router();
 
-router.route('/').get(handler.fetchAll);
-router.route('/os').get(handler.os);
-router.route('/cpu').get(handler.cpu);
-router.route('/memory').get(handler.memory);
-router.route('/netstat').get(handler.netstat);
-router.route('/storage').get(handler.storage);
-router.route('/time').get(handler.systime);
-router.route('/uptime').get(handler.uptime);
-router.route('/localtime').get(handler.localtime);
-router.route('/mqtt-broker').get(handler.mqttBroker);
+const get_handlers = [
+  ['/', handler.fetchAll],
+  ['/os', handler.os],
+  ['/cpu', handler.cpu],
+  ['/memory', handler.memory],
+  ['/netstat', handler.netstat],
+  ['/storage', handler.storage],
+  ['/time', handler.systime],
+  ['/uptime', handler.uptime],
+  ['/localtime', handler.localtime],
+  ['/mqtt-broker', handler.mqttBroker],
+  ['/stream', streamHandler],
+];
+
+get_handlers.forEach((path, req_handler) => {
+  router.route(path).get((req, res, next) => req_handler(req, res, next));
+});
 
 module.exports = router;
