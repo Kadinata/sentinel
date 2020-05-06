@@ -74,7 +74,8 @@ class SSEHandler extends EventEmitter {
    */
   send(data) {
     // console.log(`SSE: Sending data`);
-    Object.values(this.clients).forEach(res => res.write(JSON.stringify(data)));
+    const payload = `data: ${JSON.stringify(data)}\n\n`;
+    Object.values(this.clients).forEach(res => res.write(payload));
   }
 
   /** @private Emits the current count of active listeners */

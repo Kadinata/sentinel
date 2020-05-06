@@ -38,6 +38,7 @@ class DataSampler extends EventEmitter {
     if (this.interval == null) return;
     console.log('Sampler: stopped');
     clearInterval(this.interval);
+    this.interval = null;
     this.emit('end');
   }
 
@@ -47,7 +48,7 @@ class DataSampler extends EventEmitter {
       try {
         const data = await this.dataSource();
         this.emit('data', data);
-        console.log('Sampler: data emitted');
+        // console.log('Sampler: data emitted');
       } catch (err) {
         this.emit('error', err);
       }
