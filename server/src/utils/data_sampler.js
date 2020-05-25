@@ -25,21 +25,29 @@ class DataSampler extends EventEmitter {
 
   /**
    * Starts the data sampler
-   * @param {number} period - Period of the sampling interval in milliseconds
+   * @param {number} period - Sampling interval period in milliseconds
    */
   start(period) {
-    if (this.interval != null) return;
+    if (this.isRunning()) return;
     console.log(`Sampler: started @${period} ms`)
     this.interval = setInterval(() => this._sample_data(), period);
   }
 
   /** Stops the data sampler */
   stop() {
-    if (this.interval == null) return;
+    if (!this.isRunning()) return;
     console.log('Sampler: stopped');
     clearInterval(this.interval);
     this.interval = null;
     this.emit('end');
+  }
+
+  /**
+   * Returns true if the sampler has been started and is running.
+   * @returns {boolean} - true if the sampler is running, false otherwise.
+   */
+  isRunning() {
+    return (this.interval != null);
   }
 
   /** @private Internal function to be used as setInterval handler */
