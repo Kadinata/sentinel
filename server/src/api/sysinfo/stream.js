@@ -24,6 +24,10 @@ service.mqttBroker.statusListener.on('statusChange', (mqtt_broker) => {
   streamHandler.send({ mqtt_broker });
 });
 
+service.cpuUsage.on('data', (cpu_usage) => {
+  streamHandler.send({ cpu_usage });
+});
+
 const startSamplers = () => {
   timingSampler.start(1000);
   resourceSampler.start(10000);
