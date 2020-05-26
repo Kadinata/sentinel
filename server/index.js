@@ -1,15 +1,21 @@
 const express = require('express');
-const apiRoutes = require('./src/api');
-const mqttHandler = require('./src/mqtt_handler');
+const bodyParser = require('body-parser');
+const cors = require('cors');
 const path = require('path');
+
+const apiRoutes = require('./src/api');
+const MqttService = require('./src/mqtt_service');
+const services = require('./src/services');
 
 const app = express();
 const port = process.env.port || 3000;
 
-const mqttClient = new mqttHandler();
-mqttClient.connect();
+const mqttService = new MqttService.mqttService();
+mqttService.start();
 
 app.set('json spaces', 2);
+
+app.use(cors());
 
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -19,6 +25,8 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'public/index.html'));
 });
 
-app.listen(port, () => {
-  console.log(`Server is listening on port ${port}`);
+services.init().then(() => {
+  app.listen(port, () => {
+    console.log(`Server is listening on port ${port}`);
+  });
 });
