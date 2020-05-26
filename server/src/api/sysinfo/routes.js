@@ -20,8 +20,9 @@ const get_handlers = [
   ['/stream', streamHandler],
 ];
 
-get_handlers.forEach((path, req_handler) => {
+get_handlers.forEach(([path, req_handler]) => {
   router.route(path).get((req, res, next) => req_handler(req, res, next));
 });
 
 module.exports = router;
+//===========================================================================
