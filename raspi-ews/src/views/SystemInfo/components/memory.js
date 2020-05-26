@@ -31,6 +31,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const cardTitle = (
+  <Typography component="h5" variant="h5" align="left">
+    Memory
+  </Typography>
+);
+
 const RowItem = ({ label, value, unit }) => {
   return (
     <TableRow>
@@ -54,13 +60,7 @@ const Memory = ({ data, ...props }) => {
   const used = formatBytes(total_mem - free_mem);
 
   return (
-    <DisplayCard
-      title={
-        <Typography component="h5" variant="h5" align="left">
-          Memory
-        </Typography>
-      }
-    >
+    <DisplayCard title={cardTitle} >
       <Grid container alignItems="center">
         <Grid container item xs={3}
           alignItems="center"

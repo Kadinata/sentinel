@@ -33,18 +33,19 @@ const RowItem = ({ label, value, classes }) => {
   );
 }
 
+const cardTitle = (
+  <Typography component="h5" variant="h5" align="left">
+    Device Info
+  </Typography>
+);
+
+
 const DeviceInfo = ({ data, ...props }) => {
   const classes = useStyles();
   const { hostname, host_ip, type, release, processor, distribution } = data;
 
   return (
-    <DisplayCard
-      title={
-        <Typography component="h5" variant="h5" align="left">
-          Device Info
-        </Typography>
-      }
-    >
+    <DisplayCard title={cardTitle}>
       <Grid container>
         <Table>
           <TableBody>

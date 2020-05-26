@@ -12,14 +12,22 @@ import { PercentCircle } from '../../../components/common/ProgressCircle';
 import { TableCell, Table, TableBody, TableRow } from '../../../components/common/Table';
 
 const useStyles = makeStyles((theme) => ({
+  container: {
+    display: 'flex',
+    padding: theme.spacing(1),
+  },
   infoBox: {
     paddingLeft: theme.spacing(2),
   },
   percentCircle: {
     display: 'flex',
+    minWidth: '56px',
     paddingRight: theme.spacing(2),
     paddingLeft: theme.spacing(2),
-    minWidth: '56px',
+    [theme.breakpoints.up('md')]: {
+      paddingRight: theme.spacing(1),
+      paddingLeft: theme.spacing(1),
+    },
   },
 }));
 
@@ -30,7 +38,7 @@ const percentUsage = (usages) => {
     usageSum += usage;
     totalSum += total;
   });
-  return (totalSum > 0) ? (100.0 * usageSum / totalSum) : 0;
+  return (totalSum > 0) ? (usageSum / totalSum) : 0;
 };
 
 const RowItem = ({ label, value, classes }) => {
@@ -63,11 +71,12 @@ const CpuStatus = ({ data, ...props }) => {
       <Grid container alignItems="center">
         <Grid container item xs={3}
           alignItems="center"
-          className={[classes.percentCircle]}>
-          <PercentCircle value={pct_usage} />
+          className={[classes.progressBar]}>
+          <PercentCircle value={pct_usage * 100} />
         </Grid>
         <Grid container item xs={9}
-          className={[classes.infoBox]}>
+          direction="column"
+          className={[classes.container, classes.infoBox]}>
           <Table size="small">
             <TableBody>
               <RowItem label={"Load 1m"} value={(load_1).toFixed(2)} />

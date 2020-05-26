@@ -22,9 +22,13 @@ const useStyles = makeStyles((theme) => ({
   },
   progressBar: {
     display: 'flex',
+    minWidth: '56px',
     paddingRight: theme.spacing(2),
     paddingLeft: theme.spacing(2),
-    minWidth: '56px',
+    [theme.breakpoints.up('md')]: {
+      paddingRight: theme.spacing(1),
+      paddingLeft: theme.spacing(1),
+    },
   },
 }));
 
@@ -41,6 +45,12 @@ const RowItem = ({ label, value, unit }) => {
     </TableRow>
   );
 };
+
+const cardTitle = (
+  <Typography component="h5" variant="h5" align="left">
+    Storage
+  </Typography>
+);
 
 const StorageDisplay = ({ partition, classes, key }) => {
 
@@ -85,13 +95,7 @@ const Storage = ({ data, ...props }) => {
   const storages = data.map((partition, key) => StorageDisplay({ partition, classes, key }))
 
   return (
-    <DisplayCard
-      title={
-        <Typography component="h5" variant="h5" align="left">
-          Storage
-        </Typography>
-      }
-    >
+    <DisplayCard title={cardTitle} >
       <Grid container>
         {storages}
       </Grid>

@@ -14,6 +14,12 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
+const cardTitle = (
+  <Typography component="h5" variant="h5" align="left">
+    Network Usage
+  </Typography>
+);
+
 const RowItem = ({ label, netstats }) => {
 
   const { bytes, error, dropped } = netstats;
@@ -63,13 +69,7 @@ const NetworkUsage = ({ data, ...props }) => {
   const network_interfaces = data.map((net_if, key) => (<NetworkDisplay net_if={net_if} key={key} />));
 
   return (
-    <DisplayCard
-      title={
-        <Typography component="h5" variant="h5" align="left">
-          Network Usage
-        </Typography>
-      }
-    >
+    <DisplayCard title={cardTitle}>
       <Grid container>
         <Table size="small">
           <TableBody>
