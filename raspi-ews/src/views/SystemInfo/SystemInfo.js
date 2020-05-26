@@ -20,11 +20,14 @@ const useStyles = (theme) => ({
     paddingTop: theme.spacing(2),
   },
   gridItem: {
-    padding: theme.spacing(2),
+    padding: theme.spacing(1),
+    [theme.breakpoints.up('md')]: {
+      padding: theme.spacing(2),
+    }
   },
 });
 
-class SystemInfo extends React.Component {
+class SystemInfoPage extends React.Component {
 
   render() {
 
@@ -34,7 +37,7 @@ class SystemInfo extends React.Component {
       return (<div />);
     }
 
-    const { os_info, cpu_info, hdd_info, mem_info, netstats, uptime, localtime, mqtt_broker } = data;
+    const { os_info, cpu_info, cpu_usage, hdd_info, mem_info, netstats, uptime, localtime, mqtt_broker } = data;
 
     return (
       <div className={classes.root}>
@@ -55,7 +58,7 @@ class SystemInfo extends React.Component {
               <Uptime uptime={uptime} />
             </Grid>
             <Grid item lg={3} md={6} sm={6} xs={12} className={classes.gridItem}>
-              <MqttStatus brokerStatus={mqtt_broker.online}/>
+              <MqttStatus brokerStatus={mqtt_broker.online} />
             </Grid>
             <Grid item lg={3} md={6} sm={6} xs={12} className={classes.gridItem}>
               <SystemTime time={localtime} />
@@ -68,7 +71,7 @@ class SystemInfo extends React.Component {
                 <DeviceInfo data={{ ...cpu_info, ...os_info }} />
               </Grid>
               <Grid item lg={12} md={6} xs={12} className={classes.gridItem}>
-                <CpuStatus data={cpu_info} />
+                <CpuStatus data={{ ...cpu_info, ...cpu_usage }} />
               </Grid>
             </Grid>
 
@@ -92,4 +95,4 @@ class SystemInfo extends React.Component {
   };
 };
 
-export default withStyles(useStyles)(SystemInfo);
+export default withStyles(useStyles)(SystemInfoPage);

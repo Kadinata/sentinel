@@ -23,6 +23,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const percentUsage = (usages) => {
+  let usageSum = 0;
+  let totalSum = 0;
+  usages.forEach(([usage, total]) => {
+    usageSum += usage;
+    totalSum += total;
+  });
+  return (totalSum > 0) ? (100.0 * usageSum / totalSum) : 0;
+};
+
 const RowItem = ({ label, value, classes }) => {
   return (
     <TableRow>
@@ -36,24 +46,25 @@ const RowItem = ({ label, value, classes }) => {
   );
 };
 
+const cardTitle = (
+  <Typography component="h5" variant="h5" align="left">
+    CPU Usage
+  </Typography>
+);
+
 const CpuStatus = ({ data, ...props }) => {
 
   const classes = useStyles();
-  const { load_1, load_5, load_15 } = data;
+  const { load_1, load_5, load_15, usages } = data;
+  const pct_usage = percentUsage(usages);
 
   return (
-    <DisplayCard
-      title={
-        <Typography component="h5" variant="h5" align="left">
-          CPU Usage
-        </Typography>
-      }
-    >
+    <DisplayCard title={cardTitle}>
       <Grid container alignItems="center">
         <Grid container item xs={3}
           alignItems="center"
           className={[classes.percentCircle]}>
-          <PercentCircle value={16.7} />
+          <PercentCircle value={pct_usage} />
         </Grid>
         <Grid container item xs={9}
           className={[classes.infoBox]}>
