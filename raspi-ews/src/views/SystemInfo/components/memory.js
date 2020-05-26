@@ -21,9 +21,13 @@ const useStyles = makeStyles((theme) => ({
   },
   progressBar: {
     display: 'flex',
+    minWidth: '56px',
     paddingRight: theme.spacing(2),
     paddingLeft: theme.spacing(2),
-    minWidth: '56px',
+    [theme.breakpoints.up('md')]: {
+      paddingRight: theme.spacing(1),
+      paddingLeft: theme.spacing(1),
+    },
   },
 }));
 
