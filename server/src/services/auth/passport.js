@@ -1,3 +1,6 @@
+//===========================================================================
+//  
+//===========================================================================
 const bcrypt = require('bcrypt');
 const LocalStrategy = require('passport-local').Strategy;
 const JWTStrategy = require('passport-jwt').Strategy;
@@ -66,20 +69,13 @@ const loginHandler = async (username, password, done) => {
 };
 
 const jwtHandler = async (jwtPayload, done) => {
-
   try {
     const user = await utils.findById(jwtPayload.id);
-
-    if (user) {
-      return done(null, user);
-    }
-    return done(null, null);
-
+    return done(null, user || null);
   } catch (err) {
     done(err);
   }
 };
-
 
 module.exports = passport => {
 
@@ -98,3 +94,5 @@ module.exports = passport => {
     new JWTStrategy(jwtOpts, (payload, done) => jwtHandler(payload, done))
   );
 };
+
+//===========================================================================
