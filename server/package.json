@@ -19,8 +19,6 @@
     "onoff": "^6.0.0",
     "passport": "^0.4.1",
     "passport-jwt": "^4.0.0",
-    "passport-local": "^1.0.0",
-    "sequelize": "^6.2.3",
-    "sqlite3": "^4.2.0"
+    "passport-local": "^1.0.0"
   }
 }
