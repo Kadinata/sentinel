@@ -44,6 +44,8 @@ const DeviceInfo = ({ data, ...props }) => {
   const classes = useStyles();
   const { hostname, host_ip, type, release, processor, distribution } = data;
 
+  console.log(`Rendering device info ${new Date()}`);
+
   return (
     <DisplayCard title={cardTitle}>
       <Grid container>

@@ -107,4 +107,4 @@ Storage.defaultProps = {
   data: [],
 };
 
-export default Storage;
+export default React.memo(Storage);
