@@ -1,46 +1,125 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { makeStyles } from '@material-ui/core';
 
 import {
   Typography,
   TextField,
-  Button,
+  CardMedia,
 } from '@material-ui/core';
 
 import { DisplayCard } from '../../../components/common/Card';
+import { SubmitButton } from '../../../components/common/Button';
+import {
+  ErrorBar,
+  SuccessBar,
+} from '../../../components/common/Alert';
 
-const LoginCard = ({ ...props }) => {
+import useLoginForm from '../useLoginForm';
+import useBtnState from '../useBtnState';
+import States from '../LoginStates';
+
+const useStyles = makeStyles(theme => ({
+  media: {
+    height: 320,
+    objectFit: 'scale-down',
+  },
+  submitButton: {
+    marginTop: theme.spacing(1),
+  },
+}));
+
+const initialState = {
+  username: "",
+  password: "",
+};
+
+const LoginCard = ({ onSubmit, onError, ...props }) => {
+
+  const classes = useStyles();
+
+  const {
+    values,
+    errors,
+    state,
+    handleChange,
+    handleSubmit,
+  } = useLoginForm({
+    initialState,
+    onSubmit: (values) => onSubmit(values)
+  });
+
+  const btnState = useBtnState({ ...values, state });
+
+  useEffect(() => {
+    if (errors) {
+      console.log({ errors });
+      onError(errors);
+    }
+  }, [errors]);
 
   return (
     <DisplayCard
       title={
         <Typography component="h5" variant="h5" align="center">
-          Login
+          Sentinel System
         </Typography>
       }
     >
 
-      <form>
+      <CardMedia
+        className={classes.media}
+        component="img"
+        image="https://www.raspberrypi.org/app/uploads/2011/10/Raspi-PGB001.png"
+        title="Raspberry Pi"
+      />
+
+      <ErrorBar variant="filled" show={(state === States.error)}>
+        Incorrect username and/or password
+      </ErrorBar>
+
+      <SuccessBar variant="filled" show={(state === States.success)}>
+        Login successful.
+      </SuccessBar>
+
+      <form onSubmit={handleSubmit}>
+        <TextField
+          variant="outlined"
+          margin="normal"
+          required
+          fullWidth
+          name="username"
+          label="username"
+          id="username"
+          disabled={(state === States.success)}
+          value={values.username}
+          onChange={handleChange}
+        />
         <TextField
           variant="outlined"
           margin="normal"
           required
           fullWidth
           name="password"
-          label="Password"
+          label="password"
           type="password"
           id="password"
-          autoComplete="current-password"
+          disabled={(state === States.success)}
+          value={values.password}
+          onChange={handleChange}
         />
-        <Button
+        <SubmitButton
           type="submit"
           fullWidth
           variant="contained"
           color="primary"
+          disabled={btnState.disabled}
+          loading={btnState.loading}
+          success={btnState.success}
+          className={classes.submitButton}
         >
           Login
-          </Button>
+        </SubmitButton>
       </form>
     </DisplayCard>
   );

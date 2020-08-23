@@ -1,40 +1,36 @@
 import React from 'react';
-import { withStyles } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core';
 import {
-  Grid,
-  Typography,
+  Container,
 } from '@material-ui/core';
 
 import { LoginCard } from './components';
 
-const useStyles = (theme) => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     padding: theme.spacing(3),
-    paddingTop: theme.spacing(2),
+    paddingTop: theme.spacing(8) * 4 / 3,
+    flex: 1,
+    alignItems: 'flex-start',
+    display: 'flex',
   },
-  gridItem: {
-    padding: theme.spacing(2),
-  },
-});
+}));
 
-class LoginView extends React.Component {
+const LoginView = ({ ...props }) => {
 
-  render() {
+  const classes = useStyles();
 
-    const { classes } = this.props;
-    return (
-      <div className={classes.root}>
-        <Grid container direction="column">
-          <Grid container item alignItems="stretch" justify="flex-start" lg={4} sm={12} xs={12}>
-            <Grid container item className={classes.gridItem}>
-              <LoginCard />
-            </Grid>
-          </Grid>
-        </Grid>
-      </div>
-    );
-  }
+  const handleError = (error) => {
+    console.log(error);
+  };
 
-}
+  return (
+    <div className={classes.root}>
+      <Container maxWidth="sm">
+        <LoginCard onSubmit={() => ({ success: false })} onError={handleError} />
+      </Container>
+    </div>
+  );
+};
 
-export default withStyles(useStyles)(LoginView);
+export default LoginView;
