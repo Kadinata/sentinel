@@ -22,6 +22,8 @@ const login = (req, res, next) => {
       const token = authService.token.generate(user, 60 * 60);
       const auth = true;
       const message = 'Login successful';
+      const expires = new Date(Date.now() + 1 * 60 * 1000);
+      res.cookie('jwt', token, { expires });
       res.status(200).send({ auth, token, message });
     });
 
@@ -29,8 +31,7 @@ const login = (req, res, next) => {
 };
 
 const register = (req, res, next) => {
-  const session = false;
-  passport.authenticate('register', { session }, (err, user, info) => {
+  passport.authenticate('register', (err, user, info) => {
     if (err) {
       console.error(`Register Error: ${err}`);
     }
@@ -38,13 +39,13 @@ const register = (req, res, next) => {
     if (info !== undefined) {
       const { message } = info;
       console.error(`Register Error: ${message}`);
-      res.status(403).json({ message });
+      res.status(403).json({ success: false, message });
       return;
     }
 
     req.login(user, async () => {
       const message = 'User created';
-      res.status(200).json({ message });
+      res.status(200).json({ success: true, message });
     });
 
   })(req, res, next);
