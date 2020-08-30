@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const path = require('path');
 
@@ -17,8 +18,9 @@ mqttService.start();
 app.set('json spaces', 2);
 
 app.use(cors());
+app.use(cookieParser());
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(passport.initialize());
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -35,9 +37,3 @@ app.get('*', (req, res) => {
     console.log(`Server is listening on port ${port}`);
   });
 })();
-
-// services.init().then(() => {
-//   app.listen(port, () => {
-//     console.log(`Server is listening on port ${port}`);
-//   });
-// });
