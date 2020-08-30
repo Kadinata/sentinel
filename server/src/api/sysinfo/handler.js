@@ -20,6 +20,7 @@ const netstat = baseHandler(service.network);
 const storage = baseHandler(service.hdd);
 const systime = baseHandler(service.systime.getAll);
 const uptime = baseHandler(service.systime.getUptime);
+const startTime = baseHandler(service.systime.getStartTime);
 const localtime = baseHandler(service.systime.getLocaltime);
 const mqttBroker = baseHandler(service.mqttBroker.brokerStatus);
 const cpuUsage = baseHandler(() => service.cpuUsage.measurements);
@@ -34,6 +35,7 @@ module.exports = {
   systime,
   uptime,
   localtime,
+  startTime,
   mqttBroker,
   cpuUsage,
   fetchAll

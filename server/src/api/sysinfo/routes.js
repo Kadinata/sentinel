@@ -15,6 +15,7 @@ const get_handlers = [
   ['/storage', handler.storage],
   ['/time', handler.systime],
   ['/uptime', handler.uptime],
+  ['/starttime', handler.startTime],
   ['/localtime', handler.localtime],
   ['/mqtt-broker', handler.mqttBroker],
   ['/cpu-usage', handler.cpuUsage],

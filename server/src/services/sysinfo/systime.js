@@ -3,6 +3,9 @@
 //===========================================================================
 const os = require('os');
 
+const serverStartTime = Date.now();
+
+const getStartTime = () => serverStartTime;
 const getUptime = () => os.uptime();
 const getLocaltime = () => {
 
@@ -23,7 +26,13 @@ const getLocaltime = () => {
 const getAll = () => {
   const uptime = getUptime();
   const localtime = getLocaltime();
-  return { uptime, localtime };
+  const startTime = getStartTime();
+  return { uptime, localtime, startTime };
 };
 
-module.exports = { getUptime, getLocaltime, getAll };
+module.exports = {
+  getUptime,
+  getLocaltime,
+  getStartTime,
+  getAll
+};
