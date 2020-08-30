@@ -3,15 +3,15 @@
 //===========================================================================
 const express = require('express');
 const sysinfoRoutes = require('./sysinfo');
-const sseTestRoutes = require('./sse_test');
 const authRoutes = require('./auth');
+const testRoutes = require('./tests');
 
 const router = express.Router();
 
 const routes = [
   ['/auth', authRoutes],
   ['/sysinfo', sysinfoRoutes],
-  //['/sse-test', sseTestRoutes],
+  ['/test', testRoutes],
 ];
 
 routes.forEach(([path, handler]) => {

@@ -1,14 +1,10 @@
 //===========================================================================
 //  
 //===========================================================================
-const express = require('express');
-const sse = require('../utils/sse_handler');
-const DataSampler = require('../utils/data_sampler');
-const service = require('../services/sysinfo');
+const sse = require('../../utils/sse_handler');
+const service = require('../../services/sysinfo');
 
-const router = express.Router();
 const testHandler = sse.Handler();
-const testSampler = new DataSampler(() => service.systime.getAll());
 const cpuUsage = service.cpuUsage;
 
 // testSampler.on('data', data => testHandler.send(data));
@@ -39,10 +35,8 @@ const handler = baseHandler(() => ({
   time: Date.now(),
 }));
 
-router.route('/').get(
+module.exports = [
   (req, res, next) => testHandler.handleRequest(req, res, next),
   handler,
-);
-
-module.exports = router;
+];
 //===========================================================================
