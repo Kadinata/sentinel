@@ -12,6 +12,13 @@ const utils = require('./utils');
 
 const SALT_ROUNDS = 10;
 
+const extractCookie = (req) => {
+  if (req && req.cookies) {
+    return req.cookies['jwt'];
+  }
+  return null;
+};
+
 const localOpts = {
   usernameField: 'username',
   passwordField: 'password',
@@ -19,7 +26,7 @@ const localOpts = {
 };
 
 const jwtOpts = {
-  jwtFromRequest: ExtractJWT.fromAuthHeaderWithScheme('JWT'),
+  jwtFromRequest: extractCookie,
   secretOrKey: jwtSecret.secret,
 };
 
@@ -41,7 +48,7 @@ const registerHandler = async (username, password, done) => {
     return done(null, newUser);
 
   } catch (err) {
-    done(err);
+    return done(err);
   }
 };
 
@@ -51,14 +58,14 @@ const loginHandler = async (username, password, done) => {
     const user = await utils.findUser(username);
 
     if (user === null) {
-      const message = 'User not found';
+      const message = 'Incorrect username and/or password';
       return done(null, null, { message });
     }
 
     const passwordMatch = await bcrypt.compare(password, user.password);
 
     if (passwordMatch !== true) {
-      const message = 'Incorrect password';
+      const message = 'Incorrect username and/or password';
       return done(null, null, { message });
     }
     return done(null, user);
@@ -71,7 +78,7 @@ const loginHandler = async (username, password, done) => {
 const jwtHandler = async (jwtPayload, done) => {
   try {
     const user = await utils.findById(jwtPayload.id);
-    return done(null, user || null);
+    done(null, user || null);
   } catch (err) {
     done(err);
   }
