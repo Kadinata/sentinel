@@ -2,6 +2,7 @@
 //  
 //===========================================================================
 const express = require('express');
+const Errors = require('../utils/errors');
 const sysinfoRoutes = require('./sysinfo');
 const authRoutes = require('./auth');
 const testRoutes = require('./tests');
@@ -18,9 +19,7 @@ routes.forEach(([path, handler]) => {
   router.use(path, (req, res, next) => handler(req, res, next));
 });
 
-router.use('*', (req, res, next) => {
-  res.status(404).send('Not found!');
-});
+router.use('*', (req, res, next) => next(new Errors.NotFound('Not found!')));
 
 module.exports = router;
 //===========================================================================

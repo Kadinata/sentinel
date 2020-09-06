@@ -4,6 +4,7 @@
 const express = require('express');
 const handler = require('./handler');
 const streamHandler = require('./stream');
+const authProtected = require('../../middleware/auth_protected');
 const router = express.Router();
 
 const get_handlers = [
@@ -21,6 +22,8 @@ const get_handlers = [
   ['/cpu-usage', handler.cpuUsage],
   ['/stream', streamHandler],
 ];
+
+router.use(authProtected);
 
 get_handlers.forEach(([path, req_handler]) => {
   router.route(path).get((req, res, next) => req_handler(req, res, next));

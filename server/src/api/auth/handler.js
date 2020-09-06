@@ -1,5 +1,6 @@
 const passport = require('passport');
 const authService = require('../../services/auth');
+const Errors = require('../../utils/errors');
 
 const login = (req, res, next) => {
   const session = false;
@@ -8,23 +9,20 @@ const login = (req, res, next) => {
     if (err || !user) {
       const { message } = info;
       console.error(`Login Error: ${message}`);
-      const statusCode = (message == 'User not found') ? 401 : 403;
-      res.status(statusCode).json({ message });
-      return;
+      return next(new Errors.Unauthorized(message));
     }
 
     req.login(user, { session }, (err) => {
       if (err) {
-        res.send(err);
-        return;
+        return next(new Errors.Unauthorized(err));
       }
 
       const token = authService.token.generate(user, 60 * 60);
       const auth = true;
       const message = 'Login successful';
-      const expires = new Date(Date.now() + 1 * 60 * 1000);
+      const expires = new Date(Date.now() + 24 * 60 * 60 * 1000);
       res.cookie('jwt', token, { expires });
-      res.status(200).send({ auth, token, message });
+      res.json({ auth, token, message });
     });
 
   })(req, res, next);
@@ -39,13 +37,13 @@ const register = (req, res, next) => {
     if (info !== undefined) {
       const { message } = info;
       console.error(`Register Error: ${message}`);
-      res.status(403).json({ success: false, message });
-      return;
+      return next(new Errors.Forbidden(message));
     }
 
     req.login(user, async () => {
+      const status = 'success';
       const message = 'User created';
-      res.status(200).json({ success: true, message });
+      res.json({ status, message });
     });
 
   })(req, res, next);

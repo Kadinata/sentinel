@@ -1,4 +1,5 @@
 const passport = require('passport');
+const Errors = require('../utils/errors');
 
 const authProtected = (req, res, next) => {
   const session = false;
@@ -10,13 +11,13 @@ const authProtected = (req, res, next) => {
 
     if (err) {
       console.error(`JWT auth error: ${err}`);
-      message = 'An error occurred.';
+      message = 'An authentication error occurred.';
     } else {
       console.error(`JWT auth not authenticated`);
       message = 'User not authenticated.';
     }
 
-    res.status(401).json({ message });
+    next(new Errors.Unauthorized(message));
   })(req, res, next);
 };
 

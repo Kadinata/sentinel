@@ -2,14 +2,16 @@
 //  
 //===========================================================================
 const service = require('../../services/sysinfo');
+const Errors = require('../../utils/errors');
 
 const baseHandler = (datasource) => async (req, res, next) => {
   try {
     const data = await datasource();
-    res.status(200).json(data);
+    res.json(data);
   } catch (err) {
     console.log(err);
-    res.send('Server Error!');
+    const message = 'An internal server error occurred.';
+    next(new Errors.GenericError(message));
   }
 };
 
