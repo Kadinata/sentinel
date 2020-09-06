@@ -8,12 +8,12 @@ const apiRoutes = require('./src/api');
 const MqttService = require('./src/mqtt_service');
 const services = require('./src/services');
 const passport = require('passport');
+const errorHandler = require('./src/middleware/error_handler');
 
 const app = express();
 const port = process.env.port || 3000;
 
 const mqttService = new MqttService.mqttService();
-mqttService.start();
 
 app.set('json spaces', 2);
 
@@ -30,7 +30,10 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'public/index.html'));
 });
 
+app.use(errorHandler);
+
 (async () => {
+  mqttService.start();
   services.auth.config(passport);
   await services.init();
   app.listen(port, () => {
