@@ -4,14 +4,13 @@ import States from './LoginStates';
 const useLoginForm = ({ initialState, onSubmit }) => {
 
   const [values, setValues] = React.useState(initialState || {});
-  const [errors, setErrors] = React.useState(null);
+  const [errors, setErrors] = React.useState({ message: '' });
   const [state, setState] = React.useState(States.default);
 
   const handleChange = ({ target }) => {
     const { id, value } = target;
     setValues((prevValues) => ({ ...prevValues, [id]: value }));
   };
-
 
   const handleSubmit = async (event) => {
     if (event) {
@@ -27,13 +26,13 @@ const useLoginForm = ({ initialState, onSubmit }) => {
     }
 
     setState(States.submitting);
-    setErrors(null);
+    setErrors({ message: '' });
 
-    const { success } = await onSubmit({ ...values });
+    const { success, message } = await onSubmit({ ...values });
 
     if (!success) {
       setState(States.error);
-      setErrors({ message: 'asdf' });
+      setErrors({ message });
     } else {
       setState(States.success);
     }

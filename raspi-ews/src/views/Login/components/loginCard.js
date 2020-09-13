@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import { makeStyles } from '@material-ui/core';
 
@@ -34,7 +34,7 @@ const initialState = {
   password: "",
 };
 
-const LoginCard = ({ onSubmit, onError, ...props }) => {
+const LoginCard = ({ onSubmit, onError, onSuccess, ...props }) => {
 
   const classes = useStyles();
 
@@ -51,12 +51,16 @@ const LoginCard = ({ onSubmit, onError, ...props }) => {
 
   const btnState = useBtnState({ ...values, state });
 
-  useEffect(() => {
-    if (errors) {
-      console.log({ errors });
-      onError(errors);
+  React.useEffect(() => {
+    switch (state) {
+      case States.error:
+        return onError(errors);
+      case States.success:
+        return onSuccess();
+      default:
+        return;
     }
-  }, [errors]);
+  }, [state, errors]);
 
   return (
     <DisplayCard
@@ -75,7 +79,7 @@ const LoginCard = ({ onSubmit, onError, ...props }) => {
       />
 
       <ErrorBar variant="filled" show={(state === States.error)}>
-        Incorrect username and/or password
+        {errors.message}
       </ErrorBar>
 
       <SuccessBar variant="filled" show={(state === States.success)}>
@@ -123,7 +127,6 @@ const LoginCard = ({ onSubmit, onError, ...props }) => {
       </form>
     </DisplayCard>
   );
-
 };
 
 export default LoginCard;

@@ -5,6 +5,7 @@ import {
 } from '@material-ui/core';
 
 import { LoginCard } from './components';
+import useLoginHandler from './useLoginHandler';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -16,18 +17,17 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const Redirect = '/test';
+
 const LoginView = ({ ...props }) => {
 
   const classes = useStyles();
 
-  const handleError = (error) => {
-    console.log(error);
-  };
-
+  const { handleSubmit, handleError, handleSuccess } = useLoginHandler(Redirect);
   return (
     <div className={classes.root}>
       <Container maxWidth="sm">
-        <LoginCard onSubmit={() => ({ success: false })} onError={handleError} />
+        <LoginCard onSubmit={handleSubmit} onError={handleError} onSuccess={handleSuccess} />
       </Container>
     </div>
   );
