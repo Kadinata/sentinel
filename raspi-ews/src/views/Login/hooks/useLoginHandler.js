@@ -1,5 +1,5 @@
 import { useHistory } from 'react-router-dom';
-import AuthService from '../../auth/Auth';
+import AuthService from '../../../auth/Auth';
 
 const useLoginHandler = (successRedirect) => {
 

@@ -8,16 +8,19 @@ import {
   CardMedia,
 } from '@material-ui/core';
 
-import { DisplayCard } from '../../../components/common/Card';
-import { SubmitButton } from '../../../components/common/Button';
+import { DisplayCard } from '../../components/common/Card';
+import { SubmitButton } from '../../components/common/Button';
 import {
   ErrorBar,
   SuccessBar,
-} from '../../../components/common/Alert';
+} from '../../components/common/Alert';
 
-import useLoginForm from '../useLoginForm';
-import useBtnState from '../useBtnState';
-import States from '../LoginStates';
+import {
+  useLoginForm,
+  useBtnState
+} from './hooks';
+
+import States from './hooks/LoginStates';
 
 const useStyles = makeStyles(theme => ({
   media: {

@@ -4,8 +4,8 @@ import {
   Container,
 } from '@material-ui/core';
 
-import { LoginCard } from './components';
-import useLoginHandler from './useLoginHandler';
+import LoginCard from './loginCard';
+import { useLoginHandler } from './hooks';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Redirect = '/test';
 
-const LoginView = ({ ...props }) => {
+const LoginView = (props) => {
 
   const classes = useStyles();
 
