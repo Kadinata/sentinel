@@ -1,10 +1,8 @@
 import React from 'react';
-import { fetchData } from '../../utils';
+import Endpoint from '../../services/Endpoint';
 
-const HOSTNAME = 'raspberrypi.local';
-const ENDPOINT_BASE = `http://${HOSTNAME}:3000`;
-const ENDPOINT_SYSINFO = `${ENDPOINT_BASE}/api/v1/sysinfo`;
-const ENDPOINT_STREAM = `${ENDPOINT_BASE}/api/v1/sysinfo/stream`;
+const ENDPOINT_SYSINFO = 'api/v1/sysinfo';
+const ENDPOINT_STREAM = 'api/v1/sysinfo/stream';
 
 const useSystemInfo = () => {
 
@@ -18,7 +16,7 @@ const useSystemInfo = () => {
     async () => {
       setIsLoading(true);
       try {
-        const data = await fetchData(ENDPOINT_SYSINFO);
+        const data = await Endpoint.fetchData(ENDPOINT_SYSINFO);
         setData(data);
         setListening(true);
       } catch (err) {
@@ -36,17 +34,10 @@ const useSystemInfo = () => {
   React.useEffect(() => {
     if ((!listening) || started) return;
     console.log('Sysinfo stream listener started.');
-    const events = new EventSource(ENDPOINT_STREAM);
-    events.onmessage = (event) => {
-      const parsedData = JSON.parse(event.data);
-      setData(prevData => ({ ...prevData, ...parsedData }));
+    const event = Endpoint.subcsribe(ENDPOINT_STREAM, (data) => {
+      setData((prevData) => ({ ...prevData, ...data }));
       setStarted(true);
-    };
-
-    // return () => {
-    //   console.log('Closing sysinfo stream listener.');
-    //   events.close();
-    // };
+    });
   }, [listening, started, setData]);
 
   return { data, error, isLoading };
