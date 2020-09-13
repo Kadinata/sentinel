@@ -1,6 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Typography, Grid } from '@material-ui/core';
+import { ErrorBar } from '../../components/common/Alert';
 
 import {
   CpuTemp,
@@ -10,6 +11,7 @@ import {
   Memory,
   NetworkUsage,
   MqttStatus,
+  StartTime,
   CpuStatus,
   SystemTime
 } from './components';
@@ -32,9 +34,14 @@ const useStyles = makeStyles((theme) => ({
 const ErrorDisplay = ({ error, ...props }) => {
   const classes = useStyles();
   if (!error) return null;
+  console.log('error: ', error);
+  const { message } = error;
   return (
-    <Grid item alignItems="stretch" justify="flex-start" className={classes.gridItem}>
-      <Typography>Error: Data failed to load</Typography>
+    <Grid container item alignItems="stretch" justify="flex-start" className={classes.gridItem}>
+      {/* <Typography>Error: Data failed to load</Typography> */}
+      <ErrorBar variant="filled" show>
+        {message}
+      </ErrorBar>
     </Grid>
   );
 };
@@ -43,7 +50,7 @@ const ContentDisplay = ({ data, ...props }) => {
   const classes = useStyles();
   if (!data) return null;
 
-  const { os_info, cpu_info, cpu_usage, hdd_info, mem_info, netstats, uptime, localtime, mqtt_broker } = data;
+  const { os_info, cpu_info, cpu_usage, hdd_info, mem_info, netstats, uptime, localtime, startTime, mqtt_broker } = data;
 
   return (
     <React.Fragment>
@@ -56,7 +63,8 @@ const ContentDisplay = ({ data, ...props }) => {
           <Uptime uptime={uptime} />
         </Grid>
         <Grid item lg={3} md={6} sm={6} xs={12} className={classes.gridItem}>
-          <MqttStatus brokerStatus={mqtt_broker.online} />
+          {/* <MqttStatus brokerStatus={mqtt_broker.online} /> */}
+          <StartTime startTime={startTime} />
         </Grid>
         <Grid item lg={3} md={6} sm={6} xs={12} className={classes.gridItem}>
           <SystemTime time={localtime} />

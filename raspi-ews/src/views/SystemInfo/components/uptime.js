@@ -29,7 +29,7 @@ const formatUptime = (uptime) => {
 const Uptime = ({ uptime, ...props }) => {
   return (
     <StatsCard
-      label={"Uptime"}
+      label={"System Uptime"}
       value={formatUptime(uptime)}
       background={"#f8c04e"}
       icon={

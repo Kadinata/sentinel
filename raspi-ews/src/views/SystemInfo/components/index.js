@@ -7,6 +7,7 @@ import Memory from './memory';
 import NetworkUsage from './networkusage';
 import MqttStatus from './mqttstatus';
 import SystemTime from './systemtime';
+import StartTime from './starttime';
 
 export {
   CpuTemp,
@@ -18,4 +19,5 @@ export {
   NetworkUsage,
   MqttStatus,
   SystemTime,
+  StartTime,
 };

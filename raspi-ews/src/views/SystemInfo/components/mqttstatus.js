@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faServer, faCheckCircle, faTimesCircle, faCircle } from '@fortawesome/free-solid-svg-icons';
+import { faServer, faCircle } from '@fortawesome/free-solid-svg-icons';
 
 import { StatsCard } from '../../../components/common/Card';
 
