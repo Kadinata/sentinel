@@ -4,8 +4,8 @@ import {
   Container,
 } from '@material-ui/core';
 
-import { SignupCard } from './components';
-import useSignupHandler from './useSignupHandler';
+import SignupCard from './signupCard';
+import { useSignupHandler } from './hooks';
 
 const useStyles = makeStyles((theme) => ({
   root: {

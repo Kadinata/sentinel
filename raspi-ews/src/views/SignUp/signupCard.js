@@ -1,23 +1,20 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import {
   Typography,
   TextField,
-  Button,
   CardMedia,
 } from '@material-ui/core';
 
-import { DisplayCard } from '../../../components/common/Card';
-import { SubmitButton } from '../../../components/common/Button';
+import { DisplayCard } from '../../components/common/Card';
+import { SubmitButton } from '../../components/common/Button';
 import {
   ErrorBar,
   SuccessBar,
-} from '../../../components/common/Alert';
+} from '../../components/common/Alert';
 
-import useSignupForm from '../useSignupForm';
-import useBtnState from '../useBtnState';
-import States from '../FormStates';
-
+import { useSignupForm, useBtnState } from './hooks';
+import States from './FormStates';
 
 const useStyles = makeStyles((theme) => ({
   media: {

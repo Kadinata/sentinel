@@ -1,5 +1,5 @@
 import React from 'react';
-import States from './LoginStates';
+import States from '../LoginStates';
 
 const initialState = {
   disabled: true,

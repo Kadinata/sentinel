@@ -1,6 +1,6 @@
 import { useHistory } from 'react-router-dom';
-import AuthService from '../../auth/Auth';
-import validatePasswords from './Validation';
+import AuthService from '../../../auth/Auth';
+import validatePasswords from '../Validation';
 
 const useSignupHandler = (successRedirect) => {
 

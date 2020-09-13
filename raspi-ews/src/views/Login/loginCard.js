@@ -20,7 +20,7 @@ import {
   useBtnState
 } from './hooks';
 
-import States from './hooks/LoginStates';
+import States from './LoginStates';
 
 const useStyles = makeStyles(theme => ({
   media: {

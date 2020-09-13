@@ -1,5 +1,5 @@
 import React from 'react';
-import States from './FormStates';
+import States from '../FormStates';
 
 const initialState = {
   disabled: true,
