@@ -42,7 +42,7 @@ const ResponsiveDrawer = ({ children, ...props }) => {
       </Hidden>
       <Hidden smDown implementation="js">
         <Drawer
-          className={[classes.drawer]}
+          className={classes.drawer}
           classes={{
             paper: classes.drawerPaper,
           }}

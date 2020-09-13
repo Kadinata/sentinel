@@ -1,9 +1,10 @@
 import React from 'react';
-import { Drawer, List } from '@material-ui/core';
+import { List } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core';
 
 import SidebarLink from './sidebarlink';
 import ResponsiveDrawer from './ResponsiveDrawer';
+import { useNavContext } from '../NavProvider';
 
 const useStyles = makeStyles((theme) => ({
   drawer: {
@@ -19,13 +20,15 @@ const useStyles = makeStyles((theme) => ({
   toolbar: theme.mixins.toolbar,
 }));
 
-const Sidebar = ({ routes, open, onClose, ...props }) => {
+const Sidebar = ({ open, onClose, ...props }) => {
+
+  const { routes } = useNavContext();
 
   const classes = useStyles();
 
   return (
     <ResponsiveDrawer
-      className={[classes.drawer]}
+      className={classes.drawer}
       classes={{
         paper: classes.drawerPaper,
       }}
@@ -49,6 +52,10 @@ const Sidebar = ({ routes, open, onClose, ...props }) => {
       </List>
     </ResponsiveDrawer>
   );
+};
+
+Sidebar.defaultProps = {
+  routes: [],
 };
 
 export default Sidebar;
