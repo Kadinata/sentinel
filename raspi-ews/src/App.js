@@ -26,6 +26,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     minHeight: '100vh',
     background: 'linear-gradient(to bottom right, #13547A, #80D0C7)',
+    color: '#E9E9E9',
   },
 }));
 
