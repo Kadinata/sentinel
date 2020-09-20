@@ -13,23 +13,33 @@ const AuthDataProvider = (props) => {
 
   const [authData, setAuthData] = React.useState(getInitialData());
 
-  React.useEffect(() => {
-    const checkAuthState = async () => {
-      try {
-        const user = await AuthService.CheckAuthState();
-        setAuthData({ user });
-      } catch (err) {
-        const user = null;
-        setAuthData({ user });
-      }
-    };
-    checkAuthState();
+  const checkAuthState = React.useCallback(async () => {
+    try {
+      const user = await AuthService.CheckAuthState();
+      setAuthData({ user });
+    } catch (err) {
+      const user = null;
+      setAuthData({ user });
+    }
   }, []);
 
-  const onLogout = () => setAuthData({ user: null });
-  const onLogin = (newData) => setAuthData((prevData) => ({ ...prevData, ...newData }));
+  React.useEffect(() => { checkAuthState() }, []);
 
-  const authDataValue = { ...authData, onLogin, onLogout };
+  const onLogout = () => setAuthData({ user: null });
+  // const onLogin = (newData) => setAuthData((prevData) => ({ ...prevData, ...newData }));
+  const onLogin = () => checkAuthState();
+
+  const handleLogin = async (username, password) => {
+    try {
+      const result = await AuthService.Login(username, password);
+      checkAuthState();
+      return result;
+    } catch (err) {
+      return Promise.reject(err);
+    }
+  };
+
+  const authDataValue = { ...authData, onLogin, handleLogin, onLogout };
   return (<AuthContext.Provider value={authDataValue} {...props} />);
 };
 
