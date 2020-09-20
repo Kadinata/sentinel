@@ -132,4 +132,10 @@ const LoginCard = ({ onSubmit, onError, onSuccess, ...props }) => {
   );
 };
 
+LoginCard.defaultProps = {
+  onSubmit: () => { },
+  onError: () => { },
+  onSuccess: () => { },
+};
+
 export default LoginCard;

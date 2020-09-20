@@ -2,10 +2,12 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core';
 import {
   Container,
+  Grid,
 } from '@material-ui/core';
 
 import LoginCard from './loginCard';
 import { useLoginHandler } from './hooks';
+import { AuthRedirect } from '../common';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -14,22 +16,26 @@ const useStyles = makeStyles((theme) => ({
     flex: 1,
     alignItems: 'flex-start',
     display: 'flex',
+    color: 'inherit',
   },
 }));
 
-const Redirect = '/test';
+const RedirectAfter = '/test';
 
 const LoginView = (props) => {
 
   const classes = useStyles();
 
-  const { handleSubmit, handleError, handleSuccess } = useLoginHandler(Redirect);
+  const { handleSubmit, handleSuccess } = useLoginHandler(RedirectAfter);
+
   return (
-    <div className={classes.root}>
-      <Container maxWidth="sm">
-        <LoginCard onSubmit={handleSubmit} onError={handleError} onSuccess={handleSuccess} />
-      </Container>
-    </div>
+    <AuthRedirect redirect={RedirectAfter}>
+      <Grid container className={classes.root}>
+        <Container maxWidth="sm">
+          <LoginCard onSubmit={handleSubmit} onSuccess={handleSuccess} />
+        </Container>
+      </Grid>
+    </AuthRedirect>
   );
 };
 

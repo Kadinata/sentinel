@@ -1,11 +1,13 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core';
 import {
+  Grid,
   Container,
 } from '@material-ui/core';
 
 import SignupCard from './signupCard';
 import { useSignupHandler } from './hooks';
+import { AuthRedirect } from '../common';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -20,19 +22,19 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Redirect = '/login'
-
 const SignupView = (props) => {
   const classes = useStyles();
 
-  const { handleSubmit, handleError, handleSuccess } = useSignupHandler(Redirect);
+  const { handleSubmit, handleSuccess } = useSignupHandler('/login');
 
   return (
-    <div className={classes.root}>
-      <Container maxWidth="sm">
-        <SignupCard onSubmit={handleSubmit} onError={handleError} onSuccess={handleSuccess} />
-      </Container>
-    </div>
+    <AuthRedirect redirect='/test'>
+      <Grid container className={classes.root}>
+        <Container maxWidth="sm">
+          <SignupCard onSubmit={handleSubmit} onSuccess={handleSuccess} />
+        </Container>
+      </Grid>
+    </AuthRedirect>
   );
 };
 

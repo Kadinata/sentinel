@@ -1,13 +1,14 @@
 import { useHistory } from 'react-router-dom';
-import AuthService from '../../../auth/Auth';
+import { useAuthDataContext } from '../../../auth/AuthProvider';
 
 const useLoginHandler = (successRedirect) => {
 
   const history = useHistory();
+  const { handleLogin } = useAuthDataContext();
 
   const handleSubmit = async ({ username, password }) => {
     try {
-      return await AuthService.Login(username, password);
+      return await handleLogin(username, password);
     } catch (err) {
       const success = false;
       const message = 'Connection error occurred';

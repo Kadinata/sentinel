@@ -147,6 +147,8 @@ const SignupCard = ({ onSubmit, onError, onSuccess, ...props }) => {
 
 SignupCard.defaultProps = {
   onSubmit: () => ({ success: false, message: initialState }),
+  onSuccess: () => { },
+  onError: () => { },
 };
 
 export default SignupCard;
