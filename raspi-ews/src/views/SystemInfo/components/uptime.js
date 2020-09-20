@@ -12,13 +12,13 @@ const formatUptime = (uptime) => {
     return '\u2014';
   }
 
-  const seconds = String(uptime % 60).padStart(2,0);
-  const minutes = String(moddiv(uptime, 60) % 60).padStart(2,0);
-  const hours = String(moddiv(uptime, 3600) % 24).padStart(2,0);
+  const seconds = String(uptime % 60).padStart(2, 0);
+  const minutes = String(moddiv(uptime, 60) % 60).padStart(2, 0);
+  const hours = String(moddiv(uptime, 3600) % 24).padStart(2, 0);
   const days = moddiv(uptime, 86400);
 
   if (days > 0) {
-    return `${days} d ${hours} h ${minutes} m ${seconds} s`;
+    return `${days} d ${hours} h ${minutes} m`;
   } else if (hours > 0) {
     return `${hours} h ${minutes} m ${seconds} s`;
   }
@@ -26,18 +26,15 @@ const formatUptime = (uptime) => {
   return `${minutes} m ${seconds} s`;
 };
 
+const cardIcon = (<FontAwesomeIcon className="fa-2x" icon={faClock} />);
+
 const Uptime = ({ uptime, ...props }) => {
   return (
     <StatsCard
       label={"System Uptime"}
       value={formatUptime(uptime)}
       background={"#f8c04e"}
-      icon={
-        <FontAwesomeIcon
-          className="fa-2x"
-          icon={faClock}
-        />
-      }
+      icon={cardIcon}
     />
   );
 };

@@ -11,6 +11,8 @@ const statusIcon = (icon) => (
   </span>
 );
 
+const cardIcon = (<FontAwesomeIcon className="fa-2x" icon={faServer} />);
+
 const MqttStatus = ({ brokerStatus, ...props }) => {
 
   const status_text = (brokerStatus) ? "Online" : "Offline";
@@ -27,12 +29,7 @@ const MqttStatus = ({ brokerStatus, ...props }) => {
       label={"MQTT Broker"}
       value={status}
       background={'#0abde3'}
-      icon={
-        <FontAwesomeIcon
-          className="fa-2x"
-          icon={faServer}
-        />
-      }
+      icon={cardIcon}
     />
   );
 };

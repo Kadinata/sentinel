@@ -20,7 +20,7 @@ const formatStartTime = (startTime) => {
   const days = moddiv(delta, 86400);
 
   if (days > 0) {
-    return `${days} d ${hours} h ${minutes} m ${seconds} s`;
+    return `${days} d ${hours} h ${minutes} m`;
   } else if (hours > 0) {
     return `${hours} h ${minutes} m ${seconds} s`;
   }
@@ -28,18 +28,15 @@ const formatStartTime = (startTime) => {
   return `${minutes} m ${seconds} s`;
 };
 
+const cardIcon = (<FontAwesomeIcon className="fa-2x" icon={faServer} />);
+
 const StartTime = ({ startTime, ...props }) => {
   return (
     <StatsCard
       label={"Server Uptime"}
       value={formatStartTime(startTime)}
       background={"#0abde3"}
-      icon={
-        <FontAwesomeIcon
-          className="fa-2x"
-          icon={faServer}
-        />
-      }
+      icon={cardIcon}
     />
   );
 };

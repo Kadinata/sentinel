@@ -4,6 +4,8 @@ import { StatsCard } from '../../../components/common/Card';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCalendarAlt } from '@fortawesome/free-regular-svg-icons';
 
+const cardIcon = (<FontAwesomeIcon className="fa-2x" icon={faCalendarAlt} />);
+
 const SystemTime = ({ time, ...props }) => {
   const date = new Date(time);
   const date_options = { weekday: 'short', year: 'numeric', month: 'long', day: 'numeric' };
@@ -14,12 +16,7 @@ const SystemTime = ({ time, ...props }) => {
       label={date.toLocaleDateString('default', date_options)}
       value={date.toLocaleTimeString('default', time_options)}
       background={"#e67e22"}
-      icon={
-        <FontAwesomeIcon
-          className="fa-2x"
-          icon={faCalendarAlt}
-        />
-      }
+      icon={cardIcon}
     />
   );
 };
