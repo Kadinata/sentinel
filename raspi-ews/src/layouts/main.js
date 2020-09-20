@@ -8,7 +8,6 @@ const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
     minHeight: '100vh',
-    color: '#E9E9E9',
     fontSize: 'calc(10px + 2vmin)',
     flexGrow: 1,
   },
