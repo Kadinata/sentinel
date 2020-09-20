@@ -2,7 +2,7 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Typography, Grid } from '@material-ui/core';
 
-import useSystemInfo from './useSystemInfo';
+import { useSystemInfo } from './hooks';
 import { ErrorDisplay, ContentDisplay } from './SystemInfo';
 import { Loading } from '../common';
 
@@ -39,7 +39,7 @@ const SystemInfo = ({ ...props }) => {
 
   return (
     <Grid container direction="column" wrap="nowrap" alignItems="stretch" spacing={0} className={classes.root}>
-      
+
       <PageTitle>System Information</PageTitle>
 
       <Loading show={!!isLoading}>

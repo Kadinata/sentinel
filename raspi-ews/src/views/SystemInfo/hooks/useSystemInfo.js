@@ -1,5 +1,5 @@
 import React from 'react';
-import Endpoint from '../../services/Endpoint';
+import Endpoint from '../../../services/Endpoint';
 
 const ENDPOINT_SYSINFO = 'api/v1/sysinfo';
 const ENDPOINT_STREAM = 'api/v1/sysinfo/stream';
