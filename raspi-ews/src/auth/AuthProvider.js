@@ -1,32 +1,46 @@
 import React from 'react';
 import AuthService from './Auth';
-import { getAuthData } from './utils';
+import { getAuthToken, removeToken } from './utils';
 
 export const AuthContext = React.createContext(null);
 
 const getInitialData = () => {
-  const user = getAuthData();
-  return { user };
+  const user = null;
+  const token = getAuthToken();
+  return { user, token };
 };
 
 const AuthDataProvider = (props) => {
 
   const [authData, setAuthData] = React.useState(getInitialData());
+  const [authCheckComplete, setAuthCheckState] = React.useState(false);
 
   const checkAuthState = React.useCallback(async () => {
+    const token = getAuthToken();
     try {
       const user = await AuthService.CheckAuthState();
-      setAuthData({ user });
+      setAuthData(prevState => ({ ...prevState, user, token }));
     } catch (err) {
       const user = null;
-      setAuthData({ user });
+      const token = null;
+      removeToken();
+      setAuthData(prevState => ({ ...prevState, user, token }));
     }
+    setAuthCheckState(true);
   }, []);
 
-  React.useEffect(() => { checkAuthState() }, []);
+  React.useEffect(() => {
+    console.log('useEffect() -> checkAuthState');
+    checkAuthState();
+  }, [checkAuthState]);
 
-  const onLogout = () => setAuthData({ user: null });
-  // const onLogin = (newData) => setAuthData((prevData) => ({ ...prevData, ...newData }));
+  const onLogout = () => {
+    const user = null;
+    const token = null;
+    removeToken();
+    setAuthData(prevState => ({ ...prevState, user, token }));
+  }
+
   const onLogin = () => checkAuthState();
 
   const handleLogin = async (username, password) => {
@@ -39,7 +53,8 @@ const AuthDataProvider = (props) => {
     }
   };
 
-  const authDataValue = { ...authData, onLogin, handleLogin, onLogout };
+  const authDataValue = { ...authData, authCheckComplete, onLogin, handleLogin, onLogout };
+  console.log('AuthDataProvider()', authData, {authCheckComplete});
   return (<AuthContext.Provider value={authDataValue} {...props} />);
 };
 

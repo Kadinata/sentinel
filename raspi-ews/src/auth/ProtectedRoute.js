@@ -4,7 +4,8 @@ import { useAuthDataContext } from './AuthProvider';
 
 const ProtectedRoute = ({ children, ...rest }) => {
 
-  const { user } = useAuthDataContext();
+  const { user, authCheckComplete } = useAuthDataContext();
+  if(!authCheckComplete) return null;
 
   if (!user) {
     return (<Redirect to="/login" />);

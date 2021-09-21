@@ -7,6 +7,12 @@ const getAuthData = () => {
   return parseJWT(jwt_cookie);
 };
 
+const removeToken = () => {
+  Cookies.remove('jwt');
+};
+
+const getAuthToken = () => (Cookies.get('jwt') || null);
+
 const parseJWT = (token) => {
   const base64Url = token.split('.')[1];
   const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
@@ -19,4 +25,6 @@ const parseJWT = (token) => {
 
 export {
   getAuthData,
+  getAuthToken,
+  removeToken,
 };

@@ -2,7 +2,7 @@ import Endpoint from '../services/Endpoint';
 
 const Login = async (username, password) => {
   const url = 'api/v1/auth/login';
-  const { auth, token, message } = await Endpoint.postData(url, { username, password });
+  const { auth, message } = await Endpoint.postData(url, { username, password });
   return { success: auth, message };
 };
 
