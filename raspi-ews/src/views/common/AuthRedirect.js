@@ -7,13 +7,13 @@ const useAuthRedirect = () => {
 
   const [isLoading, setLoading] = React.useState(true);
   const [loggedIn, setLoggedIn] = React.useState(false);
-  const { user } = useAuthDataContext();
+  const { user, token, authCheckComplete } = useAuthDataContext();
 
   React.useEffect(() => {
     setLoading(true);
-    setLoggedIn(!!user);
-    setLoading(false);
-  }, []);
+    setLoggedIn((!!user && !!token));
+    setLoading(!authCheckComplete);
+  }, [user, token, authCheckComplete]);
 
   return { isLoading, loggedIn };
 };
@@ -21,7 +21,7 @@ const useAuthRedirect = () => {
 const AuthRedirect = ({ redirect, ...rest }) => {
   const { isLoading, loggedIn } = useAuthRedirect();
 
-  if (loggedIn) {
+  if (loggedIn && !isLoading) {
     return (<Redirect to={redirect} />);
   }
 

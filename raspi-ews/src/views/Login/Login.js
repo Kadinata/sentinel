@@ -25,7 +25,6 @@ const RedirectAfter = '/test';
 const LoginView = (props) => {
 
   const classes = useStyles();
-
   const { handleSubmit, handleSuccess } = useLoginHandler(RedirectAfter);
 
   return (
