@@ -1,6 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-
+import classnames from 'classnames';
 import {
   Card,
   CardContent,
@@ -52,7 +52,7 @@ const renderIcon = ({ icon, background }, classes) => {
   background = background || classes.iconContainer.background;
 
   return (
-    <CardContent className={[classes.content, classes.iconContainer]} style={{ background }}>
+    <CardContent className={classnames(classes.content, classes.iconContainer)} style={{ background }}>
       <Avatar variant="rounded" className={classes.avatar}>
         {icon}
       </Avatar>
@@ -68,7 +68,7 @@ const StatsCard = ({ label, value, ...props }) => {
     <Card className={classes.card}>
       {renderIcon(props, classes)}
 
-      <CardContent className={[classes.content, classes.w100]}>
+      <CardContent className={`${classes.content} ${classes.w100}`}>
         <Grid container spacing={2} justify="flex-start" alignItems="center">
           <Grid item className={classes.w100}>
             <Typography variant="subtitle1" align="left" noWrap>

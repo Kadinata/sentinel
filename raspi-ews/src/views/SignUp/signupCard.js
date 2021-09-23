@@ -57,7 +57,7 @@ const SignupCard = ({ onSubmit, onError, onSuccess, ...props }) => {
       default:
         return;
     }
-  }, [state, errors]);
+  }, [state, errors, onError, onSuccess]);
 
   return (
     <DisplayCard
@@ -139,7 +139,7 @@ const SignupCard = ({ onSubmit, onError, onSuccess, ...props }) => {
           className={classes.submitButton}
         >
           Create Account
-          </SubmitButton>
+        </SubmitButton>
       </form>
     </DisplayCard>
   );

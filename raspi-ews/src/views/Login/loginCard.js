@@ -63,7 +63,7 @@ const LoginCard = ({ onSubmit, onError, onSuccess, ...props }) => {
       default:
         return;
     }
-  }, [state, errors]);
+  }, [state, errors, onSuccess, onError]);
 
   return (
     <DisplayCard

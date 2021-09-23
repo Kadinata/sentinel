@@ -1,7 +1,7 @@
-// const HOSTNAME = 'raspberrypi.local';
-// const PORT = 3000;
-const HOSTNAME = 'localhost';
-const PORT = 3333;
+const HOSTNAME = 'raspberrypi.local';
+const PORT = 3000;
+// const HOSTNAME = 'localhost';
+// const PORT = 3333;
 
 const ENDPOINT_BASE = `http://${HOSTNAME}:${PORT}`;
 
