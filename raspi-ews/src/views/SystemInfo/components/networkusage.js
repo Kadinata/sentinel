@@ -1,5 +1,4 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core';
 import {
   Grid,
   Typography,
@@ -7,7 +6,7 @@ import {
 import { DisplayCard } from '../../../components/common/Card';
 import { Table, TableRow, TableBody, TableCell } from '../../../components/common/Table';
 import { formatBytes } from '../../../utils';
-import { useSystemInfoContext } from '../SystemInfoProvider';
+import { useDataStreamContext } from '../SysInfoStreamProvider';
 
 const cardTitle = (
   <Typography component="h5" variant="h5" align="left">
@@ -59,7 +58,7 @@ const NetworkDisplay = ({ net_if, classes }) => {
 };
 
 const NetworkUsage = (props) => {
-  const { data = {} } = useSystemInfoContext();
+  const data = useDataStreamContext();
   const { netstats = {} } = data;
 
   const network_interfaces = netstats.map((net_if, key) => (<NetworkDisplay net_if={net_if} key={key} />));

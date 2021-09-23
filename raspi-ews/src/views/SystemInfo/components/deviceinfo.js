@@ -1,5 +1,4 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core';
 import {
   Grid,
   Typography,
@@ -7,16 +6,6 @@ import {
 import { DisplayCard } from '../../../components/common/Card';
 import { Table, TableBody, TableRow, TableCell } from '../../../components/common/Table';
 import { useSystemInfoContext } from '../SystemInfoProvider';
-
-const useStyles = makeStyles((theme) => ({
-  card: {
-    height: '100%',
-  },
-  avatar: {
-    height: 40,
-    width: 40
-  },
-}));
 
 const RowItem = ({ label, value, classes }) => {
   return (
@@ -43,8 +32,6 @@ const DeviceInfo = (props) => {
   const { cpu_info = {}, os_info = {} } = data;
 
   const { hostname, host_ip, type, release, processor, distribution } = { ...cpu_info, ...os_info };
-
-  console.log(`Rendering device info ${new Date()}`);
 
   return (
     <DisplayCard title={cardTitle}>

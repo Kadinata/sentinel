@@ -6,7 +6,7 @@ import {
 import { DisplayCard } from '../../../components/common/Card';
 import PercentDisplay from './percentDisplay';
 import { formatBytes } from '../../../utils';
-import { useSystemInfoContext } from '../SystemInfoProvider';
+import { useDataStreamContext} from '../SysInfoStreamProvider';
 
 const cardTitle = (
   <Typography component="h5" variant="h5" align="left">
@@ -34,8 +34,8 @@ const StorageDisplay = ({ partition }) => {
 }
 
 const Storage = (props) => {
-  const { data = {} } = useSystemInfoContext();
-  const { hdd_info = {} } = data;
+  const data = useDataStreamContext();
+  const { hdd_info = {} } = data || [];
 
   const storages = hdd_info.map((partition, key) => <StorageDisplay partition={partition} key={key} />);
 

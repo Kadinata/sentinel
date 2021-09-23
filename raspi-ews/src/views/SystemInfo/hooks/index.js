@@ -1,6 +1,6 @@
 import useSystemInfo from './useSystemInfo';
-import useSystemInfoData from './useSystemInfoData';
+import useSysInfoStream from './useSysInfoStream';
 export {
   useSystemInfo,
-  useSystemInfoData,
+  useSysInfoStream,
 };

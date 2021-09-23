@@ -5,7 +5,7 @@ import {
 import { DisplayCard } from '../../../components/common/Card';
 import PercentDisplay from './percentDisplay';
 import { formatBytes } from '../../../utils';
-import { useSystemInfoContext } from '../SystemInfoProvider';
+import { useDataStreamContext } from '../SysInfoStreamProvider';
 
 const cardTitle = (
   <Typography component="h5" variant="h5" align="left">
@@ -14,7 +14,7 @@ const cardTitle = (
 );
 
 const Memory = (props) => {
-  const { data = {} } = useSystemInfoContext();
+  const data = useDataStreamContext();
   const { mem_info = {} } = data;
   const { total_mem, free_mem, percent } = mem_info;
 

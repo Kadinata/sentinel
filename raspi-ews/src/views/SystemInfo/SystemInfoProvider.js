@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSystemInfo } from './hooks';
+// import { useSystemInfo } from './hooks';
 
 export const SystemInfoContext = React.createContext({});
 

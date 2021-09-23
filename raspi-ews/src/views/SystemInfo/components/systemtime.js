@@ -2,12 +2,12 @@ import React from 'react';
 import { StatsCard } from '../../../components/common/Card';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCalendarAlt } from '@fortawesome/free-regular-svg-icons';
-import { useSystemInfoContext } from '../SystemInfoProvider';
+import { useTimeStreamContext } from '../SysInfoStreamProvider';
 
 const cardIcon = (<FontAwesomeIcon className="fa-2x" icon={faCalendarAlt} />);
 
 const SystemTime = ({ time, ...props }) => {
-  const { data = {} } = useSystemInfoContext();
+  const data = useTimeStreamContext();
   const { localtime = null } = data;
 
   const date = (localtime !== null) ? new Date(localtime) : null;

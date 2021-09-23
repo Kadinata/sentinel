@@ -4,7 +4,7 @@ import {
 } from '@material-ui/core';
 import { DisplayCard } from '../../../components/common/Card';
 import PercentDisplay from './percentDisplay';
-import { useSystemInfoContext } from '../SystemInfoProvider';
+import { useDataStreamContext } from '../SysInfoStreamProvider';
 
 const percentUsage = (usages) => {
   let usageSum = 0;
@@ -24,8 +24,8 @@ const cardTitle = (
 
 const CpuStatus = (props) => {
 
-  const { data = {} } = useSystemInfoContext();
-  const { cpu_info = {}, cpu_usage = {} } = data;
+  const data = useDataStreamContext();
+  const { cpu_info = {}, cpu_usage = {} } = data || {};
   const { load_1, load_5, load_15, usages } = { ...cpu_info, ...cpu_usage };
   const pct_usage = percentUsage(usages);
 

@@ -2,7 +2,6 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Grid } from '@material-ui/core';
 import { ErrorBar } from '../../components/common/Alert';
-import { useSystemInfoContext } from './SystemInfoProvider';
 
 import {
   CpuTemp,
@@ -47,15 +46,7 @@ const ErrorDisplay = ({ error, ...props }) => {
 };
 
 const ContentDisplay = ({ ...props }) => {
-  console.debug(`Rendering: ContentDisplay`);
-
   const classes = useStyles();
-
-  // return null;
-
-  const { data } = useSystemInfoContext();
-
-  if ((!data) || (Object.keys(data).length === 0)) return null;
 
   return (
     <React.Fragment>

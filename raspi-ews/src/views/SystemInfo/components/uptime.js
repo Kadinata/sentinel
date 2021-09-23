@@ -2,7 +2,7 @@ import React from 'react';
 import { StatsCard } from '../../../components/common/Card';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faClock } from '@fortawesome/free-regular-svg-icons';
-import { useSystemInfoContext } from '../SystemInfoProvider';
+import { useTimeStreamContext } from '../SysInfoStreamProvider';
 
 const moddiv = (dividend, divisor) => ((dividend - (dividend % divisor)) / divisor);
 
@@ -29,7 +29,7 @@ const formatUptime = (uptime) => {
 const cardIcon = (<FontAwesomeIcon className="fa-2x" icon={faClock} />);
 
 const Uptime = (props) => {
-  const { data = {} } = useSystemInfoContext();
+  const data = useTimeStreamContext();
   const { uptime = null } = data;
 
   return (
