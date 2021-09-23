@@ -1,7 +1,8 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Typography, Grid } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
 import { ErrorBar } from '../../components/common/Alert';
+import { useSystemInfoContext } from './SystemInfoProvider';
 
 import {
   CpuTemp,
@@ -10,7 +11,6 @@ import {
   DeviceInfo,
   Memory,
   NetworkUsage,
-  MqttStatus,
   StartTime,
   CpuStatus,
   SystemTime
@@ -46,50 +46,55 @@ const ErrorDisplay = ({ error, ...props }) => {
   );
 };
 
-const ContentDisplay = ({ data, ...props }) => {
-  const classes = useStyles();
-  if (!data) return null;
+const ContentDisplay = ({ ...props }) => {
+  console.debug(`Rendering: ContentDisplay`);
 
-  const { os_info, cpu_info, cpu_usage, hdd_info, mem_info, netstats, uptime, localtime, startTime, mqtt_broker } = data;
+  const classes = useStyles();
+
+  // return null;
+
+  const { data } = useSystemInfoContext();
+
+  if ((!data) || (Object.keys(data).length === 0)) return null;
 
   return (
     <React.Fragment>
 
       <Grid container item spacing={0} alignItems="stretch" justify="space-between">
         <Grid item lg={3} md={6} sm={6} xs={12} className={classes.gridItem}>
-          <CpuTemp temperature={cpu_info.cpu_temp} />
+          <CpuTemp />
         </Grid>
         <Grid item lg={3} md={6} sm={6} xs={12} className={classes.gridItem}>
-          <Uptime uptime={uptime} />
+          <Uptime />
         </Grid>
         <Grid item lg={3} md={6} sm={6} xs={12} className={classes.gridItem}>
           {/* <MqttStatus brokerStatus={mqtt_broker.online} /> */}
-          <StartTime startTime={startTime} />
+          <StartTime />
         </Grid>
         <Grid item lg={3} md={6} sm={6} xs={12} className={classes.gridItem}>
-          <SystemTime time={localtime} />
+          <SystemTime />
         </Grid>
       </Grid>
 
       <Grid container item spacing={0} alignItems="stretch" justify="space-between" lg={4} sm={12} xs={12}>
         <Grid item lg={12} md={6} xs={12} className={classes.gridItem}>
-          <DeviceInfo data={{ ...cpu_info, ...os_info }} />
+          <DeviceInfo />
         </Grid>
         <Grid item lg={12} md={6} xs={12} className={classes.gridItem}>
-          <CpuStatus data={{ ...cpu_info, ...cpu_usage }} />
+          <CpuStatus />
         </Grid>
       </Grid>
 
       <Grid item lg md={6} sm={12} xs={12} className={classes.gridItem}>
-        <Storage data={hdd_info} />
+        <Storage />
       </Grid>
 
       <Grid container item spacing={0} alignItems="stretch" justify="space-between" lg md={6} sm={12} xs={12}>
         <Grid item lg={12} md={12} xs={12} className={classes.gridItem}>
-          <Memory data={mem_info} />
+          <Memory />
         </Grid>
         <Grid item lg={12} md={12} xs={12} className={classes.gridItem}>
-          <NetworkUsage data={netstats} />
+          <NetworkUsage />
         </Grid>
       </Grid>
     </React.Fragment>

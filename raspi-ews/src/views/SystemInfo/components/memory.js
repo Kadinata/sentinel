@@ -1,12 +1,11 @@
 import React from 'react';
-
 import {
   Typography,
 } from '@material-ui/core';
-
 import { DisplayCard } from '../../../components/common/Card';
 import PercentDisplay from './percentDisplay';
 import { formatBytes } from '../../../utils';
+import { useSystemInfoContext } from '../SystemInfoProvider';
 
 const cardTitle = (
   <Typography component="h5" variant="h5" align="left">
@@ -14,8 +13,10 @@ const cardTitle = (
   </Typography>
 );
 
-const Memory = ({ data }) => {
-  const { total_mem, free_mem, percent } = data;
+const Memory = (props) => {
+  const { data = {} } = useSystemInfoContext();
+  const { mem_info = {} } = data;
+  const { total_mem, free_mem, percent } = mem_info;
 
   const total = formatBytes(total_mem);
   const free = formatBytes(free_mem);

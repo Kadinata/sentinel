@@ -1,10 +1,14 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Typography, Grid } from '@material-ui/core';
-
-import { useSystemInfo } from './hooks';
 import { ErrorDisplay, ContentDisplay } from './SystemInfo';
 import { Loading } from '../common';
+import {
+  withSystemInfoProvider,
+  useSystemInfoContext,
+} from './SystemInfoProvider';
+import SystemInfoProvider from './SystemInfoProvider';
+import { useSystemInfo } from './hooks';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -34,9 +38,17 @@ const PageTitle = ({ children, ...props }) => {
 
 const SystemInfo = ({ ...props }) => {
 
+  const countRenderRef = React.useRef(1);
+
   const classes = useStyles();
   const { data, error, isLoading } = useSystemInfo();
+  
 
+  React.useEffect(function afterRender() {
+    countRenderRef.current++;
+    console.debug('Rendering: SystemInfo', countRenderRef.current, {data, isLoading});
+  });
+  
   return (
     <Grid container direction="column" wrap="nowrap" alignItems="stretch" spacing={0} className={classes.root}>
 
@@ -45,7 +57,9 @@ const SystemInfo = ({ ...props }) => {
       <Loading show={!!isLoading}>
         <Grid container item spacing={0} alignItems="stretch" justify="space-between">
           <ErrorDisplay error={error} />
-          <ContentDisplay data={data} />
+          <SystemInfoProvider data={data}>
+            <ContentDisplay />
+          </SystemInfoProvider>
         </Grid>
       </Loading>
 

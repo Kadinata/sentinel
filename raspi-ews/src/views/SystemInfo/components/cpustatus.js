@@ -1,11 +1,10 @@
 import React from 'react';
-
 import {
   Typography,
 } from '@material-ui/core';
-
 import { DisplayCard } from '../../../components/common/Card';
 import PercentDisplay from './percentDisplay';
+import { useSystemInfoContext } from '../SystemInfoProvider';
 
 const percentUsage = (usages) => {
   let usageSum = 0;
@@ -23,9 +22,11 @@ const cardTitle = (
   </Typography>
 );
 
-const CpuStatus = ({ data }) => {
+const CpuStatus = (props) => {
 
-  const { load_1, load_5, load_15, usages } = data;
+  const { data = {} } = useSystemInfoContext();
+  const { cpu_info = {}, cpu_usage = {} } = data;
+  const { load_1, load_5, load_15, usages } = { ...cpu_info, ...cpu_usage };
   const pct_usage = percentUsage(usages);
 
   const rowValues = [

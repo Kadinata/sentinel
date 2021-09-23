@@ -1,2 +1,6 @@
 import useSystemInfo from './useSystemInfo';
-export { useSystemInfo };
+import useSystemInfoData from './useSystemInfoData';
+export {
+  useSystemInfo,
+  useSystemInfoData,
+};

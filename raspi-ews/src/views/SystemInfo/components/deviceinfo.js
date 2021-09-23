@@ -1,14 +1,12 @@
 import React from 'react';
-
 import { makeStyles } from '@material-ui/core';
-
 import {
   Grid,
   Typography,
 } from '@material-ui/core';
-
 import { DisplayCard } from '../../../components/common/Card';
 import { Table, TableBody, TableRow, TableCell } from '../../../components/common/Table';
+import { useSystemInfoContext } from '../SystemInfoProvider';
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -40,9 +38,11 @@ const cardTitle = (
 );
 
 
-const DeviceInfo = ({ data, ...props }) => {
-  const classes = useStyles();
-  const { hostname, host_ip, type, release, processor, distribution } = data;
+const DeviceInfo = (props) => {
+  const { data = {} } = useSystemInfoContext();
+  const { cpu_info = {}, os_info = {} } = data;
+
+  const { hostname, host_ip, type, release, processor, distribution } = { ...cpu_info, ...os_info };
 
   console.log(`Rendering device info ${new Date()}`);
 

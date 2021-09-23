@@ -1,18 +1,13 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core';
-
 import {
   Grid,
   Typography,
 } from '@material-ui/core';
-
 import { DisplayCard } from '../../../components/common/Card';
 import { Table, TableRow, TableBody, TableCell } from '../../../components/common/Table';
 import { formatBytes } from '../../../utils';
-
-const useStyles = makeStyles((theme) => ({
-
-}));
+import { useSystemInfoContext } from '../SystemInfoProvider';
 
 const cardTitle = (
   <Typography component="h5" variant="h5" align="left">
@@ -63,10 +58,11 @@ const NetworkDisplay = ({ net_if, classes }) => {
   );
 };
 
-const NetworkUsage = ({ data, ...props }) => {
-  const classes = useStyles();
+const NetworkUsage = (props) => {
+  const { data = {} } = useSystemInfoContext();
+  const { netstats = {} } = data;
 
-  const network_interfaces = data.map((net_if, key) => (<NetworkDisplay net_if={net_if} key={key} />));
+  const network_interfaces = netstats.map((net_if, key) => (<NetworkDisplay net_if={net_if} key={key} />));
 
   return (
     <DisplayCard title={cardTitle}>

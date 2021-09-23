@@ -1,13 +1,12 @@
 import React from 'react';
-
 import {
   Grid,
   Typography,
 } from '@material-ui/core';
-
 import { DisplayCard } from '../../../components/common/Card';
 import PercentDisplay from './percentDisplay';
 import { formatBytes } from '../../../utils';
+import { useSystemInfoContext } from '../SystemInfoProvider';
 
 const cardTitle = (
   <Typography component="h5" variant="h5" align="left">
@@ -34,9 +33,11 @@ const StorageDisplay = ({ partition }) => {
   );
 }
 
-const Storage = ({ data }) => {
+const Storage = (props) => {
+  const { data = {} } = useSystemInfoContext();
+  const { hdd_info = {} } = data;
 
-  const storages = data.map((partition, key) => <StorageDisplay partition={partition} key={key} />);
+  const storages = hdd_info.map((partition, key) => <StorageDisplay partition={partition} key={key} />);
 
   return (
     <DisplayCard title={cardTitle} >

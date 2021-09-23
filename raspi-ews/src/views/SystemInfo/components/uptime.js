@@ -1,8 +1,8 @@
 import React from 'react';
 import { StatsCard } from '../../../components/common/Card';
-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faClock } from '@fortawesome/free-regular-svg-icons';
+import { useSystemInfoContext } from '../SystemInfoProvider';
 
 const moddiv = (dividend, divisor) => ((dividend - (dividend % divisor)) / divisor);
 
@@ -28,7 +28,10 @@ const formatUptime = (uptime) => {
 
 const cardIcon = (<FontAwesomeIcon className="fa-2x" icon={faClock} />);
 
-const Uptime = ({ uptime, ...props }) => {
+const Uptime = (props) => {
+  const { data = {} } = useSystemInfoContext();
+  const { uptime = null } = data;
+
   return (
     <StatsCard
       label={"System Uptime"}
