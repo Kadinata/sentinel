@@ -38,6 +38,8 @@ const SystemInfo = ({ ...props }) => {
   const classes = useStyles();
   const { data, error, isLoading } = useSystemInfo();
 
+  const PageContent = (error) ? (<ErrorDisplay error={error} />) : (<ContentDisplay />);
+
   return (
     <Grid container direction="column" wrap="nowrap" alignItems="stretch" spacing={0} className={classes.root}>
 
@@ -45,10 +47,9 @@ const SystemInfo = ({ ...props }) => {
 
       <Loading show={!!isLoading}>
         <Grid container item spacing={0} alignItems="stretch" justify="space-between">
-          <ErrorDisplay error={error} />
           <SystemInfoProvider data={data}>
             <SysInfoStreamProvider start={true} initialData={data}>
-              <ContentDisplay />
+              {PageContent}
             </SysInfoStreamProvider>
           </SystemInfoProvider>
         </Grid>

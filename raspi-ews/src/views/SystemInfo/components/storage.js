@@ -35,7 +35,7 @@ const StorageDisplay = ({ partition }) => {
 
 const Storage = (props) => {
   const data = useDataStreamContext();
-  const { hdd_info = {} } = data || [];
+  const { hdd_info = [] } = data;
 
   const storages = hdd_info.map((partition, key) => <StorageDisplay partition={partition} key={key} />);
 

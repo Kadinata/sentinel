@@ -59,7 +59,7 @@ const NetworkDisplay = ({ net_if, classes }) => {
 
 const NetworkUsage = (props) => {
   const data = useDataStreamContext();
-  const { netstats = {} } = data;
+  const { netstats = [] } = data;
 
   const network_interfaces = netstats.map((net_if, key) => (<NetworkDisplay net_if={net_if} key={key} />));
 

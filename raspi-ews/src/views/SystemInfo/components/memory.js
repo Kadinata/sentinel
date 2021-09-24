@@ -16,7 +16,7 @@ const cardTitle = (
 const Memory = (props) => {
   const data = useDataStreamContext();
   const { mem_info = {} } = data;
-  const { total_mem, free_mem, percent } = mem_info;
+  const { total_mem = 0, free_mem = 0, percent = 0 } = mem_info;
 
   const total = formatBytes(total_mem);
   const free = formatBytes(free_mem);

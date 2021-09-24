@@ -25,8 +25,13 @@ const cardTitle = (
 const CpuStatus = (props) => {
 
   const data = useDataStreamContext();
-  const { cpu_info = {}, cpu_usage = {} } = data || {};
-  const { load_1, load_5, load_15, usages } = { ...cpu_info, ...cpu_usage };
+  const { cpu_info = {}, cpu_usage = {} } = data;
+  const {
+    load_1 = 0,
+    load_5 = 0,
+    load_15 = 0,
+    usages = [],
+  } = { ...cpu_info, ...cpu_usage };
   const pct_usage = percentUsage(usages);
 
   const rowValues = [
