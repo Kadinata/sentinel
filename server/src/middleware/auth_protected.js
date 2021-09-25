@@ -5,7 +5,9 @@ const authProtected = (req, res, next) => {
   const session = false;
   passport.authenticate('jwt', { session }, (err, user) => {
 
-    if (!!user) return next();
+    if (!!user) {
+      return req.login(user, { session }, () => next());
+    }
 
     let message = '';
 
@@ -13,11 +15,11 @@ const authProtected = (req, res, next) => {
       console.error(`JWT auth error: ${err}`);
       message = 'An authentication error occurred.';
     } else {
-      console.error(`JWT auth not authenticated`);
+      console.error(`JWT auth not authenticated`, user);
       message = 'User not authenticated.';
     }
 
-    next(new Errors.Unauthorized(message));
+    return next(new Errors.Unauthorized(message));
   })(req, res, next);
 };
 

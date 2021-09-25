@@ -29,7 +29,9 @@ const login = (req, res, next) => {
 };
 
 const register = (req, res, next) => {
-  passport.authenticate('register', (err, user, info) => {
+  const session = false;
+
+  passport.authenticate('register', { session }, (err, user, info) => {
     if (err) {
       console.error(`Register Error: ${err}`);
     }
@@ -40,7 +42,7 @@ const register = (req, res, next) => {
       return next(new Errors.Forbidden(message));
     }
 
-    req.login(user, async () => {
+    req.login(user, { session }, async () => {
       const status = 'success';
       const message = 'User created';
       res.json({ status, message });
@@ -49,7 +51,13 @@ const register = (req, res, next) => {
   })(req, res, next);
 };
 
+const userAuth = (req, res, next) => {
+  const user = (req.user || null);
+  res.json({ user });
+};
+
 module.exports = {
   login,
   register,
+  userAuth,
 };

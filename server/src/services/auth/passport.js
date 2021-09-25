@@ -30,6 +30,12 @@ const jwtOpts = {
   secretOrKey: jwtSecret.secret,
 };
 
+const sanitize = (user) => {
+  if (!user) return null;
+  const { password, ...userdata } = user;
+  return userdata;
+};
+
 const registerHandler = async (username, password, done) => {
   try {
     const user = await utils.findUser(username);
@@ -45,7 +51,7 @@ const registerHandler = async (username, password, done) => {
       password: hashedPassword,
     });
 
-    return done(null, newUser);
+    return done(null, sanitize(newUser));
 
   } catch (err) {
     return done(err);
@@ -68,7 +74,7 @@ const loginHandler = async (username, password, done) => {
       const message = 'Incorrect username and/or password';
       return done(null, null, { message });
     }
-    return done(null, user);
+    return done(null, sanitize(user));
 
   } catch (err) {
     return done(err);
@@ -78,7 +84,7 @@ const loginHandler = async (username, password, done) => {
 const jwtHandler = async (jwtPayload, done) => {
   try {
     const user = await utils.findById(jwtPayload.id);
-    done(null, user || null);
+    done(null, sanitize(user));
   } catch (err) {
     done(err);
   }
