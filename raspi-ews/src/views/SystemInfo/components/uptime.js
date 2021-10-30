@@ -1,5 +1,5 @@
 import React from 'react';
-import { StatsCard } from '../../../components/common/Card';
+import { StatsCard } from '../../../common/components/Card';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faClock } from '@fortawesome/free-regular-svg-icons';
 import { useTimeStreamContext } from '../SysInfoStreamProvider';

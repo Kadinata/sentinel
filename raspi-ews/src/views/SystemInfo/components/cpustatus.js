@@ -2,7 +2,7 @@ import React from 'react';
 import {
   Typography,
 } from '@material-ui/core';
-import { DisplayCard } from '../../../components/common/Card';
+import { DisplayCard } from '../../../common/components/Card';
 import PercentDisplay from './percentDisplay';
 import { useDataStreamContext } from '../SysInfoStreamProvider';
 

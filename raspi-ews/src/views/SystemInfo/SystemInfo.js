@@ -1,7 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Grid } from '@material-ui/core';
-import { ErrorBar } from '../../components/common/Alert';
 
 import {
   CpuTemp,
@@ -16,12 +15,6 @@ import {
 } from './components';
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    padding: theme.spacing(3),
-    paddingTop: theme.spacing(2),
-    display: 'flex',
-    flex: 1,
-  },
   gridItem: {
     padding: theme.spacing(1),
     [theme.breakpoints.up('md')]: {
@@ -30,22 +23,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ErrorDisplay = ({ error, ...props }) => {
-  const classes = useStyles();
-  if (!error) return null;
-  console.log('error: ', error);
-  const { message } = error;
-  return (
-    <Grid container item alignItems="stretch" justify="flex-start" className={classes.gridItem}>
-      {/* <Typography>Error: Data failed to load</Typography> */}
-      <ErrorBar variant="filled" show>
-        {message}
-      </ErrorBar>
-    </Grid>
-  );
-};
-
-const ContentDisplay = ({ ...props }) => {
+const ContentDisplay = (props) => {
   const classes = useStyles();
 
   return (
@@ -92,4 +70,4 @@ const ContentDisplay = ({ ...props }) => {
   );
 };
 
-export { ErrorDisplay, ContentDisplay };
+export default ContentDisplay;

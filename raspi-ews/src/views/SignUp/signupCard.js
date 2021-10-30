@@ -6,12 +6,12 @@ import {
   CardMedia,
 } from '@material-ui/core';
 
-import { DisplayCard } from '../../components/common/Card';
-import { SubmitButton } from '../../components/common/Button';
+import { DisplayCard } from '../../common/components/Card';
+import { SubmitButton } from '../../common/components/Button';
 import {
   ErrorBar,
   SuccessBar,
-} from '../../components/common/Alert';
+} from '../../common/components/Alert';
 
 import { useSignupForm, useBtnState } from './hooks';
 import States from './FormStates';

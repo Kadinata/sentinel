@@ -8,11 +8,11 @@ const useSysInfoStream = ({ start, initialData = {} }) => {
 
   const [timeData, setTimeData] = React.useState({ uptime, localtime, startTime });
   const [data, setData] = React.useState(restData);
-  const [started, setStarted] = React.useState(false);
+  const [event, setEvent] = React.useState(null);
 
   React.useEffect(() => {
-    if (!start || started) return;
-    const event = Endpoint.subcsribe(ENDPOINT_STREAM, (data) => {
+    if (!start || (event !== null)) return;
+    const eventObj = Endpoint.subcsribe(ENDPOINT_STREAM, (data) => {
 
       const { uptime } = data;
 
@@ -21,9 +21,9 @@ const useSysInfoStream = ({ start, initialData = {} }) => {
       } else {
         setData((prevData) => ({ ...prevData, ...data }));
       }
-      setStarted(true);
+      setEvent(eventObj);
     });
-  }, [started, start, setTimeData, setData]);
+  }, [event, start, setTimeData, setData]);
 
   return { data, timeData };
 };

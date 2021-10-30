@@ -3,7 +3,7 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faServer, faCircle } from '@fortawesome/free-solid-svg-icons';
 
-import { StatsCard } from '../../../components/common/Card';
+import { StatsCard } from '../../../common/components/Card';
 
 const statusIcon = (icon) => (
   <span className="fa-layers">

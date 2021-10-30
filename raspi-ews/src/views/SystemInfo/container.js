@@ -1,11 +1,14 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Typography, Grid } from '@material-ui/core';
-import { ErrorDisplay, ContentDisplay } from './SystemInfo';
-import { Loading } from '../common';
+import { Grid } from '@material-ui/core';
+import { ErrorDisplay } from '../common';
+import ContentDisplay from './SystemInfo';
+import { Loading, PageTitle } from '../common';
 import SysInfoStreamProvider from './SysInfoStreamProvider';
 import SystemInfoProvider from './SystemInfoProvider';
-import { useSystemInfo } from './hooks';
+import { useResourceRequest } from '../../common/hooks';
+
+const ENDPOINT_SYSINFO = 'api/v1/sysinfo';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -14,42 +17,25 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flex: 1,
   },
-  gridItem: {
-    padding: theme.spacing(1),
-    [theme.breakpoints.up('md')]: {
-      padding: theme.spacing(2),
-    }
-  }
 }));
 
-const PageTitle = ({ children, ...props }) => {
-  const classes = useStyles();
-  return (
-    <Grid container item alignItems="stretch" justify="flex-start" className={classes.gridItem}>
-      <Typography component="h4" variant="h4" align="left">
-        {children}
-      </Typography>
-    </Grid>
-  );
-};
-
-const SystemInfo = ({ ...props }) => {
+const SystemInfo = (props) => {
 
   const classes = useStyles();
-  const { data, error, isLoading } = useSystemInfo();
-
-  const PageContent = (error) ? (<ErrorDisplay error={error} />) : (<ContentDisplay />);
+  const { data, error, completed } = useResourceRequest(ENDPOINT_SYSINFO);
 
   return (
     <Grid container direction="column" wrap="nowrap" alignItems="stretch" spacing={0} className={classes.root}>
 
       <PageTitle>System Information</PageTitle>
 
-      <Loading show={!!isLoading}>
+      <Loading show={!completed}>
         <Grid container item spacing={0} alignItems="stretch" justify="space-between">
           <SystemInfoProvider data={data}>
             <SysInfoStreamProvider start={true} initialData={data}>
-              {PageContent}
+              <ErrorDisplay error={error} >
+                <ContentDisplay />
+              </ErrorDisplay>
             </SysInfoStreamProvider>
           </SystemInfoProvider>
         </Grid>

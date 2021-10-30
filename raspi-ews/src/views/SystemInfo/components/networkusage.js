@@ -3,8 +3,8 @@ import {
   Grid,
   Typography,
 } from '@material-ui/core';
-import { DisplayCard } from '../../../components/common/Card';
-import { Table, TableRow, TableBody, TableCell } from '../../../components/common/Table';
+import { DisplayCard } from '../../../common/components/Card';
+import { Table, TableRow, TableBody, TableCell } from '../../../common/components/Table';
 import { formatBytes } from '../../../utils';
 import { useDataStreamContext } from '../SysInfoStreamProvider';
 

@@ -4,7 +4,7 @@ import {
   Grid,
   Typography,
 } from '@material-ui/core';
-import { PercentCircle } from '../../../components/common/ProgressCircle';
+import { PercentCircle } from '../../../common/components/ProgressCircle';
 
 const useStyles = makeStyles((theme) => ({
   container: {

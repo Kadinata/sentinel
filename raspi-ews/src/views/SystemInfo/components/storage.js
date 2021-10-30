@@ -3,7 +3,7 @@ import {
   Grid,
   Typography,
 } from '@material-ui/core';
-import { DisplayCard } from '../../../components/common/Card';
+import { DisplayCard } from '../../../common/components/Card';
 import PercentDisplay from './percentDisplay';
 import { formatBytes } from '../../../utils';
 import { useDataStreamContext} from '../SysInfoStreamProvider';

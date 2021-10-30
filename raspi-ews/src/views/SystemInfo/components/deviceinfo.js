@@ -3,8 +3,8 @@ import {
   Grid,
   Typography,
 } from '@material-ui/core';
-import { DisplayCard } from '../../../components/common/Card';
-import { Table, TableBody, TableRow, TableCell } from '../../../components/common/Table';
+import { DisplayCard } from '../../../common/components/Card';
+import { Table, TableBody, TableRow, TableCell } from '../../../common/components/Table';
 import { useSystemInfoContext } from '../SystemInfoProvider';
 
 const RowItem = ({ label, value, classes }) => {
