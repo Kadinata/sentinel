@@ -13,34 +13,46 @@ const FLAG_PIN_HIGH = (0x1 << 0);
 
 const LOCKED_PINS = [14, 15];
 
-class GpioService {
+class GpioBank {
 
   constructor() {
     this._pins = [];
-    this._initialized = false;
     this._disposed = false;
-  };
 
-  init() {
-    if (this._initialized) return;
-    this._initialized = true;
     let pinNum = 0;
     const direction = 'in';
+    const edge = 'both';
     const options = {
       debounceTimeout: DEBOUNCE_TIMEPOUT,
       reconfigureDirection: false,
     };
+
     for (pinNum = 0; pinNum < PIN_COUNT; pinNum++) {
       if (LOCKED_PINS.includes(pinNum)) {
         this._pins.push(null);
       } else {
-        this._pins.push(new Gpio(pinNum, direction, options));
+        this._pins.push(new Gpio(pinNum, direction, edge, options));
       }
     }
   }
 
+  static get FLAG_PIN_LOCKED() {
+    return FLAG_PIN_LOCKED;
+  }
+
+  static get FLAG_PIN_OENABLE() {
+    return FLAG_PIN_OENABLE;
+  }
+
+  static get FLAG_PIN_HIGH() {
+    return FLAG_PIN_HIGH;
+  }
+
+  pins() {
+    return this._pins;
+  }
+
   pin(num) {
-    if (!this._initialized) return null;
     if ((num < 0) || (num >= this._pins.length)) return null;
     return this._pins[num] || null;
   }
@@ -53,14 +65,25 @@ class GpioService {
     return LOCKED_PINS.includes(pinNum);
   }
 
+  getUsablePins() {
+    let result = [];
+    for (let pinNum = 0; pinNum < this._pins.length; pinNum++) {
+      if (this.pin(pinNum) !== null) {
+        result.push(pinNum);
+      }
+    }
+    return result;
+  }
+
   setPinState(pinNum, state) {
     const pin = this.pin(pinNum);
     const direction = (state & FLAG_PIN_OENABLE) ? 'out' : 'in';
     const level = (state & FLAG_PIN_HIGH) ? 1 : 0;
     if (pin === null) return;
     pin.setDirection(direction);
-    if (direction === 'in') return;
-    pin.writeSync(level);
+    if (direction === 'out') {
+      pin.writeSync(level);
+    }
   }
 
   getPinState(pinNum) {
@@ -77,11 +100,23 @@ class GpioService {
     return result;
   }
 
+  watch(pinNum, callback) {
+    const pin = this.pin(pinNum);
+    pin.watch((err, value) => callback(value, err));
+  }
+
+  unwatch(pinNum) {
+    const pin = this.pin(pinNum);
+    if (pin === null) return;
+    pin.unwatch();
+  }
+
   cleanup() {
-    if (!this._initialized || this._disposed) return;
+    if (this._disposed) return;
     this._disposed = true;
     this._pins.forEach((pin) => {
       if (pin === null) return;
+      pin.unwatch();
       if (pin.direction() === 'out') {
         pin.writeSync(0);
         pin.setDirection('in');
@@ -91,6 +126,5 @@ class GpioService {
   }
 }
 
-module.exports = GpioService;
-
+module.exports = GpioBank;
 //===========================================================================

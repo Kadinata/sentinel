@@ -1,7 +1,7 @@
 //===========================================================================
 //  
 //===========================================================================
-const GpioService = require('./gpio');
+const GpioService = require('./gpio_service');
 const process = require('process');
 
 let serviceInstance = null;
@@ -9,7 +9,6 @@ let serviceInstance = null;
 const init = async () => {
   if (serviceInstance) return null;
   serviceInstance = new GpioService();
-  serviceInstance.init();
   console.log('GPIO service initialized.');
   return serviceInstance;
 };
