@@ -9,8 +9,8 @@ const routes = [
     icon: <FontAwesomeIcon className="fa-sm" icon={faColumns} />,
   },
   {
-    title: "Test",
-    path: "/test",
+    title: "GPIO",
+    path: "/gpio",
     icon: <FontAwesomeIcon className="fa-sm" icon={faColumns} />,
   },
   {
