@@ -1,5 +1,4 @@
 const express = require('express');
-const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const path = require('path');
@@ -15,12 +14,17 @@ const port = process.env.port || 3000;
 
 const mqttService = new MqttService.mqttService();
 
+const corsOptions = {
+  origin: 'http://localhost:3000',
+  credentials:  true
+}
+
 app.set('json spaces', 2);
 
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(cookieParser());
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(passport.initialize());
 app.use(express.static(path.join(__dirname, 'public')));
 
