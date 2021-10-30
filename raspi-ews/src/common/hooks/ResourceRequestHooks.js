@@ -1,6 +1,16 @@
 import React from 'react';
 import Endpoint from '../../services/Endpoint';
 
+const serializeRequests = async ({ ...endpoints }) => {
+  const result = {};
+  for (const key in endpoints) {
+    const endpoint = endpoints[key];
+    const data = await Endpoint.fetchData(endpoint);
+    result[key] = data;
+  }
+  return result;
+};
+
 const createDataState = (initialData) => {
   const timestamp = 0;
   const data = initialData || {};
@@ -13,7 +23,7 @@ const updateDataState = (prevData, newData) => {
   return { timestamp, data };
 };
 
-export const useResourceRequest = (endpoint) => {
+export const useResourceRequest = (endpoint_schema) => {
 
   const [dataState, setDataState] = React.useState(createDataState({}));
   const [completed, setCompleted] = React.useState(false);
@@ -23,14 +33,14 @@ export const useResourceRequest = (endpoint) => {
     async () => {
       setCompleted(false);
       try {
-        const newData = await Endpoint.fetchData(endpoint);
+        const newData = await serializeRequests(endpoint_schema);
         setDataState(({ data }) => updateDataState(data, newData));
       } catch (err) {
         setError(err);
       }
       setCompleted(true);
     },
-    [setDataState, setCompleted, setError, endpoint]
+    [setDataState, setCompleted, setError, endpoint_schema]
   );
 
   React.useEffect(() => {
@@ -52,7 +62,7 @@ export const useResourceStream = (endpoint, enable, initialData = {}) => {
       setDataState(({ data }) => updateDataState(data, newData));
     });
     setEvent(eventObj);
-  }, [enable, event, setDataState, setEvent]);
+  }, [enable, event, endpoint, setDataState, setEvent]);
 
   return dataState;
 };

@@ -10,6 +10,10 @@ import { useResourceRequest } from '../../common/hooks';
 
 const ENDPOINT_SYSINFO = 'api/v1/sysinfo';
 
+const DATA_SCHEMA = {
+  sysinfo_data: ENDPOINT_SYSINFO,
+};
+
 const useStyles = makeStyles((theme) => ({
   root: {
     padding: theme.spacing(3),
@@ -22,7 +26,8 @@ const useStyles = makeStyles((theme) => ({
 const SystemInfo = (props) => {
 
   const classes = useStyles();
-  const { data, error, completed } = useResourceRequest(ENDPOINT_SYSINFO);
+  const { data, error, completed } = useResourceRequest(DATA_SCHEMA);
+  const { sysinfo_data } = data;
 
   return (
     <Grid container direction="column" wrap="nowrap" alignItems="stretch" spacing={0} className={classes.root}>
@@ -31,8 +36,8 @@ const SystemInfo = (props) => {
 
       <Loading show={!completed}>
         <Grid container item spacing={0} alignItems="stretch" justify="space-between">
-          <SystemInfoProvider data={data}>
-            <SysInfoStreamProvider start={true} initialData={data}>
+          <SystemInfoProvider data={sysinfo_data}>
+            <SysInfoStreamProvider start={true} initialData={sysinfo_data}>
               <ErrorDisplay error={error} >
                 <ContentDisplay />
               </ErrorDisplay>

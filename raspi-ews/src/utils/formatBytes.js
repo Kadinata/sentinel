@@ -1,4 +1,4 @@
-export default (value) => {
+const formatBytes = (value) => {
 
   let div_count = 0;
   let unit = '';
@@ -29,3 +29,5 @@ export default (value) => {
   }
   return { value, unit };
 };
+
+export default formatBytes;

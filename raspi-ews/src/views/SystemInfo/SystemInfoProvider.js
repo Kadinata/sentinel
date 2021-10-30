@@ -4,6 +4,7 @@ import React from 'react';
 export const SystemInfoContext = React.createContext({});
 
 const SystemInfoProvider = ({data, ...props}) => {
+  console.log({data});
   // const value = useSystemInfo();
   return (<SystemInfoContext.Provider value={{data}} {...props} />);
 };
