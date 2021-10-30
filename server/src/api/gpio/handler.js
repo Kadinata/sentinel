@@ -3,6 +3,7 @@
 //===========================================================================
 const GpioService = require('../../services/gpio');
 const Errors = require('../../utils/errors');
+const handlers = require('../utils');
 
 const gpio_middleware = (req, res, next) => {
   const gpio = GpioService.instance();
@@ -15,45 +16,28 @@ const gpio_middleware = (req, res, next) => {
   }
 };
 
-const get_handler = (req, res, next) => {
-  try {
-    const payload = {};
-    let pinNum = 0;
-    for (pinNum = 0; pinNum < req.gpio.pinCount(); pinNum++) {
-      payload[pinNum] = req.gpio.getPinState(pinNum);
-    }
-    res.json(payload);
-  } catch (err) {
-    console.log(err);
-    const message = 'An internal server error occurred.';
-    next(new Errors.GenericError(message));
-  }
+const get_gpio_pin_states = (req, res, next) => {
+  return handlers.basicGetHandler(
+    () => req.gpio.getPinStates()
+  )(req, res, next);
+};
+
+const get_usable_gpio_pins = (req, res, next) => {
+  return handlers.basicGetHandler(
+    () => req.gpio.getUsablePins()
+  )(req, res, next);
 };
 
 const post_handler = (req, res, next) => {
-  try {
-    const payload = req.body || {};
-    for (let pinNum in payload) {
-      const data = parseInt(payload[pinNum]);
-      pinNum = parseInt(pinNum);
-      if (isNaN(pinNum) || isNaN(data)) {
-        const message = 'Failed to parse POST data';
-        next(new Errors.GenericError(message));
-        return;
-      }
-      req.gpio.setPinState(pinNum, data);
-    }
-    res.sendStatus(200);
-  } catch (err) {
-    console.log(err);
-    const message = 'An internal server error occurred.';
-    next(new Errors.GenericError(message));
-  }
+  return handlers.basicPostHandler(
+    (payload) => req.gpio.setPinStates(payload)
+  )(req, res, next);
 };
 
 module.exports = {
   gpio_middleware,
-  get_handler,
+  get_gpio_pin_states,
+  get_usable_gpio_pins,
   post_handler,
 };
 

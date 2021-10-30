@@ -3,6 +3,7 @@
 //===========================================================================
 const express = require('express');
 const handlers = require('./handler');
+const streamHandler = require('./stream');
 const router = express.Router();
 
 const post_handlers = [
@@ -10,7 +11,9 @@ const post_handlers = [
 ];
 
 const get_handlers = [
-  ['/', handlers.get_handler],
+  ['/', handlers.get_gpio_pin_states],
+  ['/usable_pins', handlers.get_usable_gpio_pins],
+  ['/stream', streamHandler],
 ];
 
 router.use(handlers.gpio_middleware);
