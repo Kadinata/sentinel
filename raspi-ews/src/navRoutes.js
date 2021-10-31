@@ -1,17 +1,21 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faColumns } from '@fortawesome/free-solid-svg-icons';
+import {
+  faColumns,
+  faMicrochip,
+  faChartBar
+} from '@fortawesome/free-solid-svg-icons';
 
 const routes = [
   {
     title: "Dashboard",
     path: "/systems",
-    icon: <FontAwesomeIcon className="fa-sm" icon={faColumns} />,
+    icon: <FontAwesomeIcon className="fa-sm" icon={faChartBar} />,
   },
   {
     title: "GPIO",
     path: "/gpio",
-    icon: <FontAwesomeIcon className="fa-sm" icon={faColumns} />,
+    icon: <FontAwesomeIcon className="fa-sm" icon={faMicrochip} />,
   },
   {
     title: "Login",
