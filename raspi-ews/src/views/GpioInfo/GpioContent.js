@@ -4,7 +4,7 @@ import { GpioControl, GpioStatus } from './components';
 import { Grid } from '@material-ui/core';
 import PinLayout from './config/PinLayout';
 import GpioStreamProvider from './providers/GpioStreamProvider';
-import { useGpioStateContext } from './providers/GpioStateProvider';
+import { usePageDataContext } from '../common/PageDisplayManager';
 
 const useStyles = makeStyles((theme) => ({
   gridItem: {
@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
 
 const GpioContent = (props) => {
   const classes = useStyles();
-  const { gpioState } = useGpioStateContext();
+  const { gpioState } = usePageDataContext();
 
   console.log('[Rendering]: GpioContent ');
 

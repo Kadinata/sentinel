@@ -1,12 +1,11 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Grid } from '@material-ui/core';
-import { ErrorDisplay } from '../common';
 import ContentDisplay from './SystemInfo';
-import { Loading, PageTitle } from '../common';
+import { PageTitle } from '../common';
 import SysInfoStreamProvider from './SysInfoStreamProvider';
-import SystemInfoProvider from './SystemInfoProvider';
 import { useResourceRequest } from '../../common/hooks';
+import { PageDisplayManager } from '../common/PageDisplayManager';
 
 const ENDPOINT_SYSINFO = 'api/v1/sysinfo';
 
@@ -34,17 +33,11 @@ const SystemInfo = (props) => {
 
       <PageTitle>System Information</PageTitle>
 
-      <Loading show={!completed}>
-        <Grid container item spacing={0} alignItems="stretch" justify="space-between">
-          <SystemInfoProvider data={sysinfo_data}>
-            <SysInfoStreamProvider start={true} initialData={sysinfo_data}>
-              <ErrorDisplay error={error} >
-                <ContentDisplay />
-              </ErrorDisplay>
-            </SysInfoStreamProvider>
-          </SystemInfoProvider>
-        </Grid>
-      </Loading>
+      <PageDisplayManager loading={!completed} error={error} data={sysinfo_data}>
+        <SysInfoStreamProvider start={true} initialData={sysinfo_data}>
+          <ContentDisplay />
+        </SysInfoStreamProvider>
+      </PageDisplayManager>
 
     </Grid>
   );

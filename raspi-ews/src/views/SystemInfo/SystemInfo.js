@@ -27,8 +27,7 @@ const ContentDisplay = (props) => {
   const classes = useStyles();
 
   return (
-    <React.Fragment>
-
+    <Grid container item spacing={0} alignItems="stretch" justify="space-between">
       <Grid container item spacing={0} alignItems="stretch" justify="space-between">
         <Grid item lg={3} md={6} sm={6} xs={12} className={classes.gridItem}>
           <CpuTemp />
@@ -66,7 +65,7 @@ const ContentDisplay = (props) => {
           <NetworkUsage />
         </Grid>
       </Grid>
-    </React.Fragment>
+    </Grid>
   );
 };
 

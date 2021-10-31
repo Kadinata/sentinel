@@ -9,7 +9,7 @@ import {
   Grid,
   Typography,
 } from '@material-ui/core';
-import { useGpioStateContext } from '../providers/GpioStateProvider';
+import { usePageDataContext } from '../../common/PageDisplayManager';
 
 const cardTitle = (
   <Typography component="h5" variant="h5" align="left">
@@ -20,7 +20,7 @@ const cardTitle = (
 const GpioControl = ({ pinLayout, ...props }) => {
 
   const { handleChange, handleSubmit } = useGpioController();
-  const { usablePins = [] } = useGpioStateContext();
+  const { usablePins = [] } = usePageDataContext();
   const halfCount = usablePins.length / 2;
 
   console.log('[Rendering] GpioControl');

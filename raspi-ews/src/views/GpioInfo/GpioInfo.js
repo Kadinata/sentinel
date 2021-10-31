@@ -1,11 +1,11 @@
 import React from 'react';
 import { Grid } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import { Loading, PageTitle, ErrorDisplay } from '../common';
+import { PageTitle } from '../common';
+import { PageDisplayManager } from '../common/PageDisplayManager';
 import { useResourceRequest } from '../../common/hooks';
 
 import GpioContent from './GpioContent';
-import GpioStateProvider from './providers/GpioStateProvider';
 
 const ENDPOINT_GPIO = 'api/v1/gpio';
 const ENDPOINT_USABLE_PINS = 'api/v1/gpio/usable_pins';
@@ -35,13 +35,9 @@ const GpioInfo = (props) => {
     <Grid container direction="column" wrap="nowrap" alignItems="stretch" spacing={0} className={classes.root}>
       <PageTitle>{"GPIO Control & Status"}</PageTitle>
 
-      <Loading show={!completed}>
-        <GpioStateProvider value={value}>
-          <ErrorDisplay error={error} >
-            <GpioContent />
-          </ErrorDisplay>
-        </GpioStateProvider>
-      </Loading>
+      <PageDisplayManager loading={!completed} error={error} data={value}>
+        <GpioContent />
+      </PageDisplayManager>
 
     </Grid>
   );

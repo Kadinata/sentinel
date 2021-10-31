@@ -5,7 +5,7 @@ import {
 } from '@material-ui/core';
 import { DisplayCard } from '../../../common/components/Card';
 import { Table, TableBody, TableRow, TableCell } from '../../../common/components/Table';
-import { useSystemInfoContext } from '../SystemInfoProvider';
+import { usePageDataContext } from '../../common/PageDisplayManager';
 
 const RowItem = ({ label, value, classes }) => {
   return (
@@ -26,11 +26,9 @@ const cardTitle = (
   </Typography>
 );
 
-
 const DeviceInfo = (props) => {
-  const { data = {} } = useSystemInfoContext();
-  const { cpu_info = {}, os_info = {} } = data;
 
+  const { cpu_info = {}, os_info = {} } = usePageDataContext();
   const { hostname, host_ip, type, release, processor, distribution } = { ...cpu_info, ...os_info };
 
   return (
