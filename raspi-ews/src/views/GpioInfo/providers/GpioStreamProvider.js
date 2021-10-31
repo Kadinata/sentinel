@@ -16,6 +16,12 @@ const GpioStreamProvider = ({ enable, initialData = {}, ...props }) => {
   );
 };
 
-export const useGpioStreamContext = () => React.useContext(GpioStreamContext);
+export const useGpioStreamContext = () => {
+  const context = React.useContext(GpioStreamContext);
+  if (context === undefined) {
+    throw new Error('useGpioStreamContext must be used within an GpioStreamProvider.');
+  }
+  return context;
+}
 
 export default GpioStreamProvider;

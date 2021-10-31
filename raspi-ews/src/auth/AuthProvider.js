@@ -54,10 +54,16 @@ const AuthDataProvider = (props) => {
   };
 
   const authDataValue = { ...authData, authCheckComplete, onLogin, handleLogin, onLogout };
-  console.log('AuthDataProvider()', authData, {authCheckComplete});
+  console.log('AuthDataProvider()', authData, { authCheckComplete });
   return (<AuthContext.Provider value={authDataValue} {...props} />);
 };
 
-export const useAuthDataContext = () => React.useContext(AuthContext);
+export const useAuthDataContext = () => {
+  const context = React.useContext(AuthContext);
+  if (context === undefined) {
+    throw new Error('useAuthDataContext must be used within an AuthDataProvider.');
+  }
+  return context;
+}
 
 export default AuthDataProvider;

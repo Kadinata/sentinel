@@ -7,6 +7,12 @@ const NavProvider = ({ routes, ...props }) => {
   return (<NavContext.Provider value={{ routes: navRoutes }} {...props} />);
 };
 
-export const useNavContext = () => React.useContext(NavContext);
+export const useNavContext = () => {
+  const context = React.useContext(NavContext);
+  if (context === undefined) {
+    throw new Error('useNavContext must be used within a NavProvider.');
+  }
+  return context;
+}
 
 export default NavProvider;
