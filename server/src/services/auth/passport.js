@@ -1,16 +1,10 @@
 //===========================================================================
 //  
 //===========================================================================
-const bcrypt = require('bcrypt');
 const LocalStrategy = require('passport-local').Strategy;
 const JWTStrategy = require('passport-jwt').Strategy;
-const ExtractJWT = require('passport-jwt').ExtractJwt;
-
-const { User } = require('../../models');
 const jwtSecret = require('../../config/jwtConfig');
-const utils = require('./utils');
-
-const SALT_ROUNDS = 10;
+const auth = require('./auth');
 
 const extractCookie = (req) => {
   if (req && req.cookies) {
@@ -30,29 +24,14 @@ const jwtOpts = {
   secretOrKey: jwtSecret.secret,
 };
 
-const sanitize = (user) => {
-  if (!user) return null;
-  const { password, ...userdata } = user;
-  return userdata;
-};
-
 const registerHandler = async (username, password, done) => {
   try {
-    const user = await utils.findUser(username);
-
-    if (user != null) {
+    const user = await auth.createUser(username, password);
+    if (user === null) {
       const message = 'Username already taken';
-      return done(null, null, { message });
+      return done(null, false, {message});
     }
-
-    const hashedPassword = await bcrypt.hash(password, SALT_ROUNDS);
-    const newUser = await User.create({
-      username: username,
-      password: hashedPassword,
-    });
-
-    return done(null, sanitize(newUser));
-
+    return done(null, user);
   } catch (err) {
     return done(err);
   }
@@ -61,21 +40,12 @@ const registerHandler = async (username, password, done) => {
 const loginHandler = async (username, password, done) => {
 
   try {
-    const user = await utils.findUser(username);
-
+    const user = await auth.authenticateUser(username, password);
     if (user === null) {
       const message = 'Incorrect username and/or password';
-      return done(null, null, { message });
+      return done(null, false, { message });
     }
-
-    const passwordMatch = await bcrypt.compare(password, user.password);
-
-    if (passwordMatch !== true) {
-      const message = 'Incorrect username and/or password';
-      return done(null, null, { message });
-    }
-    return done(null, sanitize(user));
-
+    return done(null, user);
   } catch (err) {
     return done(err);
   }
@@ -83,8 +53,8 @@ const loginHandler = async (username, password, done) => {
 
 const jwtHandler = async (jwtPayload, done) => {
   try {
-    const user = await utils.findById(jwtPayload.id);
-    done(null, sanitize(user));
+    const user = await auth.findUserById(jwtPayload.id);
+    done(null, (user || false));
   } catch (err) {
     done(err);
   }

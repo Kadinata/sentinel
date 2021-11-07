@@ -56,8 +56,27 @@ const userAuth = (req, res, next) => {
   res.json({ user });
 };
 
+const updatePassword = async (req, res, next) => {
+  const user = (req.user || null);
+  const { currentPassword, newPassword } = req.body;
+  if (user === null) {
+    const message = 'Permission denied';
+    return next(new Errors.Forbidden(message));
+  }
+  const { error } = await authService.auth.updateUserPassword(user.id, currentPassword, newPassword);
+
+  if (error !== null) {
+    const { message } = error;
+    return next(new Errors.GenericError(message));
+  }
+  const status = 'success';
+  const message = 'Password Updated';
+  res.json({ status, message });
+};
+
 module.exports = {
   login,
   register,
   userAuth,
+  updatePassword,
 };

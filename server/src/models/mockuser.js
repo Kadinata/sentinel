@@ -8,6 +8,13 @@ const create = ({ username, password }) => {
   return users[`${id}`];
 };
 
+const update = (userId, { password, ...rest }) => {
+  const userData = findOne({ where: { id: userId } });
+  if (userData === null) return null;
+  users[`${userId}`] = {...userData, password};
+  return users[`${userId}`];
+};
+
 const findOne = ({ where: { id, username } }) => {
   if (!!id) {
     return (users[`${id}`] || null);
@@ -25,5 +32,6 @@ const findOne = ({ where: { id, username } }) => {
 
 module.exports = {
   create,
+  update,
   findOne,
 };
