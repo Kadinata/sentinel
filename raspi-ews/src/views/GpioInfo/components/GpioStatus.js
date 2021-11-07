@@ -1,11 +1,9 @@
 import React from 'react';
-import { DisplayCard } from '../../../common/components/Card';
 import { PinStatusHeader } from './PinRowHeaders';
-import { PinRow } from './PinRow';
 import PinStatus from './PinStatus';
 import {
   Grid,
-  Typography,
+  Hidden,
 } from '@material-ui/core';
 import { useGpioStreamContext } from '../providers/GpioStreamProvider';
 
@@ -18,54 +16,52 @@ const isOutput = (gpioState, pinNum) => {
 const isHigh = (gpioState, pinNum) => {
   if (!pinNum && (pinNum !== 0)) return false;
   const oenable = gpioState[pinNum] & (1 << 0);
-  // console.log({ oenable, pinNum });
   return oenable;
 };
-
-const cardTitle = (
-  <Typography component="h5" variant="h5" align="left">
-    GPIO Status
-  </Typography>
-);
-
-const HeaderRow = (
-  <PinRow key={'header'}>
-    <PinStatusHeader /> <PinStatusHeader />
-  </PinRow>
-);
 
 const GpioStatus = ({ pinLayout, ...props }) => {
 
   console.log('[Rendering]: GpioStatus ');
   const gpioState = useGpioStreamContext();
-  const rowEntry = [HeaderRow];
 
-  let i = 0;
-  for (i = 0; i < pinLayout.length; i = i + 2) {
-    rowEntry.push((
-      <PinRow key={i}>
-        <PinStatus
-          label={pinLayout[i].label}
-          pinType={pinLayout[i].type}
-          oenable={isOutput(gpioState, pinLayout[i].gpioNum)}
-          high={isHigh(gpioState, pinLayout[i].gpioNum)}
-        />
-        <PinStatus label={
-          pinLayout[i + 1].label}
-          pinType={pinLayout[i + 1].type}
-          oenable={isOutput(gpioState, pinLayout[i + 1].gpioNum)}
-          high={isHigh(gpioState, pinLayout[i + 1].gpioNum)}
-        />
-      </PinRow>
-    ));
-  }
+  const leftColPins = pinLayout.filter((value, index) => (index % 2 === 0));
+  const rightColPins = pinLayout.filter((value, index) => (index % 2 !== 0));
+
+  const leftColumn = leftColPins.map((pinConfig, index) => (
+    <PinStatus
+      key={index}
+      label={pinConfig.label}
+      pinType={pinConfig.type}
+      oenable={isOutput(gpioState, pinConfig.gpioNum)}
+      high={isHigh(gpioState, pinConfig.gpioNum)}
+    />
+  ));
+
+  const rightColumn = rightColPins.map((pinConfig, index) => (
+    <PinStatus
+      key={index}
+      label={pinConfig.label}
+      pinType={pinConfig.type}
+      oenable={isOutput(gpioState, pinConfig.gpioNum)}
+      high={isHigh(gpioState, pinConfig.gpioNum)}
+    />
+  ));
 
   return (
-    <DisplayCard title={cardTitle}>
+    <React.Fragment>
       <Grid container>
-        {rowEntry}
+        <Grid container item sm={6} xs={12}>
+          <PinStatusHeader />
+          {leftColumn}
+        </Grid>
+        <Grid container item sm={6} xs={12}>
+          <Hidden xsDown>
+            <PinStatusHeader />
+          </Hidden>
+          {rightColumn}
+        </Grid>
       </Grid>
-    </DisplayCard>
+    </React.Fragment>
   );
 };
 

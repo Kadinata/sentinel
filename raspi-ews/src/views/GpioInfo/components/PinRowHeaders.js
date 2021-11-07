@@ -8,7 +8,7 @@ import { useStyles } from './styles';
 export const PinStatusHeader = (props) => {
   const classes = useStyles();
   return (
-    <Grid container item xs={6} alignItems="stretch" justify="space-between" className={classes.pinInfoContainer}>
+    <Grid container item alignItems="stretch" justify="space-between" className={classes.pinInfoContainer}>
       <Grid container item xs={5} alignContent="center" >
         <Typography className={classes.headerLabel}>
           Pin
@@ -31,7 +31,7 @@ export const PinStatusHeader = (props) => {
 export const PinControlHeader = (props) => {
   const classes = useStyles();
   return (
-    <Grid container item xs={6} alignItems="stretch" justify="space-between" className={classes.pinInfoContainer}>
+    <Grid container item alignItems="stretch" justify="space-between" className={classes.pinInfoContainer}>
       <Grid container item xs={2} alignContent="center" justify="center" />
       <Grid container item xs={4} alignContent="center" >
         <Typography className={classes.headerLabel}>

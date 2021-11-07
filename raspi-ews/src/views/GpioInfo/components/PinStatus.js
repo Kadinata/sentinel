@@ -45,7 +45,7 @@ const PinStatus = ({ label, pinType, oenable, high, locked, ...props }) => {
   }
 
   return (
-    <Grid container item xs={6} alignItems="stretch" justify="space-between" className={classes.pinInfoContainer}>
+    <Grid container item alignItems="stretch" justify="space-between" className={classes.pinInfoContainer}>
       <Grid container item xs={5} alignContent="center" >
         <Typography className={labelClass}>
           {label}

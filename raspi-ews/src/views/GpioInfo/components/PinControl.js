@@ -1,26 +1,16 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core';
 import { StyledSwitch } from '../../../common/components/Switch';
 import {
   Grid,
   Typography,
   Checkbox,
 } from '@material-ui/core';
+import { useGpioControlStateContext } from '../providers/GpioControlStateProvider';
+import { useStyles } from './styles';
 
 const _ID_USED = "used";
 const _ID_OUTPUT = "output";
 const _ID_HIGH = "high";
-
-const useStyles = makeStyles((theme) => ({
-  pinInfoContainer: {
-    fontFamily: "monospace",
-    paddingLeft: theme.spacing(2),
-    paddingRight: theme.spacing(2),
-  },
-  label: {
-    fontFamily: "inherit",
-  },
-}));
 
 const initialState = {
   [_ID_USED]: false,
@@ -30,9 +20,7 @@ const initialState = {
 
 const usePinControlState = ({ pin, onChange }) => {
 
-  const [controlState, setControlState] = React.useState(initialState);
-
-  const handleChange = ({ target }) => {
+  const handleChange = React.useCallback( ({ target }) => {
     const { id, checked } = target;
     if ((id === _ID_USED) && (checked === false)) {
       const newState = {
@@ -42,33 +30,33 @@ const usePinControlState = ({ pin, onChange }) => {
         pin,
       };
       onChange(newState);
-      setControlState(newState);
     } else {
-      onChange({ ...controlState, [id]: !!checked, pin });
-      setControlState((prevState) => ({ ...prevState, [id]: !!checked }));
+      onChange({ [id]: !!checked, pin });
     }
-  };
+  }, [onChange, pin]);
 
-  return { controlState, handleChange };
+  return { handleChange };
 };
 
-const PinControl = ({ label, onChange, pinNum, ...props }) => {
+const PinControl = ({ label, pinNum, ...props }) => {
 
   const classes = useStyles();
+  const { handleChange: onChange, controlState: pinState } = useGpioControlStateContext();
 
-  const { controlState, handleChange, } = usePinControlState({
+  const { handleChange } = usePinControlState({
     pin: pinNum,
-    onChange: (newState) => onChange(newState),
+    onChange: (newState) => onChange({ ...initialState, ...controlState, ...newState }),
   });
+  const controlState = pinState(pinNum);
 
   return (
-    <Grid container item xs={6} alignItems="stretch" justify="space-between" className={classes.pinInfoContainer}>
+    <Grid container item alignItems="stretch" justify="space-between" className={classes.pinInfoContainer}>
       <Grid container item xs={2} alignContent="center" justify="flex-start" >
         <Checkbox
           size="small"
           color="default"
           id={_ID_USED}
-          checked={controlState[_ID_USED]}
+          checked={!!controlState[_ID_USED]}
           onChange={handleChange}
         />
       </Grid>
@@ -81,7 +69,7 @@ const PinControl = ({ label, onChange, pinNum, ...props }) => {
         <StyledSwitch
           size="small"
           id={_ID_OUTPUT}
-          checked={controlState[_ID_OUTPUT]}
+          checked={!!controlState[_ID_OUTPUT]}
           disabled={!controlState[_ID_USED]}
           onChange={handleChange}
         />
@@ -90,7 +78,7 @@ const PinControl = ({ label, onChange, pinNum, ...props }) => {
         <StyledSwitch
           size="small"
           id={_ID_HIGH}
-          checked={controlState[_ID_HIGH]}
+          checked={!!controlState[_ID_HIGH]}
           disabled={!controlState[_ID_USED]}
           onChange={handleChange}
         />

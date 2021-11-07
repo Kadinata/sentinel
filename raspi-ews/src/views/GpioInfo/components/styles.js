@@ -3,14 +3,15 @@ import { makeStyles } from '@material-ui/core';
 export const useStyles = makeStyles((theme) => ({
   pinInfoContainer: {
     fontFamily: "monospace",
-    paddingLeft: theme.spacing(2),
-    paddingRight: theme.spacing(2),
+    paddingLeft: theme.spacing(1),
+    paddingRight: theme.spacing(1),
+    [theme.breakpoints.up('lg')]: {
+      paddingLeft: theme.spacing(2),
+      paddingRight: theme.spacing(2),
+    }
   },
   label: {
     fontFamily: "inherit",
-  },
-  pinRow: {
-    padding: (theme.spacing(0) / theme.spacing(1)),
   },
   headerLabel: {
     fontWeight: "bold",

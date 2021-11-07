@@ -1,74 +1,68 @@
 import React from 'react';
-import { DisplayCard } from '../../../common/components/Card';
 import { SubmitButton } from '../../../common/components/Button';
 import { PinControlHeader } from './PinRowHeaders';
-import { PinRow } from './PinRow';
-import { useGpioController } from '../hooks';
+import { useGpioControlStateContext } from '../providers/GpioControlStateProvider';
 import PinControl from './PinControl';
+import { makeStyles } from '@material-ui/core/styles';
 import {
   Grid,
-  Typography,
+  Hidden,
 } from '@material-ui/core';
 import { usePageDataContext } from '../../common/PageDisplayManager';
 
-const cardTitle = (
-  <Typography component="h5" variant="h5" align="left">
-    GPIO Control
-  </Typography>
-);
+const useStyles = makeStyles((theme) => ({
+  submitButton: {
+    marginTop: theme.spacing(1),
+    marginLeft: theme.spacing(2),
+  },
+}));
 
 const GpioControl = ({ pinLayout, ...props }) => {
 
-  const { handleChange, handleSubmit } = useGpioController();
+  const classes = useStyles();
+  const { handleSubmit } = useGpioControlStateContext();
   const { usablePins = [] } = usePageDataContext();
   const halfCount = usablePins.length / 2;
 
   console.log('[Rendering] GpioControl');
-  console.log({ usablePins });
 
-  const rowEntry = [
-    (
-      <PinRow key={'header'}>
-        <PinControlHeader /> <PinControlHeader />
-      </PinRow>
-    ),
-  ];
+  const leftColPins = usablePins.filter((pinNum, index) => (index < halfCount));
+  const rightColPins = usablePins.filter((pinNum, index) => (index >= halfCount));
 
-  for (let i = 0; i < halfCount; i++) {
-    rowEntry.push((
-      <PinRow key={i}>
-        <PinControl
-          label={`GPIO ${usablePins[i]}`}
-          onChange={handleChange}
-          pinNum={usablePins[i]}
-        />
-        <PinControl
-          label={`GPIO ${usablePins[i + halfCount]}`}
-          onChange={handleChange}
-          pinNum={usablePins[i + halfCount]}
-        />
-      </PinRow>
-    ));
-  }
+  const leftColumn = leftColPins.map((pinNum) => (
+    <PinControl pinNum={pinNum} label={`GPIO ${pinNum}`} key={pinNum} />
+  ));
+
+  const rightColumn = rightColPins.map((pinNum) => (
+    <PinControl pinNum={pinNum} label={`GPIO ${pinNum}`} key={pinNum} />
+  ));
 
   return (
-    <DisplayCard title={cardTitle}>
+    <React.Fragment>
       <Grid container>
-        {rowEntry}
+        <Grid container item sm={6} xs={12}>
+          <PinControlHeader key={'header'} />
+          {leftColumn}
+        </Grid>
+        <Grid container item sm={6} xs={12}>
+          <Hidden xsDown>
+            <PinControlHeader key={'header'} />
+          </Hidden>
+          {rightColumn}
+        </Grid>
       </Grid>
-      <Grid container>
+
         <SubmitButton
           type="submit"
           variant="contained"
           color="primary"
           onClick={handleSubmit}
+          className={classes.submitButton}
         >
-          Send
+          Apply
         </SubmitButton>
-      </Grid>
-    </DisplayCard>
+    </React.Fragment>
   );
-
 };
 
 export default GpioControl;

@@ -1,38 +1,25 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import { GpioControl, GpioStatus } from './components';
-import { Grid } from '@material-ui/core';
+import GpioControlStateProvider from './providers/GpioControlStateProvider';
 import PinLayout from './config/PinLayout';
 import GpioStreamProvider from './providers/GpioStreamProvider';
 import { usePageDataContext } from '../common/PageDisplayManager';
-
-const useStyles = makeStyles((theme) => ({
-  gridItem: {
-    padding: theme.spacing(1),
-    [theme.breakpoints.up('lg')]: {
-      padding: theme.spacing(2),
-    }
-  },
-}));
+import { GpioContentLayout } from './components/GpioContentLayout';
 
 const GpioContent = (props) => {
-  const classes = useStyles();
   const { gpioState } = usePageDataContext();
-
   console.log('[Rendering]: GpioContent ');
 
   return (
     <React.Fragment>
-      <Grid container item spacing={0} alignItems="stretch" justify="space-between">
-        <Grid item lg={6} sm={12} xs={12} className={classes.gridItem}>
-          <GpioControl pinLayout={PinLayout} />
-        </Grid>
-        <Grid item lg={6} sm={12} xs={12} className={classes.gridItem}>
-          <GpioStreamProvider enable initialData={gpioState}>
-            <GpioStatus pinLayout={PinLayout} />
-          </GpioStreamProvider>
-        </Grid>
-      </Grid>
+      <GpioControlStateProvider >
+        <GpioStreamProvider enable initialData={gpioState}>
+          <GpioContentLayout
+            statusDisplay={<GpioStatus pinLayout={PinLayout} />}
+            controlDisplay={<GpioControl pinLayout={PinLayout} />}
+          />
+        </GpioStreamProvider>
+      </GpioControlStateProvider>
     </React.Fragment>
   );
 };
