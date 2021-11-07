@@ -2,32 +2,28 @@
 //  
 //===========================================================================
 const express = require('express');
-const handler = require('./handler');
+const handlers = require('./handler');
 const streamHandler = require('./stream');
-const authProtected = require('../../middleware/auth_protected');
+const Endpoint = require('../endpoint_handler');
 const router = express.Router();
 
-const get_handlers = [
-  ['/', handler.fetchAll],
-  ['/os', handler.os],
-  ['/cpu', handler.cpu],
-  ['/memory', handler.memory],
-  ['/netstat', handler.netstat],
-  ['/storage', handler.storage],
-  ['/time', handler.systime],
-  ['/uptime', handler.uptime],
-  ['/starttime', handler.startTime],
-  ['/localtime', handler.localtime],
-  ['/mqtt-broker', handler.mqttBroker],
-  ['/cpu-usage', handler.cpuUsage],
-  ['/stream', streamHandler],
+const is_protected = false;
+
+const endpoint_handlers = [
+  new Endpoint('/', Endpoint.METHOD_GET, handlers.fetchAll, is_protected),
+  new Endpoint('/os', Endpoint.METHOD_GET, handlers.os, is_protected),
+  new Endpoint('/cpu', Endpoint.METHOD_GET, handlers.cpu, is_protected),
+  new Endpoint('/memory', Endpoint.METHOD_GET, handlers.memory, is_protected),
+  new Endpoint('/netstat', Endpoint.METHOD_GET, handlers.netstat, is_protected),
+  new Endpoint('/storage', Endpoint.METHOD_GET, handlers.storage, is_protected),
+  new Endpoint('/time', Endpoint.METHOD_GET, handlers.systime, is_protected),
+  new Endpoint('/uptime', Endpoint.METHOD_GET, handlers.uptime, is_protected),
+  new Endpoint('/starttime', Endpoint.METHOD_GET, handlers.startTime, is_protected),
+  new Endpoint('/localtime', Endpoint.METHOD_GET, handlers.localtime, is_protected),
+  new Endpoint('/mqtt-broker', Endpoint.METHOD_GET, handlers.mqttBroker, is_protected),
+  new Endpoint('/cpu-usage', Endpoint.METHOD_GET, handlers.cpuUsage, is_protected),
+  new Endpoint('/stream', Endpoint.METHOD_GET, streamHandler, is_protected),
 ];
 
-router.use(authProtected);
-
-get_handlers.forEach(([path, req_handler]) => {
-  router.route(path).get((req, res, next) => req_handler(req, res, next));
-});
-
-module.exports = router;
+module.exports = Endpoint.bindEndpoints(router, ...endpoint_handlers);
 //===========================================================================
