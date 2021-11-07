@@ -1,7 +1,7 @@
 import React from 'react';
 import { SubmitButton } from '../../../common/components/Button';
 import { PinControlHeader } from './PinRowHeaders';
-import { useGpioControlStateContext } from '../providers/GpioControlStateProvider';
+import { useGpioControlSubmit } from '../providers/GpioControlStateProvider';
 import PinControl from './PinControl';
 import { makeStyles } from '@material-ui/core/styles';
 import {
@@ -17,10 +17,24 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const GpioSubmitButton = () => {
+  const classes = useStyles();
+  const handleSubmit = useGpioControlSubmit();
+  return (
+    <SubmitButton
+      type="submit"
+      variant="contained"
+      color="primary"
+      onClick={handleSubmit}
+      className={classes.submitButton}
+    >
+      Apply
+    </SubmitButton>
+  );
+};
+
 const GpioControl = ({ pinLayout, ...props }) => {
 
-  const classes = useStyles();
-  const { handleSubmit } = useGpioControlStateContext();
   const { usablePins = [] } = usePageDataContext();
   const halfCount = usablePins.length / 2;
 
@@ -51,16 +65,7 @@ const GpioControl = ({ pinLayout, ...props }) => {
           {rightColumn}
         </Grid>
       </Grid>
-
-        <SubmitButton
-          type="submit"
-          variant="contained"
-          color="primary"
-          onClick={handleSubmit}
-          className={classes.submitButton}
-        >
-          Apply
-        </SubmitButton>
+      <GpioSubmitButton />
     </React.Fragment>
   );
 };

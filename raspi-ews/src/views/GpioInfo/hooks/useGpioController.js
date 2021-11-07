@@ -41,7 +41,7 @@ const useGpioController = () => {
       console.log({ gpioSetting });
       await Endpoint.postData(ENDPOINT_GPIO, gpioSetting);
     } catch (err) {
-      console.log(err);
+      console.log({err});
     }
   };
 

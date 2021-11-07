@@ -18,4 +18,15 @@ export const useGpioControlStateContext = () => {
   return context;
 };
 
+export const useGpioControlSubmit = () => {
+  const { handleSubmit } = useGpioControlStateContext();
+  return handleSubmit;
+};
+
+export const useGpioControlState = (pinNum) => {
+  const { handleChange, controlState } = useGpioControlStateContext();
+  const pinControlstate = controlState(pinNum);
+  return { handleChange, pinControlstate };
+};
+
 export default GpioControlStateProvider;

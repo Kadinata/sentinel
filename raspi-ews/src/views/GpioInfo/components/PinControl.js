@@ -5,7 +5,7 @@ import {
   Typography,
   Checkbox,
 } from '@material-ui/core';
-import { useGpioControlStateContext } from '../providers/GpioControlStateProvider';
+import { useGpioControlState } from '../providers/GpioControlStateProvider';
 import { useStyles } from './styles';
 
 const _ID_USED = "used";
@@ -20,7 +20,7 @@ const initialState = {
 
 const usePinControlState = ({ pin, onChange }) => {
 
-  const handleChange = React.useCallback( ({ target }) => {
+  const handleChange = React.useCallback(({ target }) => {
     const { id, checked } = target;
     if ((id === _ID_USED) && (checked === false)) {
       const newState = {
@@ -41,13 +41,12 @@ const usePinControlState = ({ pin, onChange }) => {
 const PinControl = ({ label, pinNum, ...props }) => {
 
   const classes = useStyles();
-  const { handleChange: onChange, controlState: pinState } = useGpioControlStateContext();
+  const { handleChange: onChange, pinControlstate: controlState } = useGpioControlState(pinNum);
 
   const { handleChange } = usePinControlState({
     pin: pinNum,
     onChange: (newState) => onChange({ ...initialState, ...controlState, ...newState }),
   });
-  const controlState = pinState(pinNum);
 
   return (
     <Grid container item alignItems="stretch" justify="space-between" className={classes.pinInfoContainer}>
