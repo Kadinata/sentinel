@@ -21,9 +21,12 @@ const useStyles = makeStyles(theme => ({
   },
   content: {
     flex: '1 0 auto',
-    padding: theme.spacing(2),
+    padding: theme.spacing(1),
     '&:last-child': {
       paddingBottom: theme.spacing(2),
+    },
+    [theme.breakpoints.up('lg')]: {
+      padding: theme.spacing(2),
     },
   },
 }));

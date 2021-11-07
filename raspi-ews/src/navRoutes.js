@@ -8,7 +8,7 @@ import {
 
 const routes = [
   {
-    title: "Dashboard",
+    title: "System Info",
     path: "/systems",
     icon: <FontAwesomeIcon className="fa-sm" icon={faChartBar} />,
   },
