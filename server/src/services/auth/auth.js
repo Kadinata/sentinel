@@ -2,8 +2,7 @@
 //  
 //===========================================================================
 const bcrypt = require('bcrypt');
-const { User } = require('../../models');
-const utils = require('./utils');
+const Users = require('../database/users');
 
 const SALT_ROUNDS = 10;
 
@@ -14,20 +13,18 @@ const sanitize = (user) => {
 };
 
 const createUser = async (username, password) => {
-  const user = await utils.findUser(username);
+  const user = await Users.findUserByUserName(username);
   if (user !== null) return null;
 
   const hashedPassword = await bcrypt.hash(password, SALT_ROUNDS);
-  const newUser = await User.create({
-    username: username,
-    password: hashedPassword,
-  });
+  Users.addUser(username, hashedPassword);
+  const newUser = await Users.findUserByUserName(username);
 
   return sanitize(newUser);
 };
 
 const authenticateUser = async (username, password) => {
-  const user = await utils.findUser(username);
+  const user = await Users.findUserByUserName(username);
   if (user === null) return null;
 
   const passwordMatched = await bcrypt.compare(password, user.password);
@@ -40,8 +37,8 @@ const updateUserPassword = async (userId, currentPassword, newPassword) => {
     const message = 'Invalid parameters';
     return { user: null, error: { message } };
   }
-  
-  const user = await utils.findById(userId);
+
+  const user = await Users.findUserById(userId);
   if (user === null) {
     const message = 'User not found';
     return { user: null, error: { message } };
@@ -59,17 +56,17 @@ const updateUserPassword = async (userId, currentPassword, newPassword) => {
   }
 
   const hashedPassword = await bcrypt.hash(newPassword, SALT_ROUNDS);
-  const updatedUser = User.update(userId, { password: hashedPassword });
-
-  if (updatedUser === null) {
+  try {
+    Users.updateUserPassword(userId, hashedPassword);
+  } catch (err) {
     const message = 'Password update failed';
     return { user: null, error: { message } };
-  };
-  return { user: sanitize(updatedUser), error: null };
+  }
+  return { user: sanitize(user), error: null };
 };
 
 const findUserById = async (userId) => {
-  const user = await utils.findById(userId);
+  const user = await Users.findUserById(userId);
   return sanitize(user);
 };
 

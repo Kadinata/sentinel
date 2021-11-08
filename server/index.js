@@ -39,7 +39,13 @@ app.use(errorHandler);
 (async () => {
   mqttService.start();
   services.auth.config(passport);
-  await services.init();
+  try {
+    await services.init();
+  } catch (err) {
+    console.log('An error occurred during service init');
+    return;
+  }
+  
   app.listen(port, () => {
     console.log(`Server is listening on port ${port}`);
   });
