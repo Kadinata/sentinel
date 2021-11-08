@@ -64,7 +64,6 @@ const findUserByUserName = async (username) => {
   const sql_params = { $username: username };
   try {
     const user = await database.get(sql_command, sql_params);
-    console.log('User found', user);
     return user;
   } catch (err) {
     console.log("Error while finding user by Username", err);
