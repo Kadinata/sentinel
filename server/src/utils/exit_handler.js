@@ -20,6 +20,9 @@ const _exit_handler = (code) => {
 
 process.on('exit', (code) => _exit_handler(code));
 process.on('SIGINT', (code) => _exit_handler(code));
+process.on('uncaughtException', (err, origin) => {
+  console.log('An uncaught exception occurred.', {err, origin});
+});
 
 module.exports = {
   register,

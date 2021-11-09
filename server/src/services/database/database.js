@@ -6,20 +6,20 @@ const exitHandler = require('../../utils/exit_handler');
 const path = require('path');
 
 const _PATH_TO_DB_FILE = path.join(__dirname, '../../../db/database.db');
-const _ERR_MSG_DB_NOT_INITIALIZED = 'Database instane not initialized';
+const _ERR_MSG_DB_NOT_INITIALIZED = 'Database instance not initialized';
 
 let db = null;
 
 const init = () => {
   return new Promise((resolve, reject) => {
-    if (db !== null) return resolve(true);
+    if (db !== null) return resolve();
     db = new sqlite3.Database(_PATH_TO_DB_FILE, (err) => {
       if (err) {
         console.log(err.message);
         return reject(err);
       }
       console.log('Connected to Database.');
-      return resolve(true);
+      return resolve();
     });
   });
 };

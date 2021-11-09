@@ -5,8 +5,7 @@
 const gpio = require('./gpio');
 const sysinfo = require('./sysinfo');
 const auth = require('./auth');
-const db = require('./database/database');
-const users = require('./database/users');
+const db = require('./database');
 
 /**
  * Initializes each service module.
@@ -16,10 +15,9 @@ const init = async () => {
     await sysinfo.init();
     await gpio.init();
     await db.init();
-    await users.init();
   } catch (err) {
     console.log(err);
-    return Promise.reject(err);
+    throw err;
   }
 };
 

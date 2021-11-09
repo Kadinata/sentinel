@@ -31,7 +31,7 @@ const fetchAll = async () => {
     const cpu_usage = cpuUsage.measurements;
     return { os_info, cpu_info, cpu_usage, hdd_info, mem_info, netstats, uptime, localtime, startTime, mqtt_broker };
   } catch (err) {
-    return Promise.reject(err);
+    throw err;
   }
 };
 
