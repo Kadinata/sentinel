@@ -7,7 +7,7 @@ const streamHandler = require('./stream');
 const Endpoint = require('../endpoint_handler');
 const router = express.Router();
 
-const is_protected = false;
+const is_protected = true;
 
 const endpoint_handlers = [
   new Endpoint('/', Endpoint.METHOD_POST, handlers.post_handler, is_protected),
