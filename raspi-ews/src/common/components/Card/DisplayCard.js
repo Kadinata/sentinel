@@ -18,6 +18,9 @@ const useStyles = makeStyles(theme => ({
     background: theme.palette.primary.main,
     borderTopLeftRadius: 4,
     borderTopRightRadius: 4,
+    [theme.breakpoints.down('md')]: {
+      padding: theme.spacing(1.5),
+    },
   },
   content: {
     flex: '1 0 auto',

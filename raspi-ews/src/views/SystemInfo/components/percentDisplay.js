@@ -14,18 +14,21 @@ const useStyles = makeStyles((theme) => ({
   infoBox: {
     display: 'flex',
     padding: theme.spacing(1),
-    paddingLeft: theme.spacing(2),
+    paddingLeft: theme.spacing(1),
+    [theme.breakpoints.up('lg')]: {
+      paddingLeft: theme.spacing(2),
+    },
   },
   progressBar: {
     display: 'flex',
     minWidth: '56px',
     paddingTop: theme.spacing(1),
-    paddingRight: theme.spacing(2),
-    paddingLeft: theme.spacing(2),
-    [theme.breakpoints.up('md')]: {
-      paddingRight: theme.spacing(1),
-      paddingLeft: theme.spacing(1),
-    },
+    paddingRight: theme.spacing(1),
+    paddingLeft: theme.spacing(1),
+    // [theme.breakpoints.up('md')]: {
+    //   paddingRight: theme.spacing(1),
+    //   paddingLeft: theme.spacing(1),
+    // },
   },
   rowLabel: {
     flexGrow: 1,

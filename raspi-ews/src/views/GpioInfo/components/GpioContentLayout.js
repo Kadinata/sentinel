@@ -1,7 +1,7 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import { DisplayCard } from '../../../common/components/Card';
 import { TabPanel } from '../../../common/components/Tabs/TabPanel';
+import { useStyles } from '../../common/styles';
 import {
   Tab,
   Tabs,
@@ -10,22 +10,6 @@ import {
   Hidden,
   Typography,
 } from '@material-ui/core';
-
-const useStyles = makeStyles((theme) => ({
-  gridItem: {
-    padding: theme.spacing(1),
-    [theme.breakpoints.up('lg')]: {
-      padding: theme.spacing(2),
-    }
-  },
-  tabPanel: {
-    paddingTop: theme.spacing(2),
-  },
-  tabContainer: {
-    maxHeight: "100%",
-    overflowY: "scroll",
-  },
-}));
 
 const a11yProps = (index) => {
   return {
@@ -53,7 +37,7 @@ const GpioTabLayout = ({ statusDisplay, controlDisplay, ...props }) => {
   };
 
   return (
-    <Grid container className={classes.tabContainer}>
+    <Grid container className={classes.widgetContainer}>
       <DisplayCard noHeader>
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
           <Tabs
@@ -66,10 +50,10 @@ const GpioTabLayout = ({ statusDisplay, controlDisplay, ...props }) => {
             <Tab label="GPIO Control" {...a11yProps(1)} />
           </Tabs>
         </Box>
-        <TabPanel value={activeIndex} index={0} className={classes.tabPanel}>
+        <TabPanel value={activeIndex} index={0}>
           {statusDisplay}
         </TabPanel>
-        <TabPanel value={activeIndex} index={1} className={classes.tabPanel}>
+        <TabPanel value={activeIndex} index={1}>
           {controlDisplay}
         </TabPanel>
       </DisplayCard>
@@ -82,12 +66,12 @@ const GpioGridLayout = ({ statusDisplay, controlDisplay, ...props }) => {
   const classes = useStyles();
   return (
     <React.Fragment>
-      <Grid container item lg={6} sm={12} xs={12} className={classes.gridItem}>
+      <Grid container item lg={6} sm={12} xs={12} className={classes.widgetContainer}>
         <DisplayCard title={controlTitle}>
           {controlDisplay}
         </DisplayCard>
       </Grid>
-      <Grid container item lg={6} sm={12} xs={12} className={classes.gridItem}>
+      <Grid container item lg={6} sm={12} xs={12} className={classes.widgetContainer}>
         <DisplayCard title={statusTitle}>
           {statusDisplay}
         </DisplayCard>

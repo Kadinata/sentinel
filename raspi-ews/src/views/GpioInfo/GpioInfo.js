@@ -1,8 +1,8 @@
 import React from 'react';
 import { Grid } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
 import { PageTitle } from '../common';
 import { PageDisplayManager } from '../common/PageDisplayManager';
+import { useStyles } from '../common/styles';
 import { useResourceRequest } from '../../common/hooks';
 
 import GpioContent from './GpioContent';
@@ -15,15 +15,6 @@ const DATA_SCHEMA = {
   usablePins: ENDPOINT_USABLE_PINS,
 };
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    padding: theme.spacing(3),
-    paddingTop: theme.spacing(2),
-    display: 'flex',
-    flex: 1,
-  },
-}));
-
 const GpioInfo = (props) => {
   const classes = useStyles();
   const { error, completed, data } = useResourceRequest(DATA_SCHEMA);
@@ -32,13 +23,19 @@ const GpioInfo = (props) => {
   console.log("[Rendering]: GpioInfo", { error, completed, value });
 
   return (
-    <Grid container direction="column" wrap="nowrap" alignItems="stretch" spacing={0} className={classes.root}>
+    <Grid
+      container
+      direction="column"
+      wrap="nowrap"
+      alignItems="stretch"
+      spacing={0}
+      className={classes.viewRoot}
+    >
       <PageTitle>{"GPIO Control & Status"}</PageTitle>
 
       <PageDisplayManager loading={!completed} error={error} data={value}>
         <GpioContent />
       </PageDisplayManager>
-
     </Grid>
   );
 };
