@@ -6,7 +6,6 @@ const Errors = require('../utils/errors');
 const sysinfoRoutes = require('./sysinfo');
 const gpioRoutes = require('./gpio');
 const authRoutes = require('./auth');
-const testRoutes = require('./tests');
 
 const router = express.Router();
 
@@ -14,7 +13,6 @@ const routes = [
   ['/auth', authRoutes],
   ['/gpio', gpioRoutes],
   ['/sysinfo', sysinfoRoutes],
-  ['/test', testRoutes],
 ];
 
 routes.forEach(([path, handler]) => {
