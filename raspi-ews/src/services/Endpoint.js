@@ -1,11 +1,4 @@
-const HOSTNAME = 'raspberrypi.local';
-const PORT = 3000;
-// const HOSTNAME = 'localhost';
-// const PORT = 3333;
-
-const ENDPOINT_BASE = `http://${HOSTNAME}:${PORT}`;
-
-const normalize = (path) => (`${ENDPOINT_BASE}/${path}`);
+const normalize = (path) => (`/${path}`);
 
 const fetchData = async (endpoint) => {
   try {
@@ -46,9 +39,6 @@ const postData = async (endpoint, data) => {
 
 
 export default {
-  HOSTNAME,
-  ENDPOINT_BASE,
-  normalize,
   fetchData,
   postData,
   subcsribe,
