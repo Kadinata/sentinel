@@ -1,9 +1,7 @@
-import { useHistory } from 'react-router-dom';
 import { useAuthDataContext } from '../../../auth/AuthProvider';
 
-const useLoginHandler = (successRedirect) => {
+const useLoginHandler = () => {
 
-  const history = useHistory();
   const { handleLogin } = useAuthDataContext();
 
   const handleSubmit = async ({ username, password }) => {
@@ -18,15 +16,9 @@ const useLoginHandler = (successRedirect) => {
 
   const handleError = (error) => { };
 
-  const handleSuccess = () => {
-    if (!successRedirect) return;
-    setTimeout(() => history.push(successRedirect), 750);
-  }
-
   return {
     handleSubmit,
     handleError,
-    handleSuccess,
   };
 };
 

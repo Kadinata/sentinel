@@ -3,29 +3,41 @@ import { Redirect } from 'react-router-dom';
 import { useAuthDataContext } from '../../auth/AuthProvider';
 import Loading from './Loading';
 
-const useAuthRedirect = () => {
+const initialState = {
+  loading: true,
+  loggedIn: false,
+  activated: false,
+};
 
-  const [isLoading, setLoading] = React.useState(true);
-  const [loggedIn, setLoggedIn] = React.useState(false);
+const useAuthRedirect = (noRetry = false) => {
+
+  const [state, setState] = React.useState(initialState);
   const { user, token, authCheckComplete } = useAuthDataContext();
 
   React.useEffect(() => {
-    setLoading(true);
-    setLoggedIn((!!user && !!token));
-    setLoading(!authCheckComplete);
-  }, [user, token, authCheckComplete]);
+    const loading = !authCheckComplete;
+    const loggedIn = !!user && !!token;
+    const activated = (authCheckComplete && !loggedIn && noRetry);
+    setState((prevState) => ({
+      ...prevState,
+      loading,
+      loggedIn,
+      activated : prevState.activated || activated,
+    }));
+  }, [user, token, authCheckComplete, noRetry]);
 
-  return { isLoading, loggedIn };
+  return state;
 };
 
-const AuthRedirect = ({ redirect, ...rest }) => {
-  const { isLoading, loggedIn } = useAuthRedirect();
+const AuthRedirect = ({ redirect, noRetry = false, ...rest }) => {
 
-  if (loggedIn && !isLoading) {
+  const { loading, loggedIn, activated } = useAuthRedirect(noRetry);
+
+  if (loggedIn && !loading && !activated) {
     return (<Redirect to={redirect} />);
   }
 
-  return (<Loading show={isLoading} {...rest} />);
+  return (<Loading show={loading} {...rest} />);
 };
 
 export default AuthRedirect;

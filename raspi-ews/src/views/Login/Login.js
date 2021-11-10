@@ -4,10 +4,10 @@ import {
   Container,
   Grid,
 } from '@material-ui/core';
-
+import { Redirect } from 'react-router-dom';
+import { AuthRedirect } from '../common';
 import LoginCard from './loginCard';
 import { useLoginHandler } from './hooks';
-import { AuthRedirect } from '../common';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -20,15 +20,25 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const RedirectAfter = '/test';
+const DELAY_AFTER_LOGIN_MS = 850;
+const RedirectAfter = '/';
 
 const LoginView = (props) => {
 
   const classes = useStyles();
-  const { handleSubmit, handleSuccess } = useLoginHandler(RedirectAfter);
+  const [loginSucceeded, setLoginSucceeded] = React.useState(false);
+  const { handleSubmit } = useLoginHandler();
+
+  const handleSuccess = () => {
+    setTimeout(() => setLoginSucceeded(true), DELAY_AFTER_LOGIN_MS);
+  };
+
+  if (loginSucceeded) {
+    return (<Redirect to={RedirectAfter} />);
+  }
 
   return (
-    <AuthRedirect redirect={RedirectAfter}>
+    <AuthRedirect noRetry redirect={RedirectAfter}>
       <Grid container className={classes.root}>
         <Container maxWidth="sm">
           <LoginCard onSubmit={handleSubmit} onSuccess={handleSuccess} />
