@@ -1,10 +1,7 @@
-import { useHistory } from 'react-router-dom';
 import AuthService from '../../../auth/Auth';
 import validatePasswords from '../Validation';
 
-const useSignupHandler = (successRedirect) => {
-
-  const history = useHistory();
+const useSignupHandler = () => {
 
   const handleSubmit = async ({ username, password, confirmpw }) => {
     var { success, message } = validatePasswords(password, confirmpw);
@@ -14,7 +11,6 @@ const useSignupHandler = (successRedirect) => {
 
     try {
       let result = await AuthService.CreateUser(username, password);
-      console.log(result);
       return { success: result.success, message: { username: result.message } };
     } catch (err) {
       const success = false;
@@ -25,15 +21,9 @@ const useSignupHandler = (successRedirect) => {
 
   const handleError = (errors) => { };
 
-  const handleSuccess = () => {
-    if (!successRedirect) return;
-    setTimeout(() => history.push(successRedirect), 750);
-  };
-
   return {
     handleSubmit,
     handleError,
-    handleSuccess,
   };
 };
 

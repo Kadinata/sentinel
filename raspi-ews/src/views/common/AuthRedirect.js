@@ -22,7 +22,7 @@ const useAuthRedirect = (noRetry = false) => {
       ...prevState,
       loading,
       loggedIn,
-      activated : prevState.activated || activated,
+      activated: prevState.activated || activated,
     }));
   }, [user, token, authCheckComplete, noRetry]);
 
