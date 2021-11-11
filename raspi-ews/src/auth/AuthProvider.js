@@ -10,23 +10,37 @@ const getInitialData = () => {
   return { user, token };
 };
 
+const useAuthState = (initialAuthData = {}) => {
+  const [authState, setAuthState] = React.useState({
+    authCheckComplete: false,
+    authData: initialAuthData,
+  });
+
+  const setAuthData = (user, token) => {
+    setAuthState((prevState) => ({
+      authCheckComplete: true,
+      authData: { ...prevState.authData, user, token }
+    }))
+  };
+
+  const { authData, authCheckComplete } = authState;
+
+  return { authData, authCheckComplete, setAuthData };
+};
+
 const AuthDataProvider = (props) => {
 
-  const [authData, setAuthData] = React.useState(getInitialData());
-  const [authCheckComplete, setAuthCheckState] = React.useState(false);
+  const { authData, authCheckComplete, setAuthData } = useAuthState(getInitialData());
 
   const checkAuthState = React.useCallback(async () => {
     const token = getAuthToken();
     try {
       const user = await AuthService.CheckAuthState();
-      setAuthData(prevState => ({ ...prevState, user, token }));
+      setAuthData(user, token);
     } catch (err) {
-      const user = null;
-      const token = null;
       removeToken();
-      setAuthData(prevState => ({ ...prevState, user, token }));
+      setAuthData(null, null);
     }
-    setAuthCheckState(true);
   }, []);
 
   React.useEffect(() => {
@@ -35,10 +49,8 @@ const AuthDataProvider = (props) => {
   }, [checkAuthState]);
 
   const onLogout = () => {
-    const user = null;
-    const token = null;
     removeToken();
-    setAuthData(prevState => ({ ...prevState, user, token }));
+    setAuthData(null, null);
   }
 
   const onLogin = () => checkAuthState();
