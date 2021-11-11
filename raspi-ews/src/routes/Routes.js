@@ -14,10 +14,10 @@ const Routes = (props) => {
   return (
     <Switch>
       <ProtectedRoute exact path="/" component={HomeView} />
-      <Route exact path="/login" redirect="/test" component={Login} />
+      <Route exact path="/login" component={Login} />
       <Route exact path="/register" component={SignUp} />
-      <Route exact path="/systems" component={withMainLayout(SystemInfo)} />
-      <Route exact path="/gpio" component={withMainLayout(GpioInfo)} />
+      <ProtectedRoute exact path="/systems" component={withMainLayout(SystemInfo)} />
+      <ProtectedRoute exact path="/gpio" component={withMainLayout(GpioInfo)} />
     </Switch>
   );
 };
