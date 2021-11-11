@@ -1,7 +1,7 @@
 import React from 'react';
 import States from '../FormStates';
 
-const useSignupForm = ({ initialState, onSubmit }) => {
+const useSignupForm = ({ initialState, onError, onSuccess, onSubmit }) => {
 
   const [values, setValues] = React.useState(initialState || {});
   const [errors, setErrors] = React.useState({ ...initialState, general: '' });
@@ -33,8 +33,10 @@ const useSignupForm = ({ initialState, onSubmit }) => {
     if (!success) {
       setState(States.error);
       setErrors((prevErrors) => ({ ...prevErrors, ...message }));
+      onError({ message });
     } else {
       setState(States.success);
+      onSuccess();
     }
     setValues((prevValues) => ({
       ...initialState,

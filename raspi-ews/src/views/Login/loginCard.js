@@ -1,20 +1,16 @@
 import React from 'react';
-
 import { makeStyles } from '@material-ui/core';
-
 import {
   Typography,
   TextField,
   CardMedia,
 } from '@material-ui/core';
-
 import { DisplayCard } from '../../common/components/Card';
 import { SubmitButton } from '../../common/components/Button';
 import {
   ErrorBar,
   SuccessBar,
 } from '../../common/components/Alert';
-
 import {
   useLoginForm,
   useBtnState
@@ -49,21 +45,12 @@ const LoginCard = ({ onSubmit, onError, onSuccess, ...props }) => {
     handleSubmit,
   } = useLoginForm({
     initialState,
-    onSubmit: (values) => onSubmit(values)
+    onSubmit: (values) => onSubmit(values),
+    onError: (errors) => onError(errors),
+    onSuccess: () => onSuccess(),
   });
 
   const btnState = useBtnState({ ...values, state });
-
-  React.useEffect(() => {
-    switch (state) {
-      case States.error:
-        return onError(errors);
-      case States.success:
-        return onSuccess();
-      default:
-        return;
-    }
-  }, [state, errors, onSuccess, onError]);
 
   return (
     <DisplayCard
