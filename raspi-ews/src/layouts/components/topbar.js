@@ -1,16 +1,19 @@
 import React from 'react';
 
 import { makeStyles } from '@material-ui/core';
-import { AppBar, Toolbar, IconButton } from '@material-ui/core';
-
+import { AppBar, Toolbar, IconButton, Box } from '@material-ui/core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
+import UserIcon from './UserIcon';
 
 const useStyles = makeStyles((theme) => ({
   spacer: theme.mixins.spacer,
   appBar: {
     color: theme.palette.text.primary,
     backgroundColor: theme.palette.primary.main,
+  },
+  toolbar_spacer: {
+    flexGrow: 1,
   },
   menuButton: {
     [theme.breakpoints.up('md')]: {
@@ -35,6 +38,8 @@ const Topbar = ({ onDrawerOpen, ...props }) => {
           >
             <FontAwesomeIcon icon={faBars} />
           </IconButton>
+          <Box className={classes.toolbar_spacer}/>
+          <UserIcon />
         </Toolbar>
       </AppBar>
       <div className={classes.spacer} />
